@@ -33,6 +33,7 @@ final class ReplicaAppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValid
     private let hotKey = GlobalHotKey()
     private let stackHotKey = GlobalHotKey()
     private let stackPasteHotKey = GlobalHotKey()
+    private var screenshotCoordinator: ScreenshotCoordinator?
     private var stackPasteRegistered = false
     private var statusItem: NSStatusItem!
     private var targetApplication: NSRunningApplication?
@@ -180,6 +181,8 @@ final class ReplicaAppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValid
                 if self.ui.state.stackItemIDs.isEmpty { self.ui.hideStack() }
             }
             configureGlobalHotKeys(force: true)
+            screenshotCoordinator = ScreenshotCoordinator(store: store, pasteboard: pasteboard)
+            screenshotCoordinator?.start()
             accessibilityObservation = accessibilityService.f_100ae5e90().sink { [weak self] _ in
                 MainActor.assumeIsolated { self?.configureStackPasteShortcut() }
             }
@@ -563,6 +566,8 @@ final class ReplicaAppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValid
         pauseResumeTimer?.invalidate()
         pauseResumeTimer = nil
         ReplicaCopiedOSD.pauseStatus = nil
+        screenshotCoordinator?.stop()
+        screenshotCoordinator = nil
         monitor?.stop(); hotKey.unregister(); stackHotKey.unregister(); stackPasteHotKey.unregister(); refreshTimer?.invalidate()
         if let activationObserver { NSWorkspace.shared.notificationCenter.removeObserver(activationObserver) }
     }
