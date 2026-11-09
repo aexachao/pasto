@@ -16,6 +16,14 @@ Pasto supports **macOS 14+, Intel (x86_64), and Apple silicon (arm64)**. It is b
 
 The website and download information below are updated by GitHub Actions after a stable Release is published.
 
+## Version 1.0.9 screenshots and scrolling capture
+
+Screenshots are new in this version. Press ⌘⇧A for a region capture: a dimmed overlay and crosshair appear, and releasing the mouse after dragging a rectangle opens the annotation editor directly. Press Esc to cancel without creating an entry. Press ⌘⇧E to capture the current screen into the same editor. In the editor, **Confirm** writes the image into Pasto history and it can be pasted with ⌘V immediately; **Save** only exports a file and does not add history.
+
+The editor provides rectangles, arrows, pen, mosaic, spotlight, text, QR codes, OCR, and pin, and `,` and `.` page through earlier images. While capturing, the Pasto panel hides itself automatically and is not included in the underlying image, then comes back after cancelling; double-clicking the overlay suspends the capture and the next ⌘⇧A resumes annotation. The editor's **Scrolling capture** button scrolls automatically or manually for a scrolling capture, and pin and OCR both work in local testing; screenshot translation asks you to enable it in **Settings → Translation**, but screenshot settings are not yet wired into the Pasto settings panel, and the screen recording entry exists but is unverified. See [Screenshots and scrolling capture](#screenshots-and-scrolling-capture) below for scrolling capture, the disabled paths, and what remains unverified.
+
+The source for this version is already merged; the 1.0.9 installer ships with the stable Release, and the download links below still point to the most recently published stable version.
+
 ## Version 1.0.8 search interaction fixes
 
 Fixes a transparent input layer intercepting clicks on the panel's search icon. The button follows the original native action path, activating search and input focus during the click action. Click the icon or press ⌘F inside the panel to search.
@@ -60,8 +68,29 @@ Settings:
 - Migration of local collections and their contents from Paste, preserving colors and order. Repeated imports do not overwrite existing edits. Open the More menu → Import collections from Paste…; see the [migration guide](replica/README.md#从-paste-迁移分组) (Chinese).
 - Global keyboard shortcuts, configurable plain-text actions, recording pause, and local settings.
 - Local Vision OCR and a separate `pasto-mcp` stdio service.
+- Screenshots and the annotation editor: ⌘⇧A region capture and ⌘⇧E full-screen capture open the annotation editor directly after selecting a region or pressing the shortcut, with rectangles, arrows, pen, mosaic, spotlight, text, QR codes, OCR, and pin.
+- Scrolling capture: automatic scrolling needs macOS Accessibility access, manual scrolling needs no permission, and a crop step runs before returning to the editor.
+- Pinned screenshots (pin) and image text recognition (OCR) work in local testing; `,` and `.` page through earlier images inside the editor.
+- Screenshot translation asks you to enable it in **Settings → Translation**, but screenshot settings are not yet wired into the Pasto settings panel; the screen recording entry exists and is not yet verified.
 
 **Pasto is an independent implementation in development. Full one-to-one verification against the original is not complete.** The list above means source code and feature entry points exist; it does not mean every interaction or edge case has been verified. Cross-app direct paste has not been fully verified, so correct insertion at the cursor cannot be guaranteed in every app. When reporting copy or paste issues, include reproduction steps without private content.
+
+## Screenshots and scrolling capture
+
+⌘⇧A starts a region capture: a dimmed overlay and crosshair appear, and releasing the mouse after dragging a selection opens the annotation editor directly. Press Esc to cancel without creating an entry. ⌘⇧E captures the current screen into the same editor.
+
+**Confirm** in the editor writes the image into Pasto history and it can be pasted with ⌘V immediately; **Save** only exports a file and does not add history, which is the intended behaviour. The tool strip includes rectangles, arrows, pen, mosaic, spotlight, text, QR codes, OCR, and pin. The interface uses 668 Chinese strings, and `,` and `.` page through earlier images inside the editor.
+
+While capturing, the Pasto panel hides itself automatically and does not appear in the underlying image, then comes back after cancelling. Double-clicking the overlay suspends the capture, and the next ⌘⇧A resumes annotation.
+
+**Scrolling capture** is the button in the vertical tool strip on the right side of the editor:
+
+- Automatic scrolling injects wheel events into the target window and needs macOS Accessibility access; manual scrolling uses your own wheel and needs no permission. A crop step follows, and confirming returns to the editor.
+- Two paths work in testing: drawing a rectangle with ⌘⇧A, and double-clicking the overlay, resuming, then dragging a rectangle.
+- **Selection rule (important):** the selection may contain only the scrolling content. Framing the window title bar, toolbar, or tab bar makes automatic scrolling stop silently part-way, with no message and no history entry; drag the top edge down so the fixed bars sit outside the selection and it runs to completion.
+- The **Scrolling capture** button is disabled by default for window snap (clicking a window with ⌘⇧A) and ⌘⇧E full-screen capture; this is upstream behaviour. After snapping, dragging a selection edge enables it, but the selection rule above still applies.
+- Screenshot translation asks you to enable it in **Settings → Translation**, but none of the screenshot settings are wired into the Pasto settings panel yet, so they cannot be configured; the screen recording entry exists and is not yet verified as working.
+- Pin and OCR work in local testing. Not yet verified: the window-snap gate, multiple displays, the stitch quality of automatic scrolling, and scrolling capture in other apps. The installer is ad-hoc signed, so updates may still require enabling Accessibility access again; the editor's **Open Settings** button and the pin window's **Edit** button are still placeholders that do nothing when clicked.
 
 ## Paste vs. Pasto
 
