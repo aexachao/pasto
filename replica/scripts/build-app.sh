@@ -51,7 +51,9 @@ install_executable() {
 }
 mkdir -p "$replica_root/dist"
 staging="$(mktemp -d "$replica_root/dist/.pasto-build.XXXXXX")"
-trap 'rm -rf "$staging"' EXIT
+# 清理用 EXIT trap 必须保留真实退出码：bash 3.2 下 `set -e` + ${VAR:?} 中止时，
+# trap 里读到的 $? 是 0，只有真正走到脚本末尾（build_complete=1）才算成功。
+trap 'rc=$?; rm -rf "$staging"; if [[ "$rc" -eq 0 && "${build_complete:-0}" != 1 ]]; then rc=1; fi; exit "$rc"' EXIT
 bundle="$staging/Pasto.app"
 mkdir -p "$bundle/Contents/MacOS" "$bundle/Contents/Resources"
 mkdir -p "$bundle/Contents/Frameworks"
@@ -63,6 +65,8 @@ codesign --force --sign - "$bundle/Contents/MacOS/pasto-mcp"
 cp "$replica_root/Assets/Sparkle-LICENSE.txt" "$bundle/Contents/Resources/Sparkle-LICENSE.txt"
 cp "$replica_root/Assets/PastoAppIcon.icns" "$bundle/Contents/Resources/PastoAppIcon.icns"
 ditto "$binary_root/Pasto_PastoCore.bundle" "$bundle/Contents/Resources/Pasto_PastoCore.bundle"
+ditto "$replica_root/Vendor/capcap/Resources/zh-Hans.lproj" "$bundle/Contents/Resources/zh-Hans.lproj"
+ditto "$replica_root/Vendor/capcap/Resources/en.lproj" "$bundle/Contents/Resources/en.lproj"
 helper="$bundle/Contents/Library/LoginItems/Pasto Helper.app"
 mkdir -p "$helper/Contents/MacOS"
 install_executable PastoHelper "$helper/Contents/MacOS/PastoHelper" '@executable_path/../../../../../Frameworks'
@@ -99,6 +103,7 @@ cat > "$bundle/Contents/Info.plist" <<PLIST
 <key>PastoSourceVersion</key><string>$version</string>
 <key>LSMinimumSystemVersion</key><string>14.0</string>
 <key>LSUIElement</key><true/>
+<key>NSScreenCaptureUsageDescription</key><string>截图功能需要读取屏幕内容，用于截取您选择的区域或整个屏幕并保存到 Pasto 历史。</string>
 <key>NSHighResolutionCapable</key><true/>
 <key>NSPrincipalClass</key><string>NSApplication</string>
 <key>UIDesignRequiresCompatibility</key><false/>
@@ -116,7 +121,7 @@ plutil -insert SUSendProfileInfo -bool NO "$bundle/Contents/Info.plist"
 mkdir -p "$bundle/Contents/Frameworks"
 xcrun swift-stdlib-tool --copy --scan-folder "$bundle/Contents" --platform macosx \
   --destination "$bundle/Contents/Frameworks" --sign "${PASTO_SIGNING_IDENTITY:--}"
-if [[ -n "${PASTO_CLOUDKIT_PROFILE:-}${PASTO_CLOUDKIT_CONTAINER:-}${PASTO_SIGNING_IDENTITY:-}" ]]; then
+if [[ -n "${PASTO_CLOUDKIT_PROFILE:-}${PASTO_CLOUDKIT_CONTAINER:-}" ]]; then
   : "${PASTO_CLOUDKIT_PROFILE:?需要自有描述文件路径}"
   : "${PASTO_CLOUDKIT_CONTAINER:?需要自有 CloudKit 容器标识}"
   : "${PASTO_SIGNING_IDENTITY:?需要本机有效 Apple 签名身份}"
@@ -125,7 +130,8 @@ if [[ -n "${PASTO_CLOUDKIT_PROFILE:-}${PASTO_CLOUDKIT_CONTAINER:-}${PASTO_SIGNIN
     --environment "${PASTO_CLOUDKIT_ENVIRONMENT:-Development}" --output "$staging/cloudkit-entitlements.plist"
   codesign --force --sign "$PASTO_SIGNING_IDENTITY" --entitlements "$staging/cloudkit-entitlements.plist" "$bundle"
 else
-  codesign --force --sign - "$bundle"
+  # 有身份则用身份签，TCC 授权可跨重建保持；无身份退回 ad-hoc。
+  codesign --force --sign "${PASTO_SIGNING_IDENTITY:--}" "$bundle"
 fi
 codesign --verify --deep --strict "$bundle"
 if [[ -e "$replica_root/dist/Pasto.app" ]]; then
@@ -135,3 +141,4 @@ if [[ -e "$replica_root/dist/Pasto.app" ]]; then
 fi
 mv "$bundle" "$replica_root/dist/Pasto.app"
 printf '%s\n' "$replica_root/dist/Pasto.app"
+build_complete=1
