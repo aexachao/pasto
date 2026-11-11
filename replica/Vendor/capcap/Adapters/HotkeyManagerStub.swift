@@ -5,14 +5,11 @@
 // `Trigger/HotkeyManager.swift` — the whole `Trigger/` directory is explicitly
 // excluded from the vendoring scope.
 //
-// Behaviour: the modifier/key formatting helpers are kept (they are pure
-// functions and the editor shortcut display needs a readable string), but every
-// global-hotkey accessor reports "no custom hotkey configured", so
-// `hotkeyConflictMessage(...)` always returns nil (no conflict) and the
-// `eventMatches*` predicates only ever match the hard-coded capcap defaults.
-// No Carbon hotkey is ever registered.
+// Local editor bindings are read from the same preferences as their labels.
+// Global triggers remain owned by Pasto; this adapter registers no hotkeys.
 
 import AppKit
+import Carbon
 import Foundation
 
 /// TEMP-STUB (P1-A) — see file header.
@@ -57,22 +54,41 @@ final class HotkeyManager {
         case historyPanel
     }
 
-    // MARK: - Current bindings (always the built-in defaults; nothing is custom)
+    // MARK: - Current editor bindings
 
     func currentClipboardHotkey() -> (keyCode: UInt32, modifiers: UInt32)? {
-        nil
+        guard Defaults.hasCustomClipboardHotkey else { return nil }
+        return Self.binding(keyCode: Defaults.clipboardHotkeyKeyCode,
+                            modifiers: Defaults.clipboardHotkeyModifiers)
+    }
+
+    private static func binding(keyCode: Int, modifiers: Int) -> (keyCode: UInt32, modifiers: UInt32)? {
+        guard (0...Int(UInt16.max)).contains(keyCode),
+              modifiers >= 0, modifiers <= Int(UInt32.max) else { return nil }
+        let mask = carbonCommand | carbonShift | carbonOption | carbonControl
+        guard UInt32(modifiers) & ~mask == 0 else { return nil }
+        return (UInt32(keyCode), UInt32(modifiers))
     }
 
     func currentFileSaveHotkey() -> (keyCode: UInt32, modifiers: UInt32) {
-        (Self.keyS, Self.carbonCommand)
+        if Defaults.hasCustomFileSaveHotkey,
+           let custom = Self.binding(keyCode: Defaults.fileSaveHotkeyKeyCode,
+                                     modifiers: Defaults.fileSaveHotkeyModifiers) { return custom }
+        return (Self.keyS, Self.carbonCommand)
     }
 
     func currentPreviousHistoryImageHotkey() -> (keyCode: UInt32, modifiers: UInt32) {
-        (Self.keyComma, 0)
+        if Defaults.hasCustomPreviousHistoryImageHotkey,
+           let custom = Self.binding(keyCode: Defaults.previousHistoryImageHotkeyKeyCode,
+                                     modifiers: Defaults.previousHistoryImageHotkeyModifiers) { return custom }
+        return (Self.keyComma, 0)
     }
 
     func currentNextHistoryImageHotkey() -> (keyCode: UInt32, modifiers: UInt32) {
-        (Self.keyPeriod, 0)
+        if Defaults.hasCustomNextHistoryImageHotkey,
+           let custom = Self.binding(keyCode: Defaults.nextHistoryImageHotkeyKeyCode,
+                                     modifiers: Defaults.nextHistoryImageHotkeyModifiers) { return custom }
+        return (Self.keyPeriod, 0)
     }
 
     // MARK: - Conflict detection (never reports a conflict)
@@ -89,8 +105,8 @@ final class HotkeyManager {
     // MARK: - Event matching
 
     static func eventMatchesClipboardHotkey(_ event: NSEvent) -> Bool {
-        _ = event
-        return false
+        guard let binding = shared.currentClipboardHotkey() else { return false }
+        return matches(event: event, keyCode: binding.keyCode, modifiers: binding.modifiers)
     }
 
     static func eventMatchesFileSaveHotkey(_ event: NSEvent) -> Bool {
@@ -139,11 +155,24 @@ final class HotkeyManager {
     }
 
     static func keyString(_ keyCode: UInt32) -> String {
-        switch keyCode {
-        case keyS: return "S"
-        case keyComma: return ","
-        case keyPeriod: return "."
-        default: return "Key \(keyCode)"
+        let special: [UInt32: String] = [36: "↩", 48: "⇥", 49: "Space", 51: "⌫", 53: "⎋",
+            123: "←", 124: "→", 125: "↓", 126: "↑"]
+        if let value = special[keyCode] { return value }
+        guard keyCode <= UInt32(UInt16.max) else { return "Key \(keyCode)" }
+        let source = TISCopyCurrentKeyboardLayoutInputSource().takeRetainedValue()
+        if let raw = TISGetInputSourceProperty(source, kTISPropertyUnicodeKeyLayoutData) {
+            let data = Unmanaged<CFData>.fromOpaque(raw).takeUnretainedValue()
+            let layout = UnsafeRawPointer(CFDataGetBytePtr(data))!.assumingMemoryBound(to: UCKeyboardLayout.self)
+            var state: UInt32 = 0
+            var count = 0
+            var characters = [UniChar](repeating: 0, count: 8)
+            let status = UCKeyTranslate(layout, UInt16(keyCode), UInt16(kUCKeyActionDisplay), 0,
+                UInt32(LMGetKbdType()), OptionBits(kUCKeyTranslateNoDeadKeysMask), &state,
+                characters.count, &count, &characters)
+            if status == noErr, count > 0 {
+                return String(utf16CodeUnits: characters, count: count).uppercased()
+            }
         }
+        return "Key \(keyCode)"
     }
 }

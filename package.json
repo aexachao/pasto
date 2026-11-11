@@ -1,16 +1,16 @@
 {
-  "name": "pasto",
-  "version": "1.0.9",
+  "name": "snapclip",
+  "version": "1.0.10",
   "private": true,
-  "description": "Pasto：免费、离线的原生 macOS 剪贴板工具",
+  "description": "闪贴 / Snapclip：免费、离线的原生 macOS 剪贴板与截图工具",
   "scripts": {
     "inventory": "python3 scripts/inventory.py",
     "decompile": "python3 scripts/decompile.py",
     "build:app": "bash replica/scripts/build-app.sh",
-    "test:core": "swift run --package-path replica pasto-core-tests",
+    "test:core": "swift run --package-path replica snapclip-core-tests",
     "test:mcp": "python3 replica/scripts/test-mcp.py",
     "test:original": "python3 replica/scripts/test-original-functions.py",
-    "build:icon": "swift replica/scripts/build-icon.swift",
+    "build:icon": "\"$HOME/dev-artifacts/bin/storage-guard\" run --repo pasto --task app-icon -- swift replica/scripts/build-icon.swift",
     "build:dmg": "python3 replica/scripts/release-ci.py package"
   }
 }

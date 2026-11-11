@@ -6,13 +6,13 @@
 // 不在 vendoring 范围内。
 //
 // P1-C：这里不再是空桩。`HistoryManager` 保留与上游一致的调用表面，但把读写转发给
-// 由 Pasto 侧注入的 `PastoHistoryBackend`；真实实现见
-// `Sources/Pasto/Screenshot/ScreenshotHistoryBridge.swift`，背后是 Pasto 的 `ClipboardStore`。
+// 由 Pasto 侧注入的 `SnapclipHistoryBackend`；真实实现见
+// `Sources/Snapclip/Screenshot/ScreenshotHistoryBridge.swift`，背后是 Pasto 的 `ClipboardStore`。
 //
-// 为什么不在这里 `import PastoCore`：`PastoCapture` 这个 target 目前没有任何依赖
-// （Package.swift 里 `.target(name: "PastoCapture", ...)` 没有 dependencies），
-// 与其为了一个存储引用改 Package.swift、把整个 PastoCore 塞进采集 target，
-// 不如在这里只声明协议，实现留在 Pasto 模块（Pasto 已经依赖 PastoCore）。
+// 为什么不在这里 `import SnapclipCore`：`SnapclipCapture` 这个 target 目前没有任何依赖
+// （Package.swift 里 `.target(name: "SnapclipCapture", ...)` 没有 dependencies），
+// 与其为了一个存储引用改 Package.swift、把整个 SnapclipCore 塞进采集 target，
+// 不如在这里只声明协议，实现留在 Pasto 模块（Pasto 已经依赖 SnapclipCore）。
 //
 // 未配置 backend 时保持 P1-A 的空实现行为（写 no-op / 读恒空），
 // 这样没接线到的路径不会因为半配置状态而崩。
@@ -25,7 +25,7 @@ import Foundation
 /// `HistoryEntry.fileURL` 在 vendored 代码里只当身份键用
 /// （`OverlayWindowController.historyEditorDrafts[fileURL]`），从不读文件，
 /// 所以这里放一个稳定的虚拟 URL（由 Pasto 侧编码 ClipboardItem 的 uuid）。
-public struct PastoHistoryImageEntry {
+public struct SnapclipHistoryImageEntry {
     public let locator: URL
     public let createdAt: Date
 
@@ -39,23 +39,23 @@ public struct PastoHistoryImageEntry {
 ///
 /// 方法统一带 `pasto` 前缀，避免与 capcap 既有符号重名；
 /// 类型只用 Foundation / AppKit，保证跨 module 可用。
-public protocol PastoHistoryBackend: AnyObject {
-    func pastoAddImagePNG(_ pngData: Data)
-    func pastoAddColor(hex: String)
-    func pastoAddText(_ text: String)
-    func pastoAddFileReferences(_ urls: [URL])
-    func pastoHasFavoriteEntries() -> Bool
+public protocol SnapclipHistoryBackend: AnyObject {
+    func snapclipAddImagePNG(_ pngData: Data)
+    func snapclipAddColor(hex: String)
+    func snapclipAddText(_ text: String)
+    func snapclipAddFileReferences(_ urls: [URL])
+    func snapclipHasFavoriteEntries() -> Bool
     /// 按时间倒序（最新在前）返回图片条目。capcap 编辑器用 `offset: 1` 表示「上一张」，
     /// 也就是往更旧的条目走，因此顺序必须是倒序。
-    func pastoImageEntries() -> [PastoHistoryImageEntry]
-    func pastoImage(forLocator locator: URL) -> NSImage?
+    func snapclipImageEntries() -> [SnapclipHistoryImageEntry]
+    func snapclipImage(forLocator locator: URL) -> NSImage?
 }
 
 /// capcap 交付的是 `NSImage`；历史库和剪贴板都需要一份明确的位图表示。
 ///
 /// 单一实现：`ScreenshotCoordinator.complete()` 也用它，避免「往历史里写」和
 /// 「写剪贴板」两条路各自编码一次。
-public enum PastoImageEncoding {
+public enum SnapclipImageEncoding {
     public static func pngData(from image: NSImage) -> Data? {
         guard let tiff = image.tiffRepresentation,
               let bitmap = NSBitmapImageRep(data: tiff) else { return nil }
@@ -83,19 +83,19 @@ struct HistoryEntry {
     let cloudURL: URL?
 }
 
-/// 上游 `HistoryManager` 的替身，转发给注入的 `PastoHistoryBackend`。
+/// 上游 `HistoryManager` 的替身，转发给注入的 `SnapclipHistoryBackend`。
 ///
 /// 注入方式刻意保持「一次性显式配置」：没有可变全局开关、没有静态 setter 滥用，
 /// `configure(backend:)` 由 `ScreenshotCoordinator.start()` 调用一次。
 public final class HistoryManager {
     static let shared = HistoryManager()
 
-    private var backend: PastoHistoryBackend?
+    private var backend: SnapclipHistoryBackend?
 
     private init() {}
 
     /// 由 `ScreenshotCoordinator` 在启动时调用一次。未调用时全部方法保持空实现。
-    public static func configure(backend: PastoHistoryBackend) {
+    public static func configure(backend: SnapclipHistoryBackend) {
         shared.backend = backend
     }
 
@@ -108,20 +108,20 @@ public final class HistoryManager {
         // `cloudURL` 没有落点：Pasto 的 iCloud 同步是整库级别的，条目上没有 per-item 云端 URL。
         // P1 不覆盖。
         _ = cloudURL
-        guard let backend, let data = PastoImageEncoding.pngData(from: image) else { return }
-        backend.pastoAddImagePNG(data)
+        guard let backend, let data = SnapclipImageEncoding.pngData(from: image) else { return }
+        backend.snapclipAddImagePNG(data)
     }
 
     func addColor(hex: String) {
-        backend?.pastoAddColor(hex: hex)
+        backend?.snapclipAddColor(hex: hex)
     }
 
     func addText(_ text: String) {
-        backend?.pastoAddText(text)
+        backend?.snapclipAddText(text)
     }
 
     func addFileReferences(_ urls: [URL]) {
-        backend?.pastoAddFileReferences(urls)
+        backend?.snapclipAddFileReferences(urls)
     }
 
     // MARK: - Reads
@@ -129,17 +129,17 @@ public final class HistoryManager {
     /// capcap 的「收藏」在 Pasto 里最接近的概念是「放进某个 Pinboard 的条目」，
     /// 语义由后端决定（见 ScreenshotHistoryBridge）。
     func hasFavoriteEntries() -> Bool {
-        backend?.pastoHasFavoriteEntries() ?? false
+        backend?.snapclipHasFavoriteEntries() ?? false
     }
 
     func imageEntries() -> [HistoryEntry] {
         guard let backend else { return [] }
-        return backend.pastoImageEntries().map { entry in
+        return backend.snapclipImageEntries().map { entry in
             HistoryEntry(fileURL: entry.locator, createdAt: entry.createdAt, kind: .image, cloudURL: nil)
         }
     }
 
     func image(for entry: HistoryEntry) -> NSImage? {
-        backend?.pastoImage(forLocator: entry.fileURL)
+        backend?.snapclipImage(forLocator: entry.fileURL)
     }
 }

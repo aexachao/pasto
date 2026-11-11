@@ -6,7 +6,8 @@ trap 'rm -rf "$test_root"' EXIT
 source "$replica_root/Tests/Native/build-support.sh"
 prepare_native_test_core
 compile_native_test_harness app-updates \
-  "$replica_root/Sources/Pasto/UI/PastoAboutWindowController.swift" \
+  "$replica_root/Sources/Snapclip/UI/ReplicaBrand.swift" \
+  "$replica_root/Sources/Snapclip/UI/PastoAboutWindowController.swift" \
   "$replica_root/Tests/Native/AppUpdateHarness.swift"
 test_app="$(dirname "$(dirname "$(dirname "$test_harness")")")"
 plutil -insert PastoSourceVersion -string '1.0.5-dev.2' "$test_app/Contents/Info.plist" >/dev/null

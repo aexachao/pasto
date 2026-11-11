@@ -1,6 +1,6 @@
-# Pasto 官网
+# 闪贴 / Snapclip 官网
 
-官网源码位于 `website/`，使用原生 HTML、CSS 和 JavaScript，无需安装依赖。设计参考 Paste 官网的大留白、产品演示与清晰下载入口，使用 Pasto 自己的品牌、演示界面和功能说明，不使用原厂宣传图或用户评价。
+官网源码位于 `website/`，使用原生 HTML、CSS 和 JavaScript，无需安装依赖。设计参考 Paste 官网的大留白、产品演示与清晰下载入口，使用 闪贴自己的品牌、演示界面和功能说明，不使用原厂宣传图或用户评价。
 
 ## 本地预览
 
@@ -15,19 +15,25 @@ python3 -m http.server 4173 --bind 127.0.0.1 --directory website
 提交前可执行静态检查：
 
 ```sh
-python3 scripts/check-website.py
-node --check website/i18n.js
-node --check website/site.js
-node scripts/test-website-i18n.cjs
+~/dev-artifacts/bin/storage-guard run --repo pasto --task website-check -- /bin/bash -c '
+  export PYTHONDONTWRITEBYTECODE=1
+  export TMPDIR="$ARTIFACT_TASK_DIR/build/tmp"
+  mkdir -p "$TMPDIR"
+  set -e
+  python3 scripts/check-website.py > "$ARTIFACT_TASK_DIR/out/website.log"
+  node --check website/i18n.js
+  node --check website/site.js
+  node scripts/test-website-i18n.cjs > "$ARTIFACT_TASK_DIR/out/i18n.log"
+'
 ```
 
 ## GitHub Pages
 
 部署工作流为 `.github/workflows/pages.yml`，只上传 `website/`。首次启用时，在仓库 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。
 
-推送 `website/`、检查脚本或部署工作流的变更到 `main` 后自动部署，也可手动运行 **Deploy Pasto website**。官网预期地址为 `https://yingyanzhitong.github.io/pasto/`，成功状态以 Actions 的部署结果为准。部署不修改应用版本，也不运行 macOS 安装包发布步骤；仓库现有 Release 工作流仍按原版本规则独立判断。
+当前仓库尚未启用 Pages，不将预期域名称为已上线官网。先在 Settings 配置 Pages，再设置仓库变量 `SNAPCLIP_PAGES_ENABLED=true`；之后 main 网站变更或手动 Deploy Snapclip website 才会部署。预期地址为 https://aexachao.github.io/Snapclip/，以真实部署结果为准。安装包仅在显式手动 publish=true 时发布。
 
-更新应用版本时，同步更新网页里的发布版本、DMG 下载地址和页面说明；静态检查会阻止下载地址与根目录 `package.json` 的当前版本不一致。复制到官网的真实演示截图来自 `docs/images/`，图标来自 `replica/Assets/`；替换素材前确保不含用户历史或其他隐私。
+下载版本由已成功发布的正式 Release 驱动。本仓库尚无 Release，当前使用 --unreleased 显示源码构建与发布状态，不链接别人的安装包。未来验证本仓库实际发布附件后才更新下载；缺少 Release 的 404 可进入未发布状态，其他 API 错误仍失败。复制到官网的真实演示截图来自 `docs/images/`，图标来自 `replica/Assets/`；替换素材前确保不含用户历史或其他隐私。
 
 ## 官网语言
 
@@ -53,3 +59,7 @@ node scripts/test-website-i18n.cjs
 - 语言入口参考 [Vue 官网](https://vuejs.org/) 的导航工具图标方式：位于下载按钮右侧，以分隔线区分；入口不显示系统偏好文案，展开后提供语言与“跟随系统”。使用原生 `details/summary`，支持键盘操作、Escape、点击外部关闭和选择后恢复焦点。
 - 新增翻译的文字使用无布局样式的内联包装；避免嵌套文字包装继承标签容器的内边距。
 - 本轮以改版前的 HTML/CSS 作为基准，在 320、390、768、1280、1440px 下对照主要区块的坐标与尺寸；中文布局差异为零，英文无页面横向溢出。验证材料保存在 Git 忽略的 `.local/website-layout-restore/`。
+
+## 2026-11-11 品牌接入
+
+页面主品牌为闪贴 / Snapclip，favicon、OG 与页面图标统一引用 `assets/snapclip-icon.png`；SVG源证据见 `branding/SnapclipAssets/ExistingBrandSource/SnapclipIcon.origin.svg`。页面保留 Paste 迁移、研究来源与许可边界。既有产品截图尚未按本轮最终品牌包重新生成，不把截图文件名或旧图等同于最新运行验收。GitHub / Pages / Release 地址及 `pasto.website.language` 保持兼容。商店分发不属于当前 Pages 发布结果。

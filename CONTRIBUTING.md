@@ -1,12 +1,12 @@
-# 为 Pasto 贡献
+# 为 Snapclip 贡献
 
 欢迎提交问题报告、文档改进和范围清晰的修复。开始前请阅读 [AGENTS.md](AGENTS.md)、[NOTICE.md](NOTICE.md) 与 [测试范围](replica/TESTING.md)。
 
 ## 报告问题
 
-在 [Issues](https://github.com/yingyanzhitong/pasto/issues) 提供：
+在 [Issues](https://github.com/aexachao/Snapclip/issues) 提供：
 
-- macOS 版本、芯片架构、Pasto 版本或提交号。
+- macOS 版本、芯片架构、Snapclip 版本或提交号。
 - 最少操作步骤、预期行为和实际行为。
 - 是否涉及辅助功能权限、直接粘贴、特定目标应用或自定义快捷键。
 - 使用虚构文本、临时图片或文件制作的截图及复现材料。
@@ -18,21 +18,36 @@
 1. 说明修改解决的具体问题，保留用户已有数据及技术兼容键。
 2. 在现有实现上做最小改动，不覆盖他人已落盘的修改。
 3. 记录验证方法和结果，明确区分静态核对、编译与实际操作测试。
-4. 界面和新文案统一使用 **Pasto**。原函数地址、系统 `paste` API 和历史证据保持真实。
+4. 界面和新文案统一使用 **闪贴 / Snapclip**。原函数地址、系统 `paste` API 和历史证据保持真实。
 
-可先进行静态检查和源码构建：
-
-```sh
-swift build --package-path replica -c release
-```
-
-该命令及默认应用构建均使用当前 Mac 的本机架构。Pasto 支持 macOS 14+ 的 Intel（x86_64）和 Apple 芯片（arm64）；需构建两个架构的独立安装包时使用：
+可先进行静态检查和源码构建。构建、测试与打包必须通过 storage-guard，产物写到仓库外，不使用仓库内缓存：
 
 ```sh
-npm run build:dmg
+~/dev-artifacts/bin/storage-guard run --repo pasto --task contributor-compile -- /bin/bash -c '
+  export TMPDIR="$ARTIFACT_TASK_DIR/build/tmp/"
+  export CLANG_MODULE_CACHE_PATH="$ARTIFACT_TASK_DIR/build/module-cache"
+  export SWIFTPM_MODULECACHE_OVERRIDE="$CLANG_MODULE_CACHE_PATH"
+  mkdir -p "$TMPDIR"
+  swift build --package-path replica --scratch-path "$ARTIFACT_TASK_DIR/build/swiftpm" -c release
+'
 ```
 
-该命令调用 `release-ci.py package`，发布介质分别为 `Pasto-<版本号>-macos-arm64.dmg` 和 `Pasto-<版本号>-macos-x86_64.dmg`，同时提供 `SHA256SUMS.txt` 和 `release-manifest.json`。GitHub 自动显示的 `Source code (zip)` / `Source code (tar.gz)` 是标签源码链接，流程不另上传源码包。检查安装说明时应使用“选择芯片对应 DMG → 打开 → 拖入 Applications → 复制完成后推出磁盘映像”的流程。当前临时签名不等于 Apple 公证，不应添加绕过系统安全保护的安装教程。
+该命令编译当前 Mac 的本机架构。Snapclip 的源码构建目标为 macOS 14+ 的 Intel（x86_64）和 Apple 芯片（arm64）。制作发布格式的 Universal 安装包时，在仓库根目录执行：
+
+```sh
+~/dev-artifacts/bin/storage-guard run --repo pasto --task contributor-package --kind release -- /bin/bash -c '
+  export TMPDIR="$ARTIFACT_TASK_DIR/build/tmp/"
+  export SNAPCLIP_BUILD_ROOT="$ARTIFACT_TASK_DIR/build/swiftpm"
+  export SNAPCLIP_APP_OUTPUT_DIR="$ARTIFACT_TASK_DIR/out"
+  export SNAPCLIP_RELEASE_OUTPUT_DIR="$ARTIFACT_TASK_DIR/out/release"
+  mkdir -p "$TMPDIR"
+  npm run build:dmg
+'
+```
+
+该命令调用 `release-ci.py package`，制作 `Snapclip-<版本号>-macos-universal.dmg`（包含两种架构），以及 `SHA256SUMS.txt`、`release-manifest.json` 和签名 `appcast.xml`。正式打包需要项目外提供与内嵌公钥匹配的更新私钥，见[应用内更新](docs/APP_UPDATES.md)；缺少签名配置时不得伪造更新源。本地打包不等于上传或公开发布，本仓库尚无正式安装包。
+
+GitHub 自动显示的 `Source code (zip)` / `Source code (tar.gz)` 是标签源码链接，不是安装包。未来已发布的 Universal DMG 无须选择芯片：打开后将 `Snapclip.app` 拖入 Applications，从应用程序启动，再推出磁盘映像。开发签名或临时签名均不等于 Developer ID 公证；不要添加绕过系统安全保护的教程。
 
 涉及架构的修改应说明编译目标、运行机器和是否通过 Rosetta 执行。双架构编译或打包通过不代表两类机器上的功能已验证。原版逆向证据目前为 arm64；不要改写历史地址报告，或据此宣称已恢复原版 x86_64 实现。
 

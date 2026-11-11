@@ -4,6 +4,10 @@ import argparse
 import base64
 import datetime
 import os
+# Accept canonical names while keeping existing CI configuration compatible.
+for _snapclip_key, _snapclip_value in list(os.environ.items()):
+    if _snapclip_key.startswith("SNAPCLIP_"):
+        os.environ["PASTO_" + _snapclip_key[9:]] = _snapclip_value
 from pathlib import Path
 import re
 import subprocess
@@ -14,26 +18,29 @@ SPARKLE = "http://www.andymatuschak.org/xml-namespaces/sparkle"
 ET.register_namespace("sparkle", SPARKLE)
 
 
-def make_feed(version, signature, size):
+def make_feed(version, signature, size, archive_name=None):
     if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version):
         raise ValueError("The stable update feed requires a stable release version")
     if len(base64.b64decode(signature, validate=True)) != 64 or size <= 0:
         raise ValueError("Invalid archive signature or size")
+    archive_name = archive_name or f"Snapclip-{version}-macos-universal.dmg"
+    if archive_name not in {f"Snapclip-{version}-macos-universal.dmg", f"Pasto-{version}-macos-universal.dmg"}:
+        raise ValueError("Unexpected versioned installer name")
     feed = ET.Element("rss", version="2.0")
     channel = ET.SubElement(feed, "channel")
-    ET.SubElement(channel, "title").text = "Pasto Updates"
-    ET.SubElement(channel, "link").text = "https://yingyanzhitong.github.io/pasto/"
-    ET.SubElement(channel, "description").text = "Pasto stable macOS updates"
+    ET.SubElement(channel, "title").text = "Snapclip Updates"
+    ET.SubElement(channel, "link").text = "https://aexachao.github.io/Snapclip/"
+    ET.SubElement(channel, "description").text = "Snapclip stable macOS updates"
     item = ET.SubElement(channel, "item")
-    ET.SubElement(item, "title").text = "Pasto " + version
-    ET.SubElement(item, "link").text = "https://github.com/yingyanzhitong/pasto/releases/tag/v" + version
+    ET.SubElement(item, "title").text = "Snapclip " + version
+    ET.SubElement(item, "link").text = "https://github.com/aexachao/Snapclip/releases/tag/v" + version
     ET.SubElement(item, "pubDate").text = datetime.datetime.now(datetime.timezone.utc).strftime("%a, %d %b %Y %H:%M:%S +0000")
     ET.SubElement(item, "{" + SPARKLE + "}version").text = version
     ET.SubElement(item, "{" + SPARKLE + "}shortVersionString").text = version
     ET.SubElement(item, "{" + SPARKLE + "}minimumSystemVersion").text = "14.0"
     ET.SubElement(item, "enclosure", {
-        "url": "https://github.com/yingyanzhitong/pasto/releases/download/v" + version
-               + "/Pasto-" + version + "-macos-universal.dmg",
+        "url": "https://github.com/aexachao/Snapclip/releases/download/v" + version
+               + "/" + archive_name,
         "{" + SPARKLE + "}edSignature": signature,
         "length": str(size), "type": "application/octet-stream"})
     return ET.ElementTree(feed)
@@ -44,7 +51,7 @@ def create_feed(archive, version, sign_tool):
     if not private_key or len(base64.b64decode(private_key, validate=True)) != 32:
         raise ValueError("Configure the PASTO_UPDATE_PRIVATE_KEY Actions secret before publishing updates")
     # Keep the private seed off argv, disk, and the signer's environment.
-    environment = {key: value for key, value in os.environ.items() if key != "PASTO_UPDATE_PRIVATE_KEY"}
+    environment = {key: value for key, value in os.environ.items() if key not in {"PASTO_UPDATE_PRIVATE_KEY", "SNAPCLIP_UPDATE_PRIVATE_KEY"}}
 
     def sign(*arguments):
         return subprocess.run([str(sign_tool), "--ed-key-file", "-", *arguments],
@@ -56,7 +63,7 @@ def create_feed(archive, version, sign_tool):
                     str(ROOT / "replica/Assets/UpdatePublicKey.txt"), signature, str(archive)],
                    check=True, env=environment)
     feed = archive.parent / "appcast.xml"
-    make_feed(version, signature, archive.stat().st_size).write(feed, encoding="utf-8", xml_declaration=True)
+    make_feed(version, signature, archive.stat().st_size, archive.name).write(feed, encoding="utf-8", xml_declaration=True)
     sign(str(feed))
     sign("--verify", str(feed))
     return feed

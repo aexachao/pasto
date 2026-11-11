@@ -1,5 +1,11 @@
 #!/bin/bash
 set -euo pipefail
+# Canonical Snapclip options take precedence; old PASTO options remain supported.
+if [[ -n "${SNAPCLIP_CLOUDKIT_ALLOW_LIVE_TEST+x}" ]]; then export PASTO_CLOUDKIT_ALLOW_LIVE_TEST="$SNAPCLIP_CLOUDKIT_ALLOW_LIVE_TEST"; fi
+if [[ -n "${SNAPCLIP_CLOUDKIT_CONTAINER+x}" ]]; then export PASTO_CLOUDKIT_CONTAINER="$SNAPCLIP_CLOUDKIT_CONTAINER"; fi
+if [[ -n "${SNAPCLIP_CLOUDKIT_PROFILE+x}" ]]; then export PASTO_CLOUDKIT_PROFILE="$SNAPCLIP_CLOUDKIT_PROFILE"; fi
+if [[ -n "${SNAPCLIP_CLOUDKIT_TEST_BUNDLE_ID+x}" ]]; then export PASTO_CLOUDKIT_TEST_BUNDLE_ID="$SNAPCLIP_CLOUDKIT_TEST_BUNDLE_ID"; fi
+if [[ -n "${SNAPCLIP_SIGNING_IDENTITY+x}" ]]; then export PASTO_SIGNING_IDENTITY="$SNAPCLIP_SIGNING_IDENTITY"; fi
 replica_root="$(cd "$(dirname "$0")/.." && pwd)"
 if [[ "${1:-}" == --preflight ]]; then
   python3 - <<'PY'

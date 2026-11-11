@@ -82,9 +82,62 @@ def client(binary, directory, initialize=True):
         instance.close()
 
 
-def run(binary):
+def text_payload_integrity(binary, directory, fixture):
+    """Exercise the real producer and persisted UTF-8 representation in a separate store."""
+    def persisted():
+        archive = directory / "test-export.json"
+        subprocess.run([str(fixture), "export", str(directory), str(archive)], check=True, capture_output=True)
+        return {i["id"]: i for i in json.loads(archive.read_text())["items"]}
+
+    def assert_text(identity, text):
+        value = persisted()[identity]
+        assert value["plainText"] == text
+        assert base64.b64decode(value["payloads"]["public.utf8-plain-text"]) == text.encode("utf-8")
+        assert value["sourceName"] == "Snapclip MCP"
+        return value
+
+    first_text = "历史 α 🧪 e\u0301\n\u0000"
+    second_text = "独立 β 🧭 café\t\r"
+    pinned_text = "仅分组 γ 🪁\n"
+    edited_text = "更新 δ 🌱 e\u0301\n\u0000"
+    with client(binary, directory) as c:
+        first = c.tool("create_item", {"content": first_text})
+        first_id = first["id"]
+        assert first["app"] == "Snapclip MCP" and "timestamp" in first
+        before = assert_text(first_id, first_text)
+        second_id = c.tool("create_item", {"content": second_text})["id"]
+        assert second_id != first_id
+        assert c.tool("create_item", {"content": second_text})["id"] == second_id
+        assert persisted()[first_id] == before
+        assert_text(second_id, second_text)
+        board = c.tool("create_pinboard", {"name": "payload integrity"})
+        pinned = c.tool("create_item", {"content": pinned_text, "list_id": board["id"]})
+        pinned_id = pinned["id"]
+        assert pinned_id not in {first_id, second_id} and "timestamp" not in pinned
+        assert c.tool("create_item", {"content": pinned_text, "list_id": board["id"]})["id"] == pinned_id
+        assert_text(pinned_id, pinned_text)
+        assert persisted()[pinned_id]["isInHistory"] is False
+        assert persisted()[first_id] == before
+        assert c.tool("read_item", {"id": first_id})["content"][0]["text"] == first_text
+        second_before, pinned_before = persisted()[second_id], persisted()[pinned_id]
+        c.tool("update_item", {"id": first_id, "content": edited_text})
+        assert_text(first_id, edited_text)
+        assert persisted()[second_id] == second_before and persisted()[pinned_id] == pinned_before
+        assert c.tool("create_item", {"content": edited_text})["id"] == first_id
+        assert len(persisted()) == 3
+    with client(binary, directory) as c:
+        for identity, text in [(first_id, edited_text), (second_id, second_text), (pinned_id, pinned_text)]:
+            assert c.tool("read_item", {"id": identity})["content"][0]["text"] == text
+            assert_text(identity, text)
+        summaries = {i["id"]: i for i in c.tool("search")["items"]}
+        assert set(summaries) == {first_id, second_id, pinned_id}
+        assert "timestamp" not in summaries[pinned_id]
+        assert "timestamp" in summaries[first_id] and "timestamp" in summaries[second_id]
+
+
+def run(binary, fixture):
     checks = []
-    with tempfile.TemporaryDirectory(prefix="pasto-mcp-test-") as temporary:
+    with tempfile.TemporaryDirectory(prefix="snapclip-mcp-test-") as temporary:
         directory = pathlib.Path(temporary) / "store"
         with client(binary, directory, initialize=False) as c:
             assert c.request("tools/list")["error"]["code"] == -32002
@@ -189,14 +242,13 @@ def run(binary):
                 changed = other.tool("create_item", {"content": "cross-process-visible"})
                 assert c.tool("read_item", {"id": changed["id"]})["content"][0]["text"] == "cross-process-visible"
             # 只改测试目录fixture，以模拟UI软删除，再验证扩展恢复。
-            state_path = directory / "clipboard.json"
-            state = json.loads(state_path.read_text())
-            next(i for i in state["items"] if i["id"] == identity)["isDeleted"] = True
-            state_path.write_text(json.dumps(state))
+            state_path = directory / "test-export.json"
+            subprocess.run([str(fixture), "soft-delete", str(directory), identity], check=True, capture_output=True)
             c.invalid_tool("read_item", {"id": identity})
             assert c.tool("replica_restore_item", {"item_id": identity})["id"] == identity
             checks.append("shared persistence across running processes, reload before each call and soft-delete restoration extension")
 
+            subprocess.run([str(fixture), "export", str(directory), str(state_path)], check=True, capture_output=True)
             state = json.loads(state_path.read_text())
             template = next(i for i in state["items"] if i["id"] == identity)
             def png_chunk(kind, payload):
@@ -214,8 +266,13 @@ def run(binary):
                  "payloads": {"public.png": base64.b64encode(wide_png).decode()}},
                 {**template, "id": large_id, "kind": "text", "title": "fixture-large", "plainText": "x" * (3 * 1024 * 1024), "payloads": {}}
             ]
+            for value in fixtures:
+                value["nativeIdentifier"] = value["id"]
+                for key in ["nativeChecksum", "rawPreview", "imagePreviewMetadata"]:
+                    value.pop(key, None)
             state["items"].extend(fixtures)
             state_path.write_text(json.dumps(state))
+            subprocess.run([str(fixture), "import", str(directory), str(state_path)], check=True, capture_output=True)
             image = c.tool("read_item", {"id": image_id})["content"][0]
             assert image["type"] == "image" and image["mimeType"] == "image/png"
             assert base64.b64decode(image["data"]).startswith(b"\x89PNG")
@@ -240,6 +297,8 @@ def run(binary):
             results = c.tool("search", {"query": "concurrent-", "limit": 100})["items"]
             assert {i["id"] for i in results} == set(identities)
         checks.append("6 real concurrent CLI processes, 48 persistent writes without lost updates")
+        text_payload_integrity(binary, pathlib.Path(temporary) / "text-integrity-store", fixture)
+        checks.append("isolated UTF-8 payload integrity: distinct Unicode texts, exact duplicates, history/pin-only isolation, update isolation and restart persistence")
     return {"status": "passed", "checks": checks, "check_groups": len(checks),
             "scope": "Replica MCP executable end-to-end; fixture-only. Not an original-vs-replica semantic equivalence claim.",
             "system_clipboard_used": False}
@@ -247,11 +306,13 @@ def run(binary):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--binary", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[1] / ".build/debug/pasto-mcp")
+    parser.add_argument("--binary", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[1] / ".build/debug/snapclip-mcp")
+    parser.add_argument("--fixture", type=pathlib.Path, required=True,
+                        help="MCPStoreFixture executable linked against the same SnapclipCore build")
     parser.add_argument("--report", type=pathlib.Path)
     args = parser.parse_args()
     started = time.monotonic()
-    result = run(args.binary.resolve())
+    result = run(args.binary.resolve(), args.fixture.resolve())
     result["binary_sha256"] = hashlib.sha256(args.binary.resolve().read_bytes()).hexdigest()
     result["elapsed_seconds"] = round(time.monotonic() - started, 3)
     if args.report:

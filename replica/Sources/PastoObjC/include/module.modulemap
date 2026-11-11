@@ -1,8 +1,0 @@
-module PastoObjC {
-    header "PRObjCExceptionCatcher.h"
-    header "PastoKeyTranslation.h"
-    header "PRPanelGlassBackground.h"
-    header "PRGlassBackgroundWindow.h"
-    header "PRCloudKitEntitlements.h"
-    export *
-}

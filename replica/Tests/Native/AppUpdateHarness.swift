@@ -1,6 +1,6 @@
 import AppKit
 import Foundation
-import PastoCore
+import SnapclipCore
 
 private final class UpdateProtocol: URLProtocol {
     private static let lock = NSLock()
@@ -55,7 +55,7 @@ struct AppUpdateHarness {
         return ["tag_name": "v\(version)", "draft": false, "prerelease": false,
             "published_at": "2026-11-04T00:00:00Z", "assets": [["name": name,
             "state": "uploaded", "size": 1024,
-            "browser_download_url": "https://github.com/yingyanzhitong/pasto/releases/download/v\(version)/\(name)"]]]
+            "browser_download_url": "https://github.com/aexachao/Snapclip/releases/download/v\(version)/\(name)"]]]
     }
 
     static func reply(_ release: [String: Any], status: Int = 200) throws {
@@ -68,7 +68,7 @@ struct AppUpdateHarness {
             app.setActivationPolicy(.accessory)
             app.finishLaunching()
             let icon = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
-                .deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("Assets/PastoIcon.png")
+                .deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("Assets/SnapclipIcon.png")
             if let image = NSImage(contentsOf: icon) { app.applicationIconImage = image }
             let configuration = URLSessionConfiguration.ephemeral
             configuration.protocolClasses = [UpdateProtocol.self]
@@ -76,8 +76,8 @@ struct AppUpdateHarness {
             defer { session.invalidateAndCancel() }
             if CommandLine.arguments.contains("--preview") {
                 try reply(release())
-                let checker = PastoUpdateChecker(currentVersion: "1.0.5", session: session)
-                let controller = PastoAboutWindowController(checker: checker, installUpdate: {})
+                let checker = SnapclipUpdateChecker(currentVersion: "1.0.5", session: session)
+                let controller = SnapclipAboutWindowController(checker: checker, installUpdate: {})
                 controller.showWindow(nil)
                 Timer.scheduledTimer(withTimeInterval: 120, repeats: false) { _ in NSApp.terminate(nil) }
                 print("PREVIEW_READY")
@@ -88,7 +88,7 @@ struct AppUpdateHarness {
             }
             try await run(session: session)
             if CommandLine.arguments.contains("--live") {
-                let live = PastoUpdateChecker(currentVersion: "0.0.0", session: URLSession(configuration: .ephemeral))
+                let live = SnapclipUpdateChecker(currentVersion: "0.0.0", session: URLSession(configuration: .ephemeral))
                 await live.check(force: true)
                 guard case let .available(update) = live.state else {
                     throw Failure(message: "Live GitHub release check failed: \(live.state)")
@@ -104,30 +104,30 @@ struct AppUpdateHarness {
     }
 
     @MainActor static func run(session: URLSession) async throws {
-        try check(PastoUpdateChecker(session: session).currentVersion == "1.0.5-dev.2",
+        try check(SnapclipUpdateChecker(session: session).currentVersion == "1.0.5-dev.2",
                   "Source version did not take precedence over the short bundle version")
         for (older, newer) in [("1.0.9", "1.0.10"), ("1.99.99", "2.0.0"),
             ("1.0.5-dev.2", "1.0.5-dev.10"), ("1.0.5-dev.10", "1.0.5"), ("1.0.5", "1.0.6-dev.1")] {
-            try check(PastoReleaseVersion(older)! < PastoReleaseVersion(newer)!, "Incorrect version order")
+            try check(SnapclipReleaseVersion(older)! < SnapclipReleaseVersion(newer)!, "Incorrect version order")
         }
-        try check(PastoReleaseVersion("v1.0.5") == PastoReleaseVersion("1.0.5"), "Tag prefix changed comparison")
+        try check(SnapclipReleaseVersion("v1.0.5") == SnapclipReleaseVersion("1.0.5"), "Tag prefix changed comparison")
         for value in ["", "1.0", "1.0.5\n", "1.-1.5", "1.0.5-beta", "1.0.5-dev.", "999999999999999999999.0.0"] {
-            try check(PastoReleaseVersion(value) == nil, "Invalid version accepted: \(value)")
+            try check(SnapclipReleaseVersion(value) == nil, "Invalid version accepted: \(value)")
         }
         try reply(release())
-        let checker = PastoUpdateChecker(currentVersion: "1.0.5", session: session)
+        let checker = SnapclipUpdateChecker(currentVersion: "1.0.5", session: session)
         await checker.check(force: true)
         guard case let .available(update) = checker.state else { throw Failure(message: "Missing newer release") }
         try check(update.version == "1.0.6" && update.downloadURL.lastPathComponent == "Pasto-1.0.6-macos-universal.dmg",
                   "Wrong installer selected")
         let request = UpdateProtocol.capturedRequests[0]
-        try check(request.url?.absoluteString == "https://api.github.com/repos/yingyanzhitong/pasto/releases/latest"
+        try check(request.url?.absoluteString == "https://api.github.com/repos/aexachao/Snapclip/releases/latest"
             && request.httpMethod == "GET" && request.httpBody == nil
             && request.value(forHTTPHeaderField: "Authorization") == nil
             && request.value(forHTTPHeaderField: "X-GitHub-Api-Version") == "2026-03-10", "Unexpected update request")
 
         var installations = 0
-        let controller = PastoAboutWindowController(checker: checker, installUpdate: { installations += 1 })
+        let controller = SnapclipAboutWindowController(checker: checker, installUpdate: { installations += 1 })
         controller.window?.contentView?.layoutSubtreeIfNeeded()
         try check(controller.window?.contentView?.bounds.size == NSSize(width: 360, height: 320), "About layout changed")
         try check(!controller.downloadButton.isHidden && controller.downloadButton.isEnabled
@@ -135,7 +135,7 @@ struct AppUpdateHarness {
         controller.downloadButton.performClick(nil)
         try check(installations == 1, "Download did not start the in-app updater")
         var canInstall = false
-        let retryDownload = PastoAboutWindowController(checker: checker, installUpdate: {
+        let retryDownload = SnapclipAboutWindowController(checker: checker, installUpdate: {
             if !canInstall { throw Failure(message: "Cannot start updater") }
         })
         retryDownload.download()
@@ -202,7 +202,7 @@ struct AppUpdateHarness {
         guard case .available = checker.state else { throw Failure(message: "Check button did not retry") }
 
         try reply(release())
-        let throttled = PastoUpdateChecker(currentVersion: "1.0.5", session: session)
+        let throttled = SnapclipUpdateChecker(currentVersion: "1.0.5", session: session)
         let date = Date(timeIntervalSince1970: 1000)
         await throttled.check(now: date)
         await throttled.check(now: date.addingTimeInterval(1))
@@ -213,18 +213,18 @@ struct AppUpdateHarness {
         try check(UpdateProtocol.capturedRequests.count == 3, "Manual check did not bypass throttle")
 
         try reply(release())
-        let concurrent = PastoUpdateChecker(currentVersion: "1.0.5", session: session)
+        let concurrent = SnapclipUpdateChecker(currentVersion: "1.0.5", session: session)
         async let first: Void = concurrent.check(force: true)
         async let second: Void = concurrent.check(force: true)
         _ = await (first, second)
         try check(UpdateProtocol.capturedRequests.count == 1, "Concurrent requests were duplicated")
         try reply(release())
-        let unknown = PastoUpdateChecker(currentVersion: "unknown", session: session)
+        let unknown = SnapclipUpdateChecker(currentVersion: "unknown", session: session)
         await unknown.check(force: true)
         try check(UpdateProtocol.capturedRequests.isEmpty, "Invalid installed version reached network")
     }
 
-    @MainActor static func expectFailure(_ release: [String: Any], checker: PastoUpdateChecker) async throws {
+    @MainActor static func expectFailure(_ release: [String: Any], checker: SnapclipUpdateChecker) async throws {
         try reply(release)
         await checker.check(force: true)
         guard case .failed = checker.state else { throw Failure(message: "Invalid release accepted") }

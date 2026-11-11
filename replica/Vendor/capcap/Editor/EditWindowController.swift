@@ -147,6 +147,9 @@ enum FixedImageCropRenderer {
 }
 
 class EditWindowController {
+    private var commandDoubleTap = EditorCommandDoubleTap()
+    private var commandDoubleTapMonitor: Any?
+    private var commandDoubleTapResignObserver: NSObjectProtocol?
     private var canvasView: EditCanvasView?
     private var beautifyContainerView: BeautifyContainerView?
     private var canvasScrollView: EditorScrollView?
@@ -472,7 +475,43 @@ class EditWindowController {
             activateBeautify()
         }
         bringEditorToFront()
+        installCommandDoubleTapMonitor()
     }
+
+    private func installCommandDoubleTapMonitor() {
+        removeCommandDoubleTapMonitor()
+        guard let hostWindow = hostSelectionView?.window else { return }
+        commandDoubleTapResignObserver = NotificationCenter.default.addObserver(
+            forName: NSWindow.didResignKeyNotification, object: hostWindow, queue: .main
+        ) { [weak self] _ in self?.commandDoubleTap.reset() }
+        commandDoubleTapMonitor = NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged, .keyDown]) { [weak self] event in
+            guard let self else { return event }
+            guard let window = self.hostSelectionView?.window, window.isKeyWindow,
+                  event.window === window, !self.isTextEditing,
+                  !Defaults.hasCustomClipboardHotkey else {
+                self.commandDoubleTap.reset()
+                return event
+            }
+            guard event.type == .flagsChanged else {
+                self.commandDoubleTap.reset()
+                return event
+            }
+            guard self.commandDoubleTap.flagsChanged(keyCode: event.keyCode,
+                modifiers: event.modifierFlags, timestamp: event.timestamp) else { return event }
+            self.confirmFromKeyboard()
+            return nil
+        }
+    }
+
+    private func removeCommandDoubleTapMonitor() {
+        commandDoubleTap.reset()
+        if let commandDoubleTapMonitor { NSEvent.removeMonitor(commandDoubleTapMonitor) }
+        commandDoubleTapMonitor = nil
+        if let commandDoubleTapResignObserver { NotificationCenter.default.removeObserver(commandDoubleTapResignObserver) }
+        commandDoubleTapResignObserver = nil
+    }
+
+    deinit { removeCommandDoubleTapMonitor() }
 
     private func showToolbar() {
         guard let hostSelectionView else { return }
@@ -554,8 +593,9 @@ class EditWindowController {
         case .save:
             save()
         case .upload:
-            guard Defaults.hasUsableUploadProvider else { return false }
-            upload()
+            // Older persisted editor actions may still name this unsupported
+            // feature. It has no user-facing configuration in Snapclip.
+            return false
         case .pin:
             pin()
         case .record:
@@ -2849,6 +2889,7 @@ class EditWindowController {
     }
 
     func tearDown() {
+        removeCommandDoubleTapMonitor()
         finishBeautifyShadowSizeAdjustment(repositionChrome: false)
         detachWindowCapturePreparation()
         pendingWindowCaptureAction = nil
@@ -3301,7 +3342,7 @@ class ToolbarView: NSView {
     /// and frame lookups. `MoveSelectionDragHandle` values are not `ToolButton`s.
     private var buttons: [ToolbarItemID: NSView] = [:]
     init(items: [ToolbarItemID], orientation: Orientation) {
-        self.items = items
+        self.items = items.filter { $0 != .upload }
         self.orientation = orientation
         super.init(frame: NSRect(origin: .zero, size: .zero))
         setFrameSize(preferredSize)

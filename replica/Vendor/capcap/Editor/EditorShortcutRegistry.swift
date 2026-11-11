@@ -180,7 +180,8 @@ enum EditorShortcutRegistry {
     }
 
     static func displayString(for action: EditorShortcutAction) -> String? {
-        if action == .toolbar(.confirm), binding(for: action) == nil {
+        // The default is implemented only by the active editor's scoped monitor.
+        if action == .toolbar(.confirm), !Defaults.hasCustomClipboardHotkey {
             return L10n.clipboardShortcutDefaultDisplay
         }
         return binding(for: action)?.displayString

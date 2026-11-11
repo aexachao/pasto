@@ -2,7 +2,7 @@ import AppKit
 import CoreData
 import CryptoKit
 import Foundation
-import PastoCore
+import SnapclipCore
 
 @main
 struct PasteGroupMigrationHarness {

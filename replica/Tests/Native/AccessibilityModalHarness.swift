@@ -1,8 +1,8 @@
 import AppKit
 import Foundation
 import SwiftUI
-import PastoCore
-import PastoObjC
+import SnapclipCore
+import SnapclipObjC
 import IOKit.hidsystem
 
 @main

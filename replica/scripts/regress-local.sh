@@ -19,7 +19,7 @@ import time
 root = pathlib.Path(sys.argv[1])
 reports = pathlib.Path(sys.argv[2]).resolve()
 replica = root / 'replica'
-app = replica / 'dist/Pasto.app'
+app = replica / 'dist/Snapclip.app'
 results = []
 
 def run(name, command, timeout=180):
@@ -57,7 +57,7 @@ if run('build', ['bash', str(replica / 'scripts/build-app.sh')], timeout=300) ==
                            'release', '--show-bin-path'], timeout=30) == 0:
         binary_root = pathlib.Path((reports / 'binary-path.log').read_text().strip())
         suites = [
-            ('core', [str(binary_root / 'pasto-core-tests')]),
+            ('core', [str(binary_root / 'snapclip-core-tests')]),
             ('hotkey', ['bash', str(replica / 'scripts/test-hotkey.sh')]),
             ('shortcut', ['bash', str(replica / 'scripts/test-shortcut-model.sh')]),
             ('window', ['bash', str(replica / 'scripts/test-window-policy.sh')]),
@@ -82,7 +82,7 @@ if run('build', ['bash', str(replica / 'scripts/build-app.sh')], timeout=300) ==
 summary = {
     'generated_at': datetime.datetime.now(datetime.timezone.utc).isoformat(),
     'passed': all(result['passed'] for result in results),
-    'app_binary_sha256': (hashlib.sha256((app / 'Contents/MacOS/Pasto').read_bytes()).hexdigest()
+    'app_binary_sha256': (hashlib.sha256((app / 'Contents/MacOS/Snapclip').read_bytes()).hexdigest()
                           if results[0]['passed'] else None),
     'suites': results,
     'scope': 'Local regression using isolated fixtures; no MCP, release, or full migration acceptance.',

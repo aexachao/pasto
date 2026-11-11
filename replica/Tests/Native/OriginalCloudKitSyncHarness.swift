@@ -1,6 +1,6 @@
 import CloudKit
 import Foundation
-import PastoCore
+import SnapclipCore
 
 @main
 struct OriginalCloudKitSyncHarness {
@@ -126,13 +126,13 @@ struct OriginalCloudKitSyncHarness {
         try check(OriginalCloudKitRetryPolicy.action(for: .serverRecordChanged, isPrivate: true) == .mergeServer, "服务器冲突进入合并路径")
         try check(OriginalCloudKitRetryPolicy.action(for: .zoneNotFound, isPrivate: true) == .recreateZone, "私有区域丢失进入重建路径")
         try check(OriginalCloudKitRetryPolicy.action(for: .unknownItem, isPrivate: true) == .recreateRecord, "服务器记录丢失清除旧版本")
-        try rejects("无有效签名时不初始化容器") { _ = try PastoCloudKitConfiguration.current() }
+        try rejects("无有效签名时不初始化容器") { _ = try SnapclipCloudKitConfiguration.current() }
         let bundle = "local.pasto.cloudkit-tests", container = "iCloud.local.pasto.tests"
         var entitlements: [String: Any] = ["com.apple.developer.icloud-container-identifiers": [container], "com.apple.developer.icloud-services": ["CloudKit"],
             "com.apple.developer.team-identifier": "TESTTEAM01", "com.apple.application-identifier": "TESTTEAM01.\(bundle)", "com.apple.developer.icloud-container-environment": "Development"]
-        try check(try PastoCloudKitConfiguration.validate(container: container, bundleIdentifier: bundle, entitlements: entitlements).containerIdentifier == container, "合法自有配置校验")
+        try check(try SnapclipCloudKitConfiguration.validate(container: container, bundleIdentifier: bundle, entitlements: entitlements).containerIdentifier == container, "合法自有配置校验")
         entitlements["com.apple.developer.icloud-container-identifiers"] = ["iCloud.com.wiheads.paste"]
-        try rejects("原版厂商容器不可复用") { _ = try PastoCloudKitConfiguration.validate(container: "iCloud.com.wiheads.paste", bundleIdentifier: bundle, entitlements: entitlements) }
+        try rejects("原版厂商容器不可复用") { _ = try SnapclipCloudKitConfiguration.validate(container: "iCloud.com.wiheads.paste", bundleIdentifier: bundle, entitlements: entitlements) }
 
         let a = try ClipboardStore(directoryURL: root.appendingPathComponent("a"))
         let b = try ClipboardStore(directoryURL: root.appendingPathComponent("b"))

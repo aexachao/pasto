@@ -1,11 +1,29 @@
 #!/bin/bash
 set -euo pipefail
+# Canonical Snapclip options take precedence; old PASTO options remain supported.
+if [[ -n "${SNAPCLIP_BUILD_ROOT+x}" ]]; then export PASTO_BUILD_ROOT="$SNAPCLIP_BUILD_ROOT"; fi
 replica_root="$(cd "$(dirname "$0")/.." && pwd)"
-tools="$replica_root/.build/sparkle-tools/2.10.1"
+if [[ -n "${PASTO_BUILD_ROOT:-}" ]]; then
+  scratch_root="$PASTO_BUILD_ROOT"
+elif [[ -n "${ARTIFACT_TASK_DIR:-}" ]]; then
+  scratch_root="$ARTIFACT_TASK_DIR/build/swiftpm"
+else
+  # Keep the hosted CI cache layout when no managed task is present.
+  scratch_root="$replica_root/.build"
+fi
+mkdir -p "$scratch_root/sparkle-tools"
+tools_root="$(cd "$scratch_root/sparkle-tools" && pwd)"
+tools="$tools_root/2.10.1"
 if [[ ! -x "$tools/bin/sign_update" ]]; then
-  mkdir -p "$replica_root/.build/sparkle-tools"
-  temporary="$(mktemp -d "$replica_root/.build/sparkle-tools/.download.XXXXXX")"
-  trap 'rm -rf "$temporary"' EXIT
+  temporary="$(mktemp -d "$tools_root/.download.XXXXXX")"
+  cleanup() {
+    result=$?
+    if [[ "$temporary" == "$tools_root"/.download.* && -d "$temporary" && ! -L "$temporary" ]]; then
+      rm -rf -- "$temporary"
+    fi
+    return "$result"
+  }
+  trap cleanup EXIT
   curl --fail --location --silent --show-error --proto '=https' --proto-redir '=https' \
     'https://github.com/sparkle-project/Sparkle/releases/download/2.10.1/Sparkle-2.10.1.tar.xz' \
     -o "$temporary/sparkle.tar.xz"

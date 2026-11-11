@@ -1,6 +1,6 @@
 import AppKit
 import Foundation
-import PastoCore
+import SnapclipCore
 import CryptoKit
 
 @main

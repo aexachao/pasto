@@ -48,11 +48,16 @@ def main():
             assert path.is_file(), f"Missing resource: {target}"
         elif url.fragment:
             assert unquote(url.fragment) in parser.ids, f"Missing anchor: {target}"
-    # Public download links may lag a package version while its release is still building.
-    version = parser.release_version or json.loads((ROOT / "package.json").read_text())["version"]
-    assert re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+(?:-dev\.[0-9]+)?", version), "Invalid public release version"
-    expected = f"https://github.com/yingyanzhitong/pasto/releases/download/v{version}/Pasto-{version}-macos-universal.dmg"
-    assert parser.downloads == {expected}, "Download does not match current universal release"
+    # No installer has been published in a new repository: never link an upstream DMG as our own.
+    version = parser.release_version
+    if version == "":
+        assert not parser.downloads, "Unreleased repositories must not advertise installer downloads"
+        assert "https://github.com/aexachao/Snapclip/releases" in parser.targets
+    else:
+        assert version and re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version), "Invalid public release version"
+        prefix = f"https://github.com/aexachao/Snapclip/releases/download/v{version}/"
+        allowed_downloads = {prefix + f"Snapclip-{version}-macos-universal.dmg", prefix + f"Pasto-{version}-macos-universal.dmg"}
+        assert len(parser.downloads) == 1 and parser.downloads <= allowed_downloads, "Download does not match the validated repository release"
     allowed = {".html", ".css", ".js", ".png"}
     for path in SITE.rglob("*"):
         assert not path.is_symlink(), f"Unexpected symlink: {path}"

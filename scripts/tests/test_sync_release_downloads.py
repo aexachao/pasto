@@ -31,12 +31,22 @@ class SyncReleaseDownloadsTests(unittest.TestCase):
         for name in ("README.md", "README.en.md"):
             self.assertIn("**9.8.7**", changes[name])
             self.assertIn(url, changes[name])
-            self.assertIn(f"{sync.BASE}/releases/latest", changes[name])
+            self.assertIn(f"{sync.BASE}/releases", changes[name])
         self.assertEqual(changes["website/index.html"].count(url), 2)
         self.assertIn('data-release-version="9.8.7"', changes["website/index.html"])
-        self.assertIn("Pasto 9.8.7 现已发布", changes["website/i18n.js"])
-        self.assertIn("Pasto 9.8.7 is here", changes["website/i18n.js"])
+        self.assertIn("当前正式安装包：Snapclip 9.8.7", changes["website/i18n.js"])
+        self.assertIn("Current stable installer: Snapclip 9.8.7", changes["website/i18n.js"])
         self.assertNotIn("package.json", changes)
+
+    def test_new_snapclip_asset_and_existing_pasto_asset_are_both_supported(self):
+        old = published()
+        self.assertIn("Pasto-", sync.release_info(old)[1])
+        new = copy.deepcopy(old)
+        new["assets"][0]["name"] = new["assets"][0]["name"].replace("Pasto-", "Snapclip-")
+        new["assets"][0]["browser_download_url"] = new["assets"][0]["browser_download_url"].replace("Pasto-", "Snapclip-")
+        changes = sync.render(ROOT, new)
+        self.assertIn("Snapclip-9.8.7-macos-universal.dmg", changes["README.md"])
+        self.assertIn("Snapclip-9.8.7-macos-universal.dmg", changes["website/index.html"])
 
     def test_sync_is_idempotent_and_does_not_change_other_readme_content(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -98,18 +108,45 @@ class SyncReleaseDownloadsTests(unittest.TestCase):
     def test_i18n_release_metadata_matches_the_shipped_html(self):
         html = (ROOT / "website/index.html").read_text()
         import re
-        version = re.search(r'data-release-version="([^"]+)"', html)[1]
+        version = re.search(r'data-release-version="([^"]*)"', html)[1]
         catalog = (ROOT / "website/i18n.js").read_text()
         messages = json.loads(re.search(r"const messages = (\{[\s\S]*?\n\});", catalog)[1])
         for language in ("zh-CN", "en"):
-            self.assertIn(version, messages[language]["hero.release"])
-            self.assertTrue(messages[language]["download.meta"].startswith("v" + version + " ·"))
+            if version:
+                self.assertIn(version, messages[language]["hero.release"])
+                self.assertTrue(messages[language]["download.meta"].startswith("v" + version + " ·"))
+            else:
+                self.assertNotIn(".dmg", messages[language]["download.mac"])
+                self.assertNotIn("1.0.8", messages[language]["hero.release"])
+
+    def test_unreleased_removes_foreign_downloads_and_roundtrips_to_a_real_release(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name in sync.FILES:
+                target = root / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text((ROOT / name).read_text())
+            for name, text in sync.render(root, None).items():
+                (root / name).write_text(text)
+            self.assertEqual(sync.render(root, None), {})
+            for name in sync.FILES:
+                self.assertNotIn("yingyanzhitong/pasto/releases/download", (root / name).read_text())
+            self.assertIn('data-release-version=""', (root / "website/index.html").read_text())
+            for name, text in sync.render(root, published()).items():
+                (root / name).write_text(text)
+            self.assertEqual(sync.render(root, published()), {})
+            self.assertIn('data-release-version="9.8.7"', (root / "website/index.html").read_text())
 
     def test_release_explicitly_dispatches_pages_after_publish_and_pages_saves_before_deploy(self):
         release = (ROOT / ".github/workflows/release.yml").read_text()
         pages = (ROOT / ".github/workflows/pages.yml").read_text()
         self.assertLess(release.index('release-ci.py publish'), release.index('gh workflow run pages.yml'))
         self.assertIn('actions: write', release)
+        self.assertIn('default: false', release)
+        self.assertIn('SNAPCLIP_PUBLISH:', release)
+        self.assertIn('vars.SNAPCLIP_PAGES_ENABLED', pages)
+        self.assertIn('repos/$GITHUB_REPOSITORY/releases/latest', pages)
+        self.assertIn('--unreleased', pages)
         self.assertLess(pages.index('releases/latest'), pages.index('scripts/sync-release-downloads.py --release-json'))
         self.assertLess(pages.index('python3 scripts/check-website.py'), pages.index('git commit -m'))
         self.assertLess(pages.index('git push origin HEAD:main'), pages.index('actions/upload-pages-artifact'))

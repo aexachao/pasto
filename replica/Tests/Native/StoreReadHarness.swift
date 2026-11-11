@@ -1,5 +1,5 @@
 import Foundation
-import PastoCore
+import SnapclipCore
 
 /// Test-only observer: read through the same model and lock as the app, not SQLite's private blob format.
 @main

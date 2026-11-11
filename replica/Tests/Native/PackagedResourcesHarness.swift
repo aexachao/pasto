@@ -1,6 +1,6 @@
 import AppKit
-import PastoCore
-import PastoObjC
+import SnapclipCore
+import SnapclipObjC
 
 @main
 struct PackagedResourcesHarness {

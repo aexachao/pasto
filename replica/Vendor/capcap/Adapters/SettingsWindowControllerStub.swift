@@ -6,8 +6,17 @@
 // settings window (SettingsView + every pane, incl. permissions/updates/trigger
 // panes) and is out of the vendoring scope.
 //
-// Behaviour: `showAsSettings(...)` is a no-op — tapping "open settings" in the
-// OCR/translate panel closes the panel and opens nothing.
+// Behaviour: `showAsSettings(...)` now forwards to `SnapclipSettingsOpener.open` — the
+// slot Pasto fills at launch (see `Adapters/SettingsOpener.swift`). So tapping
+// "open settings" in the OCR/translate panel closes the panel and lands on Pasto's
+// own "Screenshot" settings pane (分区 index 2). `SnapclipCapture` must not import
+// Pasto (the dependency runs the other way), so this reverse mount is a closure
+// rather than a direct call. When nothing is installed the tap stays a no-op,
+// i.e. the P1-A behaviour.
+//
+// `focusingPermissions` is upstream's "scroll to the permissions area" hint.
+// Pasto's settings window has no per-permission pane, so the parameter is kept
+// (callers need no change) and ignored.
 
 import AppKit
 import Foundation
@@ -19,5 +28,6 @@ class SettingsWindowController: NSWindowController {
     /// Upstream signature: `showAsSettings(focusingPermissions: Bool? = nil)`.
     func showAsSettings(focusingPermissions: Bool? = nil) {
         _ = focusingPermissions
+        SnapclipSettingsOpener.open?(.screenshot)
     }
 }

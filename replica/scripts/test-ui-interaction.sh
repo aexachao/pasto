@@ -4,13 +4,13 @@ replica_root="$(cd "$(dirname "$0")/.." && pwd)"
 test_root="$(mktemp -d "${TMPDIR:-/tmp}/pasto-ui-interaction.XXXXXX")"
 trap 'rm -rf "$test_root"' EXIT
 source "$replica_root/Tests/Native/build-support.sh"
-prepare_native_test_core
+prepare_native_test_ui
 compile_native_test_harness ui-interaction \
-  "$replica_root/Sources/Pasto/UI/"*.swift \
-  "$replica_root/Sources/Pasto/ICloudDriveSyncController.swift" \
-  "$replica_root/Sources/Pasto/SourceAppColor.swift" \
-  "$replica_root/Sources/Pasto/WindowSharingPolicy.swift" \
-  "$replica_root/Sources/Pasto/BackgroundService.swift" \
+  "$replica_root/Sources/Snapclip/UI/"*.swift \
+  "$replica_root/Sources/Snapclip/ICloudDriveSyncController.swift" \
+  "$replica_root/Sources/Snapclip/SourceAppColor.swift" \
+  "$replica_root/Sources/Snapclip/WindowSharingPolicy.swift" \
+  "$replica_root/Sources/Snapclip/BackgroundService.swift" \
   "$replica_root/Tests/Native/UIInteractionHarness.swift"
 run_native_test_harness "$@" | tee "$test_root/result.log"
 python3 - "$test_root/result.log" <<'PY'

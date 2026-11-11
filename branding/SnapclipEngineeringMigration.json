@@ -1,0 +1,312 @@
+{
+  "schemaVersion": 1,
+  "status": "implementation-self-validation-complete; native-graph-and-package-pass; legacy-store-postsave-full-native-comparison-pass; independent-audit-and-integration-pending; broad-Core-MCP-failures-under-separate-diagnostic",
+  "brand": {
+    "zh": "\u95ea\u8d34",
+    "en": "Snapclip"
+  },
+  "observedOn": "2026-11-11",
+  "constraints": [
+    "Preserve all existing dirty edits; no index mutations/commit/push/install/release",
+    "Keep checkout /Users/chrisli/dev/pasto and repository/Pages/feed URLs",
+    "Keep main/helper Bundle IDs, Team ID, UserDefaults suites, data directories, CloudKit identity and on-disk formats",
+    "Assets and localization inputs remain owned by separate integration worker until handoff"
+  ],
+  "renameMap": {
+    "package:Pasto": "Snapclip",
+    "target:Pasto": "Pasto (intent identity bridge; product Snapclip and path Sources/Snapclip)",
+    "target:PastoCore": "SnapclipCore",
+    "target:PastoObjC": "SnapclipObjC",
+    "target:PastoCapture": "SnapclipCapture",
+    "target:PastoHelper": "SnapclipHelper",
+    "target:PastoMCP": "SnapclipMCP",
+    "target:PastoCoreTests": "SnapclipCoreTests",
+    "product:pasto-mcp": "snapclip-mcp",
+    "product:pasto-core-tests": "snapclip-core-tests",
+    "resource:Pasto_PastoCore.bundle": "Snapclip_SnapclipCore.bundle",
+    "helper:Pasto Helper.app": "Pasto Helper.app (physical SMAppService identifier retained; display Snapclip Helper, executable SnapclipHelper)",
+    "product:Pasto": "Snapclip (targets: [Pasto])"
+  },
+  "directoryMoves": {
+    "replica/Sources/Pasto": "replica/Sources/Snapclip",
+    "replica/Sources/PastoCore": "replica/Sources/SnapclipCore",
+    "replica/Sources/PastoObjC": "replica/Sources/SnapclipObjC",
+    "replica/Sources/PastoHelper": "replica/Sources/SnapclipHelper",
+    "replica/Sources/PastoMCP": "replica/Sources/SnapclipMCP"
+  },
+  "otherPaths": {
+    "replica/Tests/PastoCoreTests": "replica/Tests/SnapclipCoreTests",
+    "replica/Sources/PastoObjC/include/PastoKeyTranslation.h": "replica/Sources/SnapclipObjC/include/SnapclipKeyTranslation.h",
+    "replica/Sources/PastoObjC/PastoKeyTranslation.m": "replica/Sources/SnapclipObjC/SnapclipKeyTranslation.m",
+    "replica/Vendor/capcap": "unchanged vendor source path; target becomes SnapclipCapture"
+  },
+  "consumers": [
+    "replica/Package.swift products/targets/dependencies; import statements, module-qualified KeyboardShortcut; ObjC module.modulemap and bridging include paths",
+    "replica/scripts/build-app.sh both architectures, resource diff/copy, executable install, CFBundleExecutable, helper executable, resource output; helper path changed with fixed helper Bundle ID",
+    "replica/scripts/build-dmg.sh, release-ci.py, test-release-packaging.py packaged executable contracts/rpaths",
+    "replica/Tests/Native/build-support.sh target names, .build object roots, Modules path, explicit modulemap and resource bundle; native harness source paths and test shell scripts",
+    "replica/Sources/PastoCore/OriginalResourceBundle.swift and UI/OriginalAccessibilityModals.swift explicit SwiftPM bundle name; prefer centralized resolver",
+    "replica/Sources/Pasto/UI/AuxiliaryViews.swift MCP executable discovery; MCP main struct/file and help/serverInfo/sourceName branding",
+    "root scripts/tests hardcoded active paths and historical inverse transform fixtures; adapt path access through a mapping without rewriting historical expected source evidence",
+    "README.md, README.en.md, replica/README.md, website/index.html and website/i18n.js active CLI/build instructions synchronized by docs owner; NOTICE/history retain factual source names"
+  ],
+  "compatibilityExceptions": [
+    {
+      "key": "ObjC CoreData class identity",
+      "action": "Rename Swift identifiers optionally, retain existing @objc names verbatim",
+      "evidence": [
+        "OriginalManagedItem.swift: @objc(PastoManagedObject/PastoItemEntity/PastoListEntity/PastoListMetadataEntity/PastoApplicationEntity/PastoDeviceEntity)",
+        "ClipboardItemDataPersistence.swift: @objc(PastoItemDataEntity/PastoItemDataMigrationPolicy)",
+        "ClipboardPersistence.swift makeModel uses NSStringFromClass for actual entity and migration policy names"
+      ],
+      "verification": "Compare entityVersionHashesByName and NSStringFromClass before/after; open real pre-rename SQLite fixture with all relationship types"
+    },
+    {
+      "key": "NSKeyedArchive class identity/checksum",
+      "action": "Retain @objc(_TtC9PasteCore14PasteboardItem) and decoder aliases PasteCore.PasteboardItem, _TtC9PasteCore14PasteboardItem, PastoCore.OriginalPasteboardItem, _TtC9PastoCore22OriginalPasteboardItem; add Snapclip alias only if needed",
+      "evidence": [
+        "OriginalPasteboard.swift",
+        "OriginalPasteboardArchive.swift",
+        "OriginalPasteboardChecksums.swift"
+      ],
+      "verification": "Old archive decode + new encode metadata/checksum equivalence; type allow-list/secure coding roundtrip"
+    },
+    {
+      "key": "Persistent and cloud protocol fields",
+      "action": "Retain PasteReplica data directory, PastoSync-v1 folder, pasto-icloud-drive format, CloudKit default zone Pasto, entity names/attributes and record schema, preference keys, pasteIsRunning session key",
+      "evidence": [
+        "ClipboardStore.swift",
+        "ICloudDriveSync.swift",
+        "OriginalCloudKitContracts.swift",
+        "BackgroundService.swift"
+      ],
+      "verification": "Fixture reopen and JSON import/export preserve IDs/content/preferences; no new data root or zone"
+    },
+    {
+      "key": "Installed identity",
+      "action": "Keep com.yingyanzhitong.paste-replica and .helper/.session identifiers, Team4NJM425J3B; HelperApplicationLocator retains Pasto.app fallback",
+      "evidence": [
+        "BackgroundService.swift",
+        "HelperMain.swift",
+        "replica/scripts/build-app.sh"
+      ],
+      "verification": "Packaged plist/helper lookup and actual registration/permissions separate runtime acceptance"
+    },
+    {
+      "key": "AppIntents identity",
+      "action": "Keep Pasto main executable target/module and current Pasto* intent/entity types as compatibility bridge. SwiftPM product/executable becomes Snapclip, target explicitly uses path Sources/Snapclip. Other independent targets/modules are renamed.",
+      "evidence": [
+        "replica/Sources/Pasto/AppIntents/*.swift"
+      ],
+      "verification": "Saved pre-rename shortcuts get/create/index/pinboard selection, AppIntent metadata extraction and fresh shortcut"
+    },
+    {
+      "key": "CLI/MCP external paths",
+      "action": "Ship snapclip-mcp canonical executable plus compatibility pasto-mcp launcher or identical signed binary; preserve --data-dir, tool names/schema/results/error contract; serverInfo display can be snapclip",
+      "evidence": [
+        "PastoMCP.swift",
+        "UI/AuxiliaryViews.swift",
+        "replica/scripts/test-mcp.py"
+      ],
+      "verification": "Old configured MCP command and new command both initialize/search/create; stdout JSON-RPC only; same data directory"
+    },
+    {
+      "key": "Environment variables and Info keys",
+      "action": "SNAPCLIP_* preferred with PASTO_* fallback (new value wins), retain PASTO_UPDATE_PRIVATE_KEY secret until explicit CI migration; keep PastoSourceVersion/PastoCloudKitContainerIdentifier read aliases until consumers migrate",
+      "evidence": [
+        "replica/scripts/*.sh",
+        "release-ci.py",
+        "create-update-feed.py",
+        "PastoCloudKitConfiguration.swift",
+        ".github/workflows/release.yml"
+      ],
+      "verification": "old-only/new-only/both precedence tests, output paths under ARTIFACT_TASK_DIR; secret never printed"
+    },
+    {
+      "key": "URL schemes",
+      "action": "No CFBundleURL/URLScheme/onOpenURL registration found in searched Sources/scripts; do not invent or rename a protocol",
+      "verification": "Inspect generated packaged Info.plist and installed LS handlers before claiming absence"
+    },
+    {
+      "key": "Historical tests and evidence",
+      "action": "Keep historical snapshots, reports/replica, extraction scripts, NOTICE and original SDK pasteboard APIs intact; map only active source lookups",
+      "verification": "Historical inverse transforms compare unchanged evidence and current renamed source mapped to old logical paths"
+    }
+  ],
+  "requiredPreRenameFixture": {
+    "producer": "Before editing modules, build current old modules in storage-guard isolated scratch; producer fixture writes actual ClipboardStore/native SQLite and secure archives, not a handcrafted current-model-only file",
+    "fixtureContents": [
+      "text/image/file/link/color payloads with binary bytes and attributed/archive payload",
+      "history and multiple pinboards/ListMetadata including reordered indexes",
+      "ApplicationEntity/DeviceEntity/ItemDataEntity relationships, source metadata and checksums",
+      "preferences/shortcuts/exclusions/custom display names and nil optional fields",
+      "iCloud Drive JSON snapshot and CloudKit record archive offline metadata"
+    ],
+    "consumer": "Build renamed modules in separate scratch; copy fixture into fresh isolated data-dir; open/reopen/save/reopen through production persistence, compare normalized entity IDs/relationships/data bytes/preferences and archive checksums; retain fixture producer binary/source hash and SQLite metadata hashes",
+    "mustNot": "No user store mutation, live CloudKit traffic, fixture regenerated by new module only, or production installation required",
+    "acceptance": "No migration error/trap, no silent empty store/new data root, no data/schema/checksum loss. If hashes differ, explicitly diagnose model migration rather than call rename safe."
+  },
+  "testMatrix": [
+    {
+      "stage": "preflight",
+      "checks": "git dirty inventory; store fixture + old model/runtime names; dependency interface ownership; storage-guard status",
+      "buildRequired": true
+    },
+    {
+      "stage": "static/package",
+      "checks": "swift package dump-package; imports and module-qualified names; explicit bundle/modulemap/object paths; active script syntax; map-aware regression paths",
+      "buildRequired": false
+    },
+    {
+      "stage": "build",
+      "checks": "SnapclipCoreTests and Snapclip/SnapclipMCP/SnapclipHelper products; arm64 and x86_64; resource accessor path; Objective-C module and capture links",
+      "buildRequired": true
+    },
+    {
+      "stage": "compatibility",
+      "checks": "old-store -> new-module fixture + archive aliases/checksum; both MCP names; env aliases; helper locator; offline CloudKit/iCloud formats",
+      "buildRequired": true
+    },
+    {
+      "stage": "package",
+      "checks": "build-app and release contracts; all executable paths, plists/rpaths/codesign verify; Snapclip_SnapclipCore.bundle with new assets and en/zh localization; no excluded old art accidentally packaged",
+      "buildRequired": true
+    },
+    {
+      "stage": "runtime-limited",
+      "checks": "App launch/settings/history/permissions prompts/menus/icon; actual SMAppService and saved AppIntent shortcut compatibility only with separate authorized installation. Compile never implies runtime continuity.",
+      "buildRequired": true
+    }
+  ],
+  "estimatedScope": {
+    "tokenHitFiles": {
+      "replica/Sources": 68,
+      "replica/Tests": 34,
+      "replica/scripts": 34,
+      "scripts/tests": 354
+    },
+    "filesInFiveSourceDirectoriesToMove": 283,
+    "note": "Observed text-hit counts, not final diff count. Directory moves include unchanged resource files; root 354 historical-test hit files need mapping design to avoid mechanically rewriting historical evidence. App/Swift type branding adds extra files beyond exact module tokens."
+  },
+  "phases": [
+    "A: freeze asset/L10n integrated baseline and old-module fixture",
+    "B: rename package/targets/directories/modules + explicit bundle/header/build references atomically",
+    "C: canonical CLI/helper executable/env names with legacy aliases and compat exceptions",
+    "D: active regression source path mapping, package contracts and docs owner sync",
+    "E: independent audit + integration build + compatibility fixture; release/install remain separate authorization"
+  ],
+  "externalMigrationDeferred": [
+    "GitHub repository rename and redirects",
+    "Pages path/custom domain migration",
+    "SUFeedURL/download URLs and deployed releases",
+    "CI secret rename and user MCP configuration distribution",
+    "Bundle ID/Team ID/App Group/CloudKit/iCloud-container migration",
+    "Mac App Store sandbox/signing/entitlements review is separate work; branding changes are not store acceptance"
+  ],
+  "mainAppModuleBridge": {
+    "target": "Pasto",
+    "module": "Pasto",
+    "path": "Sources/Snapclip",
+    "product": "Snapclip",
+    "reason": "Keep default serialized AppIntent type identities in original main module while all independent core/ObjC/capture/MCP/helper modules are renamed",
+    "exitCriteria": "Only consider future main-module rename after saved pre-migration shortcuts and extracted AppIntent identifiers are proven compatible; no generic Pasto naming exception outside specific persistence/system bridges"
+  },
+  "legacyFixture": {
+    "path": "/Users/chrisli/dev-artifacts/pasto/snapclip-legacy-fixture-finalize-15591-20261111-191225/out",
+    "producerTask": "/Users/chrisli/dev-artifacts/pasto/snapclip-legacy-fixture-15173-20261111-191049/out",
+    "manifestSHA256": "9e504d34754c8b5ae77b83751cc26c80cb4926458c38cf9ce015065de94700ee",
+    "counts": {
+      "items": 6,
+      "objects": 65,
+      "entityTypes": 11
+    },
+    "verified": [
+      "actual old-module canonical Store reopen stability, complete serialized items/boards/preferences",
+      "secure archive roundtrip",
+      "payload SHA256 and lengths",
+      "model metadata, runtime classes, relationships and objectID evidence",
+      "read-only SQLite quick_check and fixture source hashes"
+    ],
+    "notVerified": [
+      "renamed-module Store reader",
+      "main AppIntents metadata and saved Shortcuts",
+      "SMAppService/TCC/system install continuity"
+    ],
+    "seedNormalization": "Old Core populates omitted nativeChecksum and pinboardOrder nil->0 on first reopen. Expected snapshots are canonical old-module reopen outputs, stable across second reopen.",
+    "retention": "storage-guard success 7 days; not pinned",
+    "readOnly": "fixture regular files 0444; consumer must copy to fresh guarded build directory and restore owner-write bits there"
+  },
+  "proposedStageThreeWriteScope": {
+    "preconditions": [
+      "assets/localization integration frozen and handed off",
+      "fresh independent audit of fixture and bounded rename scope",
+      "root explicit rename WRITE_GO"
+    ],
+    "allowed": [
+      "replica/Package.swift",
+      "replica/Sources/{Pasto,PastoCore,PastoObjC,PastoMCP,PastoHelper} filesystem move to Snapclip-prefixed paths preserving all current dirty contents",
+      "replica/Tests/PastoCoreTests move to SnapclipCoreTests",
+      "replica/Sources Swift active imports/module-qualified names and explicitly selected nonpersistent branded Swift identifiers",
+      "replica/Sources/SnapclipObjC module.modulemap and key translation header/implementation naming + active include consumers",
+      "replica/Tests/Native and replica/scripts active source paths/target/object/resource/executable contracts and CLI/env aliases",
+      "root scripts/tests current-source path mapping only, no historical source text substitutions"
+    ],
+    "serialCoordination": [
+      "README.md/README.en.md/replica/README.md/website/index.html/website/i18n.js active build and MCP paths handed to existing docs owner to prevent overlapping writes",
+      "new resource bundle reference follows integrated assets/localization paths; do not revert new assets"
+    ],
+    "fixed": [
+      "target/module Pasto with path Sources/Snapclip; product Snapclip targets Pasto",
+      "CoreData @objc runtime aliases and schema identities",
+      "archive @objc and decoder aliases",
+      "Bundle IDs/Team/data directories/cloud/suites/preferences/wire fields",
+      "GitHub/Pages/feed URLs and checkout path",
+      "NOTICE and historical reports/source fixtures"
+    ],
+    "deferred": [
+      "global prefix replacement across recovered function names/historical comments",
+      "main AppIntents type rename or main module rename",
+      "remote rename/install/release/commit/push"
+    ],
+    "acceptance": [
+      "newCore actual read+write+reopen against copied readonly fixture, full snapshot/hash/object/schema comparison",
+      "new package product/target graph and debug/release build",
+      "core test executable and native resource harness; both MCP aliases",
+      "packaged executable/plist/bundle/helper contracts",
+      "independent audit and fresh integration validation"
+    ]
+  },
+  "implementationEvidence": {
+    "renameManifest": "branding/SnapclipRenameManifest.json",
+    "nativeBuild": "/Users/chrisli/dev-artifacts/pasto/snapclip-engineering-migration-18257-20261111-192504/out/build.log",
+    "legacyMigration": "/Users/chrisli/dev-artifacts/pasto/snapclip-engineering-migration-18622-20261111-192705/out/legacy-migration.json",
+    "fullCoreSuiteFailure": "/Users/chrisli/dev-artifacts/pasto/snapclip-engineering-migration-18622-20261111-192705/out/core-tests.log",
+    "notVerified": [
+      "saved AppIntent shortcuts execution",
+      "SMAppService registration continuity",
+      "live CloudKit",
+      "universal package pending integration worker"
+    ],
+    "finalNativePackage": "/Users/chrisli/dev-artifacts/pasto/snapclip-engineering-migration-20465-20261111-193223/out/Snapclip.app",
+    "legacyMigrationPostSave": "/Users/chrisli/dev-artifacts/pasto/snapclip-engineering-migration-20465-20261111-193223/out/legacy-migration.json",
+    "baselineRecovery": "/Users/chrisli/dev-artifacts/pasto/snapclip-engineering-migration-20465-20261111-193223/out/pre-rename-baseline/recovery-verification.json",
+    "mcpFullSuiteFailure": "/Users/chrisli/dev-artifacts/pasto/snapclip-engineering-migration-19268-20261111-192828/out/mcp-tests.log",
+    "packagedSmoke": "both snapclip-mcp and pasto-mcp initialize + tools/list passed; byte-identical copies; package codesign/plist/rpaths/arm64 verification passed",
+    "boundedContracts": "/Users/chrisli/dev-artifacts/pasto/snapclip-engineering-contracts-21423-20261111-193446/out",
+    "boundedContractResults": {
+      "releasePackagingAndEnvironmentAliases": 9,
+      "publishedDownloadOldAndNewAssets": 8,
+      "signedUpdateFeed": 9,
+      "pythonASTFiles": 12,
+      "allActiveShellSyntax": "pass"
+    }
+  },
+  "remainingSourceFilenameCompatibility": [
+    "PastoUpdateChecker.swift",
+    "PastoCloudKitConfiguration.swift",
+    "PastoAboutWindowController.swift",
+    "PastoInAppUpdater.swift",
+    "PastoMCP.swift",
+    "AppIntents/Pasto*.swift"
+  ]
+}

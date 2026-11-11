@@ -6,9 +6,9 @@ trap 'rm -rf "$test_root"' EXIT
 source "$replica_root/Tests/Native/build-support.sh"
 prepare_native_test_core
 compile_native_test_harness accessibility-modal \
-  "$replica_root/Sources/Pasto/UI/OriginalAccessibilityModals.swift" \
-  "$replica_root/Sources/Pasto/UI/OriginalAccessibilityRequestAction.swift" \
-  "$replica_root/Sources/Pasto/UI/ReplicaBrand.swift" \
+  "$replica_root/Sources/Snapclip/UI/OriginalAccessibilityModals.swift" \
+  "$replica_root/Sources/Snapclip/UI/OriginalAccessibilityRequestAction.swift" \
+  "$replica_root/Sources/Snapclip/UI/ReplicaBrand.swift" \
   "$replica_root/Tests/Native/AccessibilityModalHarness.swift"
 if [[ $# -gt 0 ]]; then
   result=0

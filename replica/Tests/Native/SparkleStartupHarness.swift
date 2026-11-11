@@ -12,7 +12,7 @@ struct SparkleStartupHarness {
         precondition(!controller.updater.automaticallyChecksForUpdates)
         precondition(!controller.updater.automaticallyDownloadsUpdates)
         precondition(controller.updater.feedURL?.absoluteString ==
-            "https://github.com/yingyanzhitong/pasto/releases/latest/download/appcast.xml")
+            "https://github.com/aexachao/Snapclip/releases/latest/download/appcast.xml")
         // Exercise scheduled work without initiating a check or showing UI.
         RunLoop.current.run(until: Date().addingTimeInterval(0.15))
         precondition(!controller.updater.sessionInProgress)

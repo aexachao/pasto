@@ -31,7 +31,7 @@ def wait_for(check, process, timeout=12):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--app", type=pathlib.Path,
-                        default=pathlib.Path(__file__).resolve().parents[1] / "dist/Pasto.app")
+                        default=pathlib.Path(__file__).resolve().parents[1] / "dist/Snapclip.app")
     parser.add_argument("--report", type=pathlib.Path)
     args = parser.parse_args()
     with tempfile.TemporaryDirectory(prefix="pasto-app-test-") as temporary:

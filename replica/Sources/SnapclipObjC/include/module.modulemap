@@ -1,0 +1,8 @@
+module SnapclipObjC {
+    header "PRObjCExceptionCatcher.h"
+    header "SnapclipKeyTranslation.h"
+    header "PRPanelGlassBackground.h"
+    header "PRGlassBackgroundWindow.h"
+    header "PRCloudKitEntitlements.h"
+    export *
+}

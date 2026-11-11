@@ -220,7 +220,7 @@ struct ToolbarLayout: Equatable {
         .rectangle, .ellipse, .line, .arrow, .pen, .marker, .spotlight, .mosaic, .eraser, .numbered, .text, .emoji, .insertImage,
         .colorPicker, .magnifier, .undo, .redo, .moveSelection, .scrollCapture, .rotate, .beautify, .qrCode, .ocr,
         .screenshotTranslate,
-        .save, .upload, .pin, .record, .close, .confirm,
+        .save, .pin, .record, .close, .confirm,
     ]
 
     /// Default layout: annotation tools + edit actions on the primary
@@ -232,20 +232,22 @@ struct ToolbarLayout: Equatable {
                 .rectangle, .ellipse, .line, .arrow, .pen, .marker, .spotlight, .mosaic, .eraser, .numbered, .text, .emoji, .insertImage,
                 .colorPicker, .magnifier, .rotate, .beautify, .qrCode, .ocr, .screenshotTranslate, .undo, .redo, .moveSelection,
             ],
-            side: [.scrollCapture, .upload, .save, .pin, .record, .close, .confirm],
+            side: [.scrollCapture, .save, .pin, .record, .close, .confirm],
             hidden: []
         )
     }
 
     /// Drops duplicate / unknown ids and slots any tool missing from all
     /// three buckets next to its canonical neighbour, so the result always
-    /// covers every `ToolbarItemID` exactly once regardless of app-version
+    /// covers every supported toolbar item exactly once regardless of app-version
     /// drift. A newly-introduced tool lands beside its siblings (e.g. `line`
     /// after `ellipse`) instead of being dumped at the end of the bar.
     func normalized() -> ToolbarLayout {
         var seen = Set<ToolbarItemID>()
         func dedup(_ ids: [ToolbarItemID]) -> [ToolbarItemID] {
-            ids.filter { seen.insert($0).inserted }
+            // Retain the persisted raw value for compatibility, but never
+            // restore the unsupported image-host upload into any toolbar.
+            ids.filter { $0 != .upload && seen.insert($0).inserted }
         }
         var p = dedup(primary)
         var s = dedup(side)

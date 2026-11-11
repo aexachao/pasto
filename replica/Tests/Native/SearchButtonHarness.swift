@@ -1,5 +1,5 @@
 import AppKit
-import PastoCore
+import SnapclipCore
 
 @main
 struct SearchButtonHarness {

@@ -4,15 +4,13 @@ replica_root="$(cd "$(dirname "$0")/.." && pwd)"
 test_root="$(mktemp -d "${TMPDIR:-/tmp}/pasto-search-button.XXXXXX")"
 trap 'rm -rf "$test_root"' EXIT
 source "$replica_root/Tests/Native/build-support.sh"
-prepare_native_test_core
-sparkle_root="$test_build_root/artifacts/replica/Sparkle/Sparkle.xcframework/macos-arm64_x86_64"
+prepare_native_test_ui
 compile_native_test_harness search-button \
-  -F "$sparkle_root" -framework Sparkle -Xlinker -rpath -Xlinker "$sparkle_root" \
-  "$replica_root/Sources/Pasto/UI/"*.swift \
-  "$replica_root/Sources/Pasto/ICloudDriveSyncController.swift" \
-  "$replica_root/Sources/Pasto/SourceAppColor.swift" \
-  "$replica_root/Sources/Pasto/WindowSharingPolicy.swift" \
-  "$replica_root/Sources/Pasto/BackgroundService.swift" \
+  "$replica_root/Sources/Snapclip/UI/"*.swift \
+  "$replica_root/Sources/Snapclip/ICloudDriveSyncController.swift" \
+  "$replica_root/Sources/Snapclip/SourceAppColor.swift" \
+  "$replica_root/Sources/Snapclip/WindowSharingPolicy.swift" \
+  "$replica_root/Sources/Snapclip/BackgroundService.swift" \
   "$replica_root/Tests/Native/SearchButtonHarness.swift"
 run_native_test_harness "$@" | tee "$test_root/result.log"
 python3 - "$test_root/result.log" <<'PY'

@@ -35,9 +35,93 @@ def lifecycle_time():
     return time.clock_gettime(time.CLOCK_MONOTONIC)
 
 
+def verify_application_resolution(source_root, root):
+    """Execute the production locator against disposable bundles, without Launch Services changes."""
+    identity = "local.pasto.locator." + uuid.uuid4().hex
+    cases = []
+
+    def application(path, bundle_id=identity):
+        (path / "Contents/MacOS").mkdir(parents=True)
+        (path / "Contents/Info.plist").write_bytes(plistlib.dumps({
+            "CFBundleIdentifier": bundle_id, "CFBundleExecutable": "Fixture",
+            "CFBundleName": path.stem, "CFBundlePackageType": "APPL"}))
+        return path
+
+    for index, name in enumerate(["Snapclip.app", "Pasto.app", "用户重命名.app"]):
+        folder = root / str(index)
+        enclosing = application(folder / name)
+        registered = application(folder / "OldRegistered.app")
+        cases.append({"name": "enclosing-" + name,
+                      "helper": str(enclosing / "Contents/Library/LoginItems/Helper.app"),
+                      "registered": str(registered), "applications": str(folder / "Applications"),
+                      "expected": str(enclosing), "lookups": 0})
+    for index, (name, registered_id, current, legacy, expected) in enumerate([
+        ("registered-after-foreign-enclosing", identity, False, False, "registered"),
+        ("nil-registration-current-installed", None, True, False, "current"),
+        ("stale-registration-current-installed", "missing-path", True, False, "current"),
+        ("stale-registration-legacy-installed", "missing-path", False, True, "legacy"),
+        ("wrong-registration-current-installed", "local.foreign.app", True, False, "current"),
+        ("no-installed-candidate", None, False, False, "current"),
+        ("both-installed-prefer-current", None, True, True, "current"),
+    ], start=3):
+        folder = root / str(index)
+        # A matching filename is insufficient when the enclosing identity is foreign.
+        enclosing = application(folder / "Pasto.app", "local.foreign.enclosing")
+        registered = (application(folder / "Registered.app", registered_id)
+                      if registered_id not in (None, "missing-path") else folder / "Missing.app")
+        applications = folder / "Applications"
+        current_app, legacy_app = applications / "Snapclip.app", applications / "Pasto.app"
+        if current:
+            application(current_app)
+        if legacy:
+            application(legacy_app)
+        expected_url = {"registered": registered, "current": current_app, "legacy": legacy_app}[expected]
+        cases.append({"name": name, "helper": str(enclosing / "Contents/Library/LoginItems/Helper.app"),
+                      "registered": str(registered) if registered_id else None,
+                      "applications": str(applications),
+                      "expected": str(expected_url), "lookups": 1})
+    fixture = root / "resolution-cases.json"
+    fixture.write_text(json.dumps({"identity": identity, "cases": cases}))
+    source = (source_root / "Sources/SnapclipHelper/HelperMain.swift").read_text()
+    assert source.count("@main\n") == 1, "Helper entry-point isolation needs review"
+    source = source.replace("@main\n", "", 1)
+    harness = root / "Resolver.swift"
+    harness.write_text(source + '''
+@main enum ResolverHarness {
+    static func main() throws {
+        let input = try Data(contentsOf: URL(fileURLWithPath: CommandLine.arguments[1]))
+        let fixture = try JSONSerialization.jsonObject(with: input) as! [String: Any]
+        var results = [[String: Any]]()
+        for entry in fixture["cases"] as! [[String: Any]] {
+            var lookups = 0
+            let actual = HelperApplicationLocator.resolve(
+                helperBundleURL: URL(fileURLWithPath: entry["helper"] as! String),
+                mainID: fixture["identity"] as! String,
+                registeredApplication: {
+                    lookups += 1
+                    return (entry["registered"] as? String).map { URL(fileURLWithPath: $0) }
+                }, applicationsDirectory: URL(fileURLWithPath: entry["applications"] as! String))
+            let passed = actual.path == entry["expected"] as! String && lookups == entry["lookups"] as! Int
+            results.append(["name": entry["name"]!, "passed": passed, "actual": actual.path,
+                            "expected": entry["expected"]!, "registration_lookups": lookups])
+        }
+        print(String(data: try JSONSerialization.data(withJSONObject: results), encoding: .utf8)!)
+    }
+}
+''')
+    binary = root / "resolver"
+    subprocess.run(["xcrun", "swiftc", "-parse-as-library", "-swift-version", "5",
+                    "-module-cache-path", str(root / "module-cache"),
+                    str(harness), "-o", str(binary)], check=True)
+    results = json.loads(subprocess.check_output([str(binary), str(fixture)], text=True))
+    assert all(row["passed"] for row in results), "Production helper URL resolution failed: " + json.dumps(results)
+    return results
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--report", type=pathlib.Path)
+    parser.add_argument("--resolution-only", action="store_true")
     args = parser.parse_args()
     source_root = pathlib.Path(__file__).resolve().parents[1]
     identity = "com.pastereplica.lifecycle." + uuid.uuid4().hex
@@ -46,8 +130,17 @@ def main():
     helper_process = None
     with tempfile.TemporaryDirectory(prefix="paste-helper-lifecycle-") as temporary:
         root = pathlib.Path(temporary)
-        # The production helper resolves its enclosing application by this exact name.
-        app = root / "Pasto.app"
+        resolution = verify_application_resolution(source_root, root / "resolution")
+        if args.resolution_only:
+            result = {"passed": True, "resolution_checks": resolution,
+                      "scope": "Production locator with isolated bundle metadata; no app launch or service registration."}
+            if args.report:
+                args.report.parent.mkdir(parents=True, exist_ok=True)
+                args.report.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+            return
+        # Exercise relaunch from the newly named enclosing app, without registering a service.
+        app = root / "Snapclip.app"
         helper = app / "Contents/Library/LoginItems/Lifecycle Helper.app"
         events = root / "launches.json"
         control = root / "quit"
@@ -102,7 +195,7 @@ import Foundation
 }
 ''')
         helper_source = root / "Helper.swift"
-        source = (source_root / "Sources/PastoHelper/HelperMain.swift").read_text()
+        source = (source_root / "Sources/SnapclipHelper/HelperMain.swift").read_text()
         for original, isolated in [("com.yingyanzhitong.paste-replica.session", suite),
                                    ("com.yingyanzhitong.paste-replica", identity)]:
             literal = json.dumps(original)
@@ -145,6 +238,7 @@ import Foundation
         helper_binary = helper / "Contents/MacOS/LifecycleHelper"
         for source, output in [(fixture_source, target), (helper_source, helper_binary)]:
             subprocess.run(["xcrun", "swiftc", "-parse-as-library", "-swift-version", "5",
+                            "-module-cache-path", str(root / "module-cache"),
                             str(source), "-o", str(output)], check=True, capture_output=True)
         for bundle in [helper, app]:
             subprocess.run(["codesign", "--force", "--sign", "-", str(bundle)], check=True, capture_output=True)
@@ -224,6 +318,7 @@ import Foundation
                 wait_for(lambda: not process_exists(active_pid))
                 active_pid = None
                 result = {"passed": True, "launch_count": 3,
+                          "resolution_checks": resolution,
                           "timings_seconds": {"initial_launch": first["time"] - marked_at,
                                               "crash_relaunch": second["time"] - crashed_at,
                                               "error_to_next_launch": third["time"] - failure_seen_at,
@@ -237,7 +332,7 @@ import Foundation
                                      "real SIGKILL triggers workspace observation and new target PID",
                                      "graceful exit clears marker and prevents relaunch",
                                      "real launch failure schedules a ten-second retry Task; actual attempts wait three seconds"],
-                          "scope": "Real AppKit helper process and NSWorkspace runningApplications KVO. Temporary helper source copy replaces two identities and adds diagnostic-only timing writes; production delay/retry logic is unchanged. Disposable signed Pasto.app, isolated defaults suite; no service registration, production clipboard, or user data.",
+                          "scope": "Real AppKit helper process and NSWorkspace runningApplications KVO. Temporary helper source copy replaces two identities and adds diagnostic-only timing writes; production delay/retry logic is unchanged. Disposable signed Snapclip.app, isolated defaults suite; no service registration, production clipboard, or user data.",
                           "failure_observation": "actual NSWorkspace error catch timestamp, not OSLog stderr",
                           "isolated_bundle_id": identity, "isolated_defaults_suite": suite,
                           "limits": ["SMAppService registration is not exercised"]}

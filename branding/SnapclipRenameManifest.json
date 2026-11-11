@@ -1,0 +1,1780 @@
+{
+  "moves": {
+    "Sources/Pasto": "Sources/Snapclip",
+    "Sources/PastoCore": "Sources/SnapclipCore",
+    "Sources/PastoObjC": "Sources/SnapclipObjC",
+    "Sources/PastoHelper": "Sources/SnapclipHelper",
+    "Sources/PastoMCP": "Sources/SnapclipMCP",
+    "Tests/PastoCoreTests": "Tests/SnapclipCoreTests"
+  },
+  "before": {
+    "Sources/Pasto/GlobalHotKey.swift": "9c9281b031b7d5b81bf704c3f009f3dc2880cfafd819b9bfae59658cb0f28ae8",
+    "Sources/Pasto/SourceAppColor.swift": "fc9c6a1b5dd5aec1998fa9a5b3149f7b8f7055b472473a80902bd9e546e89a74",
+    "Sources/Pasto/BackgroundService.swift": "882176450c8acb852a8573f3ec3a953974ad3198df286ea4da8288835af7faa5",
+    "Sources/Pasto/WindowSharingPolicy.swift": "d1d69c1996b68c50240bfc952ea9bb9fc8c2f88185e3706daf7ad120af2705fc",
+    "Sources/Pasto/ICloudDriveSyncController.swift": "e26e9b7846a1d6f58930b414decfad3c2e679d19bec16f861adbdc77bf4c47d4",
+    "Sources/Pasto/AppMain.swift": "2c0e959a75eda7faa3518f7c3e514ac25a900792b7c45aaed25fc81b24406120",
+    "Sources/Pasto/UI/AuxiliaryViews.swift": "e173c7ea3a52e9e4078c9dae06e51d305075223d749d489b722995a77908d6fd",
+    "Sources/Pasto/UI/ReplicaPanelContentView.swift": "4dc1bc8712542e9bf8d2ee386cca67584f19d698b1e789ba6974e4028a549b32",
+    "Sources/Pasto/UI/OriginalLinkPreviewViewport.swift": "b4df9cc96a0a5fc4aa881bb3785b18df24c96b6cf989a60c7ac9223af72bf7bd",
+    "Sources/Pasto/UI/ReplicaNativeDragPreview.swift": "0e5adbd506e11dee134c1e059adf4f3c7b27fd7e3cd7379be3c87bdc1fb391b7",
+    "Sources/Pasto/UI/HistoryRetentionSaving.swift": "43582f60fb307b1f5a56305acb2d6cb4f1f5de188ca89e33ac51de3291f5d735",
+    "Sources/Pasto/UI/OriginalCollectionScrollAnimator.swift": "6a406ef43ba78b00f7acb7c184926c3d0341ef84a3e070e7eda6bc8166fa72b4",
+    "Sources/Pasto/UI/OriginalCompactTextContent.swift": "3f0e9a48a84507ddadbcf2c4c3fee02e166c5aee98ca0b6763286d22dc96a1d6",
+    "Sources/Pasto/UI/OriginalImageCheckerboardView.swift": "956e55f5c723f031c762c58571098682af9a07055a4ded76af2be684941dd68e",
+    "Sources/Pasto/UI/ScreenshotSettingsCopy.swift": "92070bad5d5311c7518e4143fcd7eb9fdf60d1e6ffa5b3015d95bc86abcf55f5",
+    "Sources/Pasto/UI/ReplicaPanelResizeHandle.swift": "f0461fe70bbcb486c89ef24d7d2d119b051cd5bbfb34279df06f72636f6bcbbe",
+    "Sources/Pasto/UI/OriginalUnavailablePreviewContent.swift": "2e1dd8473f7b0aa146ee780fb03defb4729a6a87677031da00e50b31bae08afb",
+    "Sources/Pasto/UI/CloudKitSyncController.swift": "15aed4d4fde1088e9a55f50b1dfbdf5ae2521a0d8f7ba8e917d5fbb2af1f8ac4",
+    "Sources/Pasto/UI/OriginalStackSnippetCell.swift": "334266eff46fbab12a7895734553252887a423dd691d7c564f025d4cfe380d18",
+    "Sources/Pasto/UI/OriginalReplicaPreviewAdapter.swift": "46958c5360ed3df960aa07f056041a3e238b8f1873f57de93a8bbcd47798856c",
+    "Sources/Pasto/UI/ReplicaUIController.swift": "470f9b6b95f1443678155757f4f5fe25d567403bcbeb51db51708bb51fec1399",
+    "Sources/Pasto/UI/PastoAboutWindowController.swift": "029790c561e4e94701112adc2072bd25edfcffdd9122a72fc8ea9e6e7ad00250",
+    "Sources/Pasto/UI/CardSourceIconPresentation.swift": "e22527544bb02279f08e38f3b140dc3db0667610027f184fb17a5e180417b662",
+    "Sources/Pasto/UI/OriginalCollectionNavigation.swift": "c6823ab643eb983afed5db05caacc060a568035e35edac2d94b920edd1a48c21",
+    "Sources/Pasto/UI/OriginalHeadTruncatedLabel.swift": "02882527d847263c3370a82d555436d149fd9f9971392ba033967d32cdc9ae6b",
+    "Sources/Pasto/UI/ReplicaCardContextSelection.swift": "2a5b9aac7f579d6466a8f0c6feff24095609873c348ef99444f95f23aeb7615f",
+    "Sources/Pasto/UI/ReplicaBrand.swift": "a137c6c6a0f9b980ca6024bb2ef1c18804bf0e09526f0e34a8b6699ffc843b13",
+    "Sources/Pasto/UI/SettingsShortcutRowRestore.swift": "01dae6eba062d2cf12aa78208707e8def93687aede2dea3014137aa638866735",
+    "Sources/Pasto/UI/OriginalAccessibilityRequestAction.swift": "8d01232abf8a3ad555cfde386ac7ff099ec6410290ef9f17c7ab3f5a60d9e0a1",
+    "Sources/Pasto/UI/HistoryRetentionCopy.swift": "513deaf4af45c1604cf3e6a42c48c66c40284d2960e92de6f97ee5d66af1c148",
+    "Sources/Pasto/UI/OriginalUnavailableCompactContent.swift": "aa3a350b3aa3559b9e78db3eb5547a90b4ab73a5abf92e8763ac7340f5706d50",
+    "Sources/Pasto/UI/ReplicaSearchSuggestionSource.swift": "d3a861f8ca53ce22c57f54684d673ff2df6f646d965de8b5220ac75d6e56f24c",
+    "Sources/Pasto/UI/ReplicaLinkPreviewContent.swift": "0c8cee3ee1ba72db63a2f7752f42a736058405608fcbea71b7819fe8a69de2be",
+    "Sources/Pasto/UI/OriginalAdaptiveScalingImageView.swift": "0002845178a53c2617885f40fcfad92f679c1123a095340aa1037450914730d6",
+    "Sources/Pasto/UI/RichTextEditor.swift": "7c4a91fd3876d2bd35277b1a2e0ce6e1ac5e4f6af0e8de346ac7a1ced149794d",
+    "Sources/Pasto/UI/ReplicaCardTitle.swift": "eb1dadb0a53e03e8ced8c70e35add3a4431aa4c77b668adaa3aa5098f3938ebf",
+    "Sources/Pasto/UI/OriginalPinboardHeaderIcon.swift": "c5aad86b7285c39fd31757919e9cf8d3cc5a29fae201a150132735c193a0c2db",
+    "Sources/Pasto/UI/OriginalImageSizeBadge.swift": "5579a312cf5cc74260e6a9403c1b704afdfe3c0c6a70aa101678264733911873",
+    "Sources/Pasto/UI/ReplicaFileCardImage.swift": "92b5d106ab7f48bb8d9dddaa29fdc279ef09b4a02e34448879d34738f440bbd4",
+    "Sources/Pasto/UI/PermissionStatusView.swift": "0a12157833359e664202eabc31f3d97e2a0c419ccc547d7dc3618b97b50486fd",
+    "Sources/Pasto/UI/ReplicaImagePreviewContent.swift": "f571de628dd9f10ae92e16c9a6f53ae386451f60f61c581958bf4d070f1dd027",
+    "Sources/Pasto/UI/OriginalCompactTextFooter.swift": "cd31a6dd52715f0f376365665dabba599bd190358ba6b9d23d4f6d0b4c284d2b",
+    "Sources/Pasto/UI/OriginalPanelTabBar.swift": "7a4329eadd9d833ebabd34d034ff3b99ad38fc66c264d5e2c0e3ff2a8bda1a99",
+    "Sources/Pasto/UI/OriginalCardShortcutIndicator.swift": "afb30541523231c5438a4a357d607d87aa67a0babd7ecd1fa839b204e08ff620",
+    "Sources/Pasto/UI/PanelViews.swift": "bc022f3c7e4ba5e7274464b7a12fa6de39c475d011f01c731958f911e70b4a58",
+    "Sources/Pasto/UI/OriginalNavigationKey.swift": "63c828be06065a20f1956fb2c4cb346e81990872ff089a13e5af2ecad2c61ded",
+    "Sources/Pasto/UI/ReplicaLinkMetadataContent.swift": "0a47517556c1c338b3035815126f000cff8e49b32d3e42f3bd80221acb9af21c",
+    "Sources/Pasto/UI/OriginalPreviewColorFormatting.swift": "38754162d394bae0d27932eb73389f8c5ac0f1de6c7be24fd7e16a8656774fa9",
+    "Sources/Pasto/UI/ReplicaFilePreviewContent.swift": "df56f4edf10439457eb19ae21ca3225088e66e2b9ebeb6db461f024fa60c76ee",
+    "Sources/Pasto/UI/ReplicaCanonicalCardContent.swift": "366ac2b62df5d28f46fc9264538503dcabf1159f06fefbcbea8b038bdc8cc928",
+    "Sources/Pasto/UI/PermissionStatusProbe.swift": "d34a26e897f2b6bbb28cb0a13bdab18756a23b39f13ffb2c2478aee86fb4d50a",
+    "Sources/Pasto/UI/PastoInAppUpdater.swift": "b889b36b5c61bf4553ffbd55ca30fc04a6e35db94e773e35d449a21ad23c3572",
+    "Sources/Pasto/UI/ReplicaNativeCardCollection.swift": "b121bf9ac66163acef09f5e33ee8b9c3eddd8c37ec1444668632594ea0ae524b",
+    "Sources/Pasto/UI/ReplicaCopiedOSD.swift": "d1b58b05ef6c37302cf6d6c1e0056ee0af55035422071d4c53ebe1583c84883d",
+    "Sources/Pasto/UI/WindowAppearancePreferenceObservation.swift": "3d16ed80340cc60c816db5045164db3dc9e93c8e5bb56bc9af330cb030aa6ba8",
+    "Sources/Pasto/UI/FilterBrowser.swift": "d912970a1adc294d0c039db34374de8497bf321bf4ce2d622634e53e2dd59b37",
+    "Sources/Pasto/UI/SettingsShortcutReset.swift": "d31a81f894da59aa335e921ee11f6de5f34975667aa23b172afd061e99c4b9b2",
+    "Sources/Pasto/UI/ReplicaReadOnlyPreviewContent.swift": "9aaf8080fba6501211d529b319d0e0b7ecab29e2874694369ba46eab37e7ea77",
+    "Sources/Pasto/UI/SearchEditor.swift": "18219155d008f96503277a3a87084900354f5fceaca213c3d61b556688df5849",
+    "Sources/Pasto/UI/OriginalHistoryCapacityControl.swift": "55e7b8af42e2504fdfd4c45dd8dd0af24fc38725f0316c2400bd266fa6ce7441",
+    "Sources/Pasto/UI/ReplicaPanelGlassBackground.swift": "9c3907820c33abe26fae19f9dd75feba8a4dd22d65ad98f145af58a71a5e609d",
+    "Sources/Pasto/UI/OriginalSuggestionAttributedTitle.swift": "8abc994aae0de69cc925757b59a4976580f2a6f145af30f850c0b63f768d99f9",
+    "Sources/Pasto/UI/OriginalImageTextSelection.swift": "930ceb4220aaba298f30eac0642bbcdebfab4d143390be8edd9d903515e1f21d",
+    "Sources/Pasto/UI/PreviewAnchor.swift": "aa621221c95e877131ce3f53723be87730091482eeac479ec109daf66adaf923",
+    "Sources/Pasto/UI/ReplicaSearchSuggestionsMenu.swift": "5eb9ad17123990d7c2040a75c07270668adc16e8a93a738b85dbd96efc8d4bc3",
+    "Sources/Pasto/UI/ReplicaSearchIndex.swift": "544764d37462eaf491c2b1e22a24b8faf0450e58cc01909fc44b7bdc4648cd47",
+    "Sources/Pasto/UI/OriginalPanelToolbar.swift": "89ab126e27d68ff5da3d1c30f99074631f23500841426d52722488bb39b8295e",
+    "Sources/Pasto/UI/SettingsCopy.swift": "8bab4f3003007376fa8535a5ff899a0061cc0ca5c3359be21522a42235a3e806",
+    "Sources/Pasto/UI/ShortcutRecorder.swift": "89a3190e3fe5d7bf854000049fb709fb3a68c33ee8f6cbcca10ca9ff14cd5873",
+    "Sources/Pasto/UI/OriginalSettingsSplitView.swift": "d9c348122901ac2657757e76e149109c0d8ab261642f31255b98a0784a4b2549",
+    "Sources/Pasto/UI/ReplicaColorPreviewContent.swift": "950ae832377be7458c762c7b3c807231b6da404ac7940077c9ee4799a038233d",
+    "Sources/Pasto/UI/OriginalPinboardTabTitle.swift": "0d134694dbc7cdacebdff9e215387cdb41a21738beacc4e6c4f2eed0e33346a0",
+    "Sources/Pasto/UI/OriginalAccessibilityModals.swift": "80ccc2f4e0018b4e68b03321f12948df4ff1ab634aca36acdfeff5786ac4d909",
+    "Sources/Pasto/UI/OriginalStackSnippetText.swift": "b0040d8583798179b84a4f88a2aac45652a48eeeae5746330a065073609ff428",
+    "Sources/Pasto/Screenshot/ScreenshotCoordinator.swift": "18377f4d064d3188795d7ff18eb45c1599e2e9534037e388dbc0658d89cae4d3",
+    "Sources/Pasto/Screenshot/ScreenshotHistoryBridge.swift": "e85d9b242453bab11359131b5ffcde87697a9c7138513e7898caf01039a9c155",
+    "Sources/Pasto/Screenshot/ScreenshotWindowHider.swift": "25dc4deee8622baae38e57d3321f8f3ec89e8d541a722b123d42555346648302",
+    "Sources/Pasto/Screenshot/ScreenshotFocusRestorer.swift": "de396466f2c6e5af2aa85b06d0427df76c90f1416747a7a17d7dd7224edca9eb",
+    "Sources/Pasto/AppIntents/PastoGetItemAtIndexIntent.swift": "f3f734328d115187e375e4082385ad1f4ef928fd2efbc02d6f483e1c57700492",
+    "Sources/Pasto/AppIntents/PastoPinboardAppIntents.swift": "10f76fb4ccef7d5401189aa4741920ebe5e4a45c44a8a0de562ec22034c29c0a",
+    "Sources/Pasto/AppIntents/PastoShortcutsProvider.swift": "b6ab8aaf6cf11e03fcf2119478afdf1e822ef518f5c5902cbccedf86a0f089b8",
+    "Sources/Pasto/AppIntents/PastoGetLatestItemIntent.swift": "b1fe505c1ce72ff47c620f53822d5cea9aa20a32207ee4819603de5d13a1a212",
+    "Sources/Pasto/AppIntents/PastoCreateItemIntent.swift": "997c65f1b59c274f5787000629967b4c6a67e2a5906ed6894b160a7150ce6a4c",
+    "Sources/PastoCore/OriginalResourceBundle.swift": "d51aba36162814ecbdbba757dff295966eeb2e444b00df6d2443359cc1393fac",
+    "Sources/PastoCore/OriginalDateDisplay.swift": "cd1ad2edda3b32d3e25f1750c7d790e3906869325480933e0d7d47c863500e5b",
+    "Sources/PastoCore/OriginalOrderedSelection.swift": "b3631aed0222167f88c16329c76483f807d20af3baaf3a90ab4d214e8d9cb9f8",
+    "Sources/PastoCore/OriginalSearchFieldAnimation.swift": "5c415996232f8f009d56ca0e07976ac31bb502f2295b7401cda2c62b4f51cc49",
+    "Sources/PastoCore/OriginalSearchSuggestionAnchor.swift": "2af28e89780d0e373331ea15588909cea7d99e1008e396717bb57b10b21436a7",
+    "Sources/PastoCore/ClipboardItemObservation.swift": "6cfe581eb828913eca4fbdce868350b50f5767cf5eb68cfe66d536bc671f376a",
+    "Sources/PastoCore/OriginalSearchInputContext.swift": "073c80079e979d5cddc549c105aab901fdf8c9482d7b56cb535e098d9d942867",
+    "Sources/PastoCore/ClipboardListAttributesObservation.swift": "e3697eaeef210ee29ce26369751b0706425aa4bb188f1ad2ca891f72752cc418",
+    "Sources/PastoCore/ClipboardPersistence.swift": "200a6e38595deccca9a96b88c60f9a8e9ec7edeed32ed5ea225b4483765a7e8c",
+    "Sources/PastoCore/OriginalCloudKitContracts.swift": "08d34bc19467a8d674970ccccbbd61ad8fff0d206430cf8017cf145bf468652d",
+    "Sources/PastoCore/OriginalSearchCommands.swift": "cf7409e5f4bf47f0e1052ac3ae42c5af43812c37407bfc77eca62ba864ca1bf8",
+    "Sources/PastoCore/OriginalStackFunctions.swift": "e408e508e9bc0bf2b7477ab142e29e4b1c1087daa63cd402c312f145e6cf16a4",
+    "Sources/PastoCore/OriginalShortcutValidation.swift": "fe66e83630d3e9e3031d00bc90bb869d75f5d7066a693843a53e11f9eb966c19",
+    "Sources/PastoCore/OriginalViewAnimation.swift": "66c9ebb5f7187b0ad41aac5f1b61b2bce393ccdbac6a4111491cc15e7a50e56e",
+    "Sources/PastoCore/OriginalLayerBackedView.swift": "87acffa7790cb38e5715cf6ce3d4474fffb3633d3deb15635743526f6342303c",
+    "Sources/PastoCore/OriginalLinkDisplay.swift": "22ddf146e091d4b1f9fb0315e95a8bfb527542b1e1f945c9c80a776e47302b20",
+    "Sources/PastoCore/OriginalSourceApplicationColors.swift": "c9842f94a46e841a187891f746cbbe7418fc7a595d46e4a738c59757c28dbcb3",
+    "Sources/PastoCore/OriginalSettingsLocalization.swift": "7feed7694b76db89a24a82ab511129f4f94e23685b23b9b9b16063a7bc01cfaf",
+    "Sources/PastoCore/OriginalColorPreviewMetadata.swift": "b78c20f7a126322c3be604b7a26fc7d630384f31265969e4d17c5cf0887f60b2",
+    "Sources/PastoCore/OriginalManagedItem.swift": "b5388f95ca3f7b58a366f7b9d3a77075294df773d999627249f2aa510906cdca",
+    "Sources/PastoCore/OriginalShortcutTelemetry.swift": "8873cf835f1611b85b91736a796b4335d3364b9bc9278ace5bc89b2bd43ef14c",
+    "Sources/PastoCore/OriginalSearchHistory.swift": "8fc078b55a5e21dd5b8e4297d4725d409e8f4a32c779aeff29f9cc16c4c89ab9",
+    "Sources/PastoCore/OriginalStackCategoryIcons.swift": "f1fec5541718365bf6e7b8da0641dfc0f0db229c93e2c3d1626f5180983bee7e",
+    "Sources/PastoCore/OriginalPinboardColor.swift": "cfc44a744f2d3769d70582fea50da409435cfd9dcfa7f9ba104719093dcaef8e",
+    "Sources/PastoCore/ClipboardStore.swift": "7236a4d8947b7d4587363603a3436c858f406c8776640953416dab9ec58d60e0",
+    "Sources/PastoCore/OriginalPasteboardCaptureState.swift": "37ffe8ec4714bca780d53654ed09cde4a89a1b6362ba3869e56882a30a06689c",
+    "Sources/PastoCore/OriginalPasteboardClassification.swift": "120318efac6b9e47b12a415427c830d051338fcbe0257f6f6c6d5bbab6f30614",
+    "Sources/PastoCore/OriginalSearchTextValue.swift": "8cf889ebb9999b13a43223bf406c4c1e12e9cd7365faed560b5dfe1acb8e2bf2",
+    "Sources/PastoCore/OriginalPasteboardPolicies.swift": "b85860e5fdc4be03afd7f4f69651f3ed1fc15c2c48d4a765fdcae5fdc8787dc7",
+    "Sources/PastoCore/OriginalTextPreviewModel.swift": "a01858a301a5a5d4ae5fe8492f92644c4b99fc628eaeeaa4cd34d0ca76376cd6",
+    "Sources/PastoCore/OriginalPasteboardRestore.swift": "bf309c94b15bb4db46acedc6ba535d1f060aa3a8d74257053a773cf7200dd2c6",
+    "Sources/PastoCore/OriginalPasteboardArchive.swift": "f0775dbdefa9611c9972d4aa8daf3ea9c8742f1f85d446c71f01e0c820c759dd",
+    "Sources/PastoCore/OriginalSearchDateEncoding.swift": "b46fe7fca447d1089bfc7c36676ecaf13a2d77c6d665eb5f42cb37ab5d00c5c6",
+    "Sources/PastoCore/OriginalSoundEffects.swift": "bab0a9ae8662e4f7d81cbe1c87604f0da713d3e928e466e2fb17c7f60b148dd0",
+    "Sources/PastoCore/SnapclipAssetRenderer.swift": "cbf61ff70afed586c56c4b0e0031e0a3a60b50a19813c7bda571b0b9b35151f7",
+    "Sources/PastoCore/OriginalPreviewSharing.swift": "64b2623f15994676d6798fbc4702a7046826279c56249ade36f9361eef46393c",
+    "Sources/PastoCore/OriginalFilterBrowserPopover.swift": "f0476a5457e4326cfa241adc063afb2e0031627cb49fe8bdf226634f9731ae7f",
+    "Sources/PastoCore/OriginalHistoryCapacity.swift": "b5fd642d85020bf621819b81c9bcda4cc33c4c602da19070eb67f6f7e825d3d3",
+    "Sources/PastoCore/OriginalPreviewTitles.swift": "09c1378ba75a4d8d7c75a4cdc22eb8b5093987b824a75ff56bb771cfe28d1c41",
+    "Sources/PastoCore/OriginalPasteboardChecksums.swift": "91b10577b3103f2b5e4ad0879dce27b6ed53648531a0265d93d7d9f636fc611f",
+    "Sources/PastoCore/ClipboardListPersistence.swift": "e8656dfcd9fc53737c1d212ebfc2a3ac96714e4cb37c1a5447c4fa351002c1e9",
+    "Sources/PastoCore/ClipboardRestoreItem.swift": "b896730653c49e72387fd53bc19e2aeea23e5cafabc94ce7fd8fe6b9cf1d7665",
+    "Sources/PastoCore/OriginalSearchLocalization.swift": "78d4d35361955ddcb324ae47587495f1d39efa73dc839e80e96d1106daed1d2f",
+    "Sources/PastoCore/OriginalSearchDateRanges.swift": "91f2f941e01c03dc575e29edb80144c4e268174528e551deb72642b4a7743451",
+    "Sources/PastoCore/OriginalDiagnosticsHistory.swift": "a2c917352e8d3d194f3528b7023994fdb3e393e7f81007ac5be6c77928f30b62",
+    "Sources/PastoCore/OriginalSearchIndexingState.swift": "3c790cd0e302b6a3020b88516500e1b4ab9b51462eebef220f17d2b9795264d9",
+    "Sources/PastoCore/OriginalPasteboardDataCodec.swift": "3994f19683c261c6137c9a97f66f89d69b111e8731cc09acb42f6727980a786c",
+    "Sources/PastoCore/OriginalSearchInputHistory.swift": "24cfdd95c3456f594ef02cf3d2d6b31d61600256266a129a686c2675876fce1a",
+    "Sources/PastoCore/OriginalPreviewAttributedText.swift": "e525ae72bbe7369776f892ae9949d765c6611c28e408617bea06a611a265f478",
+    "Sources/PastoCore/OriginalSourceApplication.swift": "f062fd4c806d1c155e84c80e6ba962500c2f2f195a2fee3b50fe5d864f06478b",
+    "Sources/PastoCore/OriginalDiagnosticDispatcher.swift": "7f7ca246acae9248a654db1af4973e8d48c272651a147fffc06cafaf2a103e9f",
+    "Sources/PastoCore/OriginalSearchSuggestions.swift": "c0896c16d829e7d7703bcd6f741cc10612c51975b9dae93d3fda1e07d166769e",
+    "Sources/PastoCore/OriginalPinboardTitle.swift": "111682b2e750e5a237a34b7a39bc90107cffec52f74ffe0eefa95455b5ca0261",
+    "Sources/PastoCore/OriginalCardPresentation.swift": "acb4df601c1f35cf1e8767bc8a66140c99ec082c8c82f79acd49fc316a5d09cf",
+    "Sources/PastoCore/OriginalSearchFilterView.swift": "4628dc1edfd81fa48b4442c4b7f05ec5eea3a6f8598038d3a1f9f9480c62f6aa",
+    "Sources/PastoCore/OriginalSettingsIllustrations.swift": "a3bf1cfe1a5a3f5266559022250e632476311bbd9fdd15dad384fd4e57d0a3d6",
+    "Sources/PastoCore/OriginalContextUndo.swift": "da03ff7120c764782574fb7dd0175d9d3ff7043cd2a58220c34a2b5c828ed8f7",
+    "Sources/PastoCore/OriginalConfigurationFunctions.swift": "d777c6848066ec198ca41739d0a785ece4df2000977cda19b230e3d4530fcb54",
+    "Sources/PastoCore/OriginalSearchTextTokens.swift": "ea0bef0b75186bf558f512cd15f5343e1251fb47a9e39791d320fd23248b143f",
+    "Sources/PastoCore/KeyboardShortcut.swift": "eba51741928fc95619585980567b617d39f3c749564cddb5dff4bbd04bf189d6",
+    "Sources/PastoCore/OriginalSelectionAppearance.swift": "5872178f7e902aa92c57626c3a2201be08ee9fcda85d1d7b1b90e11baff84588",
+    "Sources/PastoCore/ClipboardSourcePersistence.swift": "c62ebc61419acf331cc3311878d0bf4af0c6546537a81bd824e7fcc1a5d2e339",
+    "Sources/PastoCore/OriginalObjCExceptionBridge.swift": "cf3e9e3b016001d7d982a673e00e365d8b638693effe3c9c49f8c77b93102bc2",
+    "Sources/PastoCore/OriginalShortcutControls.swift": "39ab996761733e0646087dc1413f300d5b958ed1c95e2da3363e752d71d1b1a6",
+    "Sources/PastoCore/OriginalPasteboardImageEncoding.swift": "2e4430ee0d8c7d8f88561457d37e8d50c0c756d83471facda099b7518a6a2dfe",
+    "Sources/PastoCore/OriginalPreviewTextTraits.swift": "1cd1cbb84577bc560c3795d43940d351de246ec22c745be3d5de7b0c85571cbe",
+    "Sources/PastoCore/OriginalStackTableController.swift": "cf0da7926b589a254f17ecb40d513d25903aa3fe40aa64a112b03c04e33bd2f8",
+    "Sources/PastoCore/OriginalTextPreviewMetadata.swift": "7c09e2e2297ef070a792bf8a50e51ab162146d27b516d7e92ac3bd53df36b676",
+    "Sources/PastoCore/OriginalAccessibilityService.swift": "0944aef05fe5443056b447436bde257358b59ff30064aac24e1fc7e68f311849",
+    "Sources/PastoCore/ClipboardCollectionItemReference.swift": "0afcada788788dfd0295ab0c8b3fb0ea747045b74d64847745b7ae88157fee35",
+    "Sources/PastoCore/OriginalShortcutCoding.swift": "9a0f5880a129959b4a906014bab6aeab7dfc0055e55e73655ecbe2d55090d2e5",
+    "Sources/PastoCore/OriginalFilePreviewActions.swift": "71aed79904a062dba83864ccd4fa4a1958543abe7f216cea3395f24ccb5a6f8d",
+    "Sources/PastoCore/OriginalPreviewPopover.swift": "8617fae44630789d2aff97e65f2aa2c67adc2551c54d6d21d6021ea1c121994e",
+    "Sources/PastoCore/OriginalCloudKitJournal.swift": "f580f0d45cdb9237892f0cc5ee77faf676d0e93c026b63dd36514765811fc1f2",
+    "Sources/PastoCore/ClipboardItemTitlePersistence.swift": "c85a59b46d6b6dda6134d7454368d64fc05b269fdd99fc5350e5b74502e3715b",
+    "Sources/PastoCore/OriginalLinkPreviewMetadata.swift": "cf30ef0714e8f3bfa31c11765ce3a0493b3228013c3d4096cc5c32e851c2be00",
+    "Sources/PastoCore/OCR.swift": "71144dd13951f0ca5d0073b206d7493c576ad49943d871009c96a603dfe971f5",
+    "Sources/PastoCore/OriginalPasteKeyTranslation.swift": "cf36143569f8356a1fb84e8dd8729c5f9ca2f5fe5ab4db0eab54f7c0ffcb9ad3",
+    "Sources/PastoCore/OriginalSharedDependencyCache.swift": "d83f199826f661090cdd74b9d05e185e295bf3570ba2f8e8dc868f9dac219cbf",
+    "Sources/PastoCore/OriginalShortcutRecorder.swift": "6d26749356d383299c1bdc78104c8e348a2f1e95c8714239b36ef5b87d57426e",
+    "Sources/PastoCore/OriginalFilePreviewMetadata.swift": "39becad3e7a78d6d313569312faae9669d577803261813fee3ed8c14189044d0",
+    "Sources/PastoCore/OriginalItemPreviewView.swift": "dc4ed2844af83a17c2c878828e13e29572941172b6a18e161081a47c734fd6c0",
+    "Sources/PastoCore/OriginalShortcutDependencies.swift": "b61963d4976edbdce29db86588d7ed4725a2f27105e3eea814877663e7b1ce37",
+    "Sources/PastoCore/OriginalGlobalShortcutMonitor.swift": "8793fd5fe1cf86710fe0453d585ede5299d2e97a8c7b1b2bdea780d60bfa8945",
+    "Sources/PastoCore/OriginalCollectionShortcutActions.swift": "01be6b33a11e469bcbbe4afe6b12ff4f3ee7ef64e7f4a7cc64d8ff654379f9fb",
+    "Sources/PastoCore/OriginalShortcutMessages.swift": "7a55204bda8a093b2db4610b8cb6d0deee1173196e1b07dc2811507c7667c6d2",
+    "Sources/PastoCore/OriginalCollectionSnapshot.swift": "84df7a39ccdad8d43fb43a1e8caaa2c0c14cbd4510f5c9d7165cc651678c17ac",
+    "Sources/PastoCore/OriginalPreviewTextColors.swift": "06134570276933fc2be82f00033d2ba9c70aaf04d5e1e134e23fcfb830b3a881",
+    "Sources/PastoCore/OriginalPreviewWindows.swift": "4cc1f30d0de962162c6231a6207cc7623fc82e20f126f3ebc3edb326d5592c2d",
+    "Sources/PastoCore/OriginalPreviewLocalization.swift": "4d040eadf0a8b0f339bfb37f2ab9f5469e53439f5b175a5aa737b705f7c4dab6",
+    "Sources/PastoCore/OriginalSearchAppearance.swift": "0cfd7e194ce6f6b1f4118897810e35d0eafab317a68e6104e4bfbd11dbaeb5c4",
+    "Sources/PastoCore/Models.swift": "8fa89e9de112a13b4f4059a5f681996aec4aa9b10351db03b3e924ed528404f1",
+    "Sources/PastoCore/OriginalSearchField.swift": "6a56456d5b45a28cacd291891380b97414e71c1eaf68bd1d9ee15c3ec1596600",
+    "Sources/PastoCore/PastoCloudKitConfiguration.swift": "5c19e5388c3c730449e47dc7aef3c81d3d3d1992722c1bef2b4981d4b5495e9d",
+    "Sources/PastoCore/OriginalSearchEditing.swift": "de4dbf21b72826fed9c0e9418c842eb8b0f1146a7d7aa9bfe22985af5d7ac73e",
+    "Sources/PastoCore/AppBrand.swift": "9998e6f000ec175e775c6b9109a813fb4c4218447211c3c1b3e3feb057b8c348",
+    "Sources/PastoCore/OriginalPasteboard.swift": "139097cb610fc3a43f906414ef1b41d8634eb804f8911bc898bb987967a4208e",
+    "Sources/PastoCore/ClipboardItemDataPersistence.swift": "209195a24356c92eb1b0d9f5ddf5cd657f6103ea46fab30631db6c7d10282603",
+    "Sources/PastoCore/OriginalSearchMenu.swift": "af3962d55bbfae4c40a67d43872d7f30d8e0e9c34c049527f28f94cc5a62f5e9",
+    "Sources/PastoCore/ICloudDriveSync.swift": "54c8858a698b8f8703dc546861a70020967236494d19f9084e7ac34a9fd19847",
+    "Sources/PastoCore/OriginalCloudKitSyncEngine.swift": "6cce5e14ca63852cecf00e378964216c8ff6d4e4bef31dfd89343f1e0f6825da",
+    "Sources/PastoCore/ClipboardSnapshotReader.swift": "853b835aee118b8fd7994083fa407cd6d7d4ed2967c6bc35f3e5b3b54eef49b5",
+    "Sources/PastoCore/ClipboardItemOrderPersistence.swift": "978e36634da0a087257f4df93030f5aa60620df1a7f568f080dc2dd7c3c0bc17",
+    "Sources/PastoCore/OriginalPreviewTitleLabel.swift": "84e3a33dbd575ad595cded72928d3d9b917ec1ece7eb258ba42ef3cf457bb0e2",
+    "Sources/PastoCore/ClipboardSearchRecord.swift": "f624524f6902d07084ccbee412c92ce933b3b5d7e397f024bd57ce1330cca459",
+    "Sources/PastoCore/OriginalCloudKitGraph.swift": "413802e1c9084f8be64d16a4b33b35b7174bf52cea4f0911e0d63f54314d3c96",
+    "Sources/PastoCore/OriginalShortcutFunctions.swift": "c9f72e489f3345339beef2b79493c8c06bbae52251d9f29876bde3fd4c884174",
+    "Sources/PastoCore/OriginalUnavailablePreviewLocalization.swift": "d0b1c9580546a47c9b9491edef7016683dc54e88d767eba169be43518a810963",
+    "Sources/PastoCore/OriginalNativeDragPasteboardWriter.swift": "db793abd1e9b2c3c6ddf5fbe94dcb55af21122e5c9751751d5032a5156a3c908",
+    "Sources/PastoCore/PastoUpdateChecker.swift": "8cef96fa1e770c2af3af157cb1c8d04263bf2a33b9a312210e278960f80ac5b6",
+    "Sources/PastoCore/OriginalPreviewFooter.swift": "97d14915cc4fa873a0d526a42f168ea5487864d0b8327e825bee18e28bd2e25c",
+    "Sources/PastoCore/OriginalSearchFilterSymbols.swift": "73a9ca9cb90529d7c46665ac1af0241f0310505e56704d441df4e94c816698ef",
+    "Sources/PastoCore/OriginalImagePreviewMetadataCodec.swift": "1620a024a011c19294f16680ae2a8d6e92afac426d4ebbe1dd4e1fac1e364ca0",
+    "Sources/PastoCore/PasteGroupMigration.swift": "edc85447b3271cb519b8636f017fe17e3a473dbf7e7be35deb4346f285a5a645",
+    "Sources/PastoCore/OriginalPasteboardImageRestore.swift": "03e7d3e0aeac82986226a674708f4817cbf5cf69c20e856738774bbd0f51635a",
+    "Sources/PastoCore/OriginalSearchQueryNormalization.swift": "fc2414e1395bb916246c9ef38509730c394e3d0feebbf0ca6dc9438f86409eb9",
+    "Sources/PastoCore/OriginalImagePreviewMetadata.swift": "90bfbfd6d413e25d446b47346935f15c53d80dc44028d6630d19331b06908ffa",
+    "Sources/PastoCore/PermissionStatusSnapshot.swift": "1ec29c62fc5144b774eff74bdfa3bc483008fdf635167cc1db80261d5063972a",
+    "Sources/PastoCore/OriginalSearchInputView.swift": "bacd69180e56aaac3eebae4eca50daa594cd09a6a146da89654f37f04b860b28",
+    "Sources/PastoCore/OriginalItemTitleLabel.swift": "ffc86d0ef58daeb84ed0ede3a777fbc7152ae3a1778d2fbae8470f205f6fee29",
+    "Sources/PastoCore/OriginalSearchTextView.swift": "25de1edc0432fcfa2a18c8437d6ea6fd98727a7914e01560240380f6d74808b5",
+    "Sources/PastoCore/ClipboardCollectionEntry.swift": "8f507c30666e267cb30f60e9bf86dae8af186305348156da1fef8a2a5b30a82f",
+    "Sources/PastoCore/OriginalSearchTextScroller.swift": "0f0b42bf9b40a34105f00c5dddf2c644415329fbae2f7816de221c2c123ce870",
+    "Sources/PastoCore/ClipboardSearchCollection.swift": "a7588dd7c2bc2f994d14fdb14ea11e5801887fb1cfb8ca073420d961baf26fb7",
+    "Sources/PastoCore/OriginalLocalDiagnostics.swift": "95baca2d0ee25cb9ca5a7bcbc111a820bbe70d29feecf46e5d8cd0c1f6d5c911",
+    "Sources/PastoCore/OriginalTextPreviewSubmission.swift": "d73f78493de8b58d15baf16daa91882034cc8f186768a7e6a927a398ddc8d91f",
+    "Sources/PastoCore/OriginalSearchQuery.swift": "4c828b16c6342387d375e6b5a3f24d28b37bbffa1c377e4cdb064ad27b5d1b28",
+    "Sources/PastoCore/OriginalWritingTools.swift": "4a21f642be03fe3c1c08638186a90b3320567eb2af90f181aea36469446637a3",
+    "Sources/PastoCore/OriginalDependencies.swift": "6cccb9750822fd36e8e769bbaf820fc92232446bbde723089032b94a862619a8",
+    "Sources/PastoCore/OriginalPreviewWindowTransition.swift": "35bf14270834582525088ebe43b6b50c11373c6c59106153711c3acf0e1aa34a",
+    "Sources/PastoCore/OriginalToolbarButton.swift": "f4c3920e5f5cd9f515bbe0cce530f4f8f6335b14450f75e471f0272e19412165",
+    "Sources/PastoCore/OriginalCollectionListContext.swift": "4511aae8e8d7897a27c173e97f7cd4a98b9a9c0aecf33080d25bf78dfdd5115e",
+    "Sources/PastoCore/OriginalDiagnosticsAppActions.swift": "51b66a38645a00f634efdb623f74940f503c8c2c36862badc56b1267d2132cac",
+    "Sources/PastoCore/OriginalPinboardAttributes.swift": "c5e2e57445672c441594085a57f57b2b79325e5d19db26141962018bf5eb26df",
+    "Sources/PastoCore/PermissionPromptPolicy.swift": "3dda6e20484274900b6c5595ce3dc81252adec3e105edfc5623403b3ce0eca69",
+    "Sources/PastoCore/OriginalInitializedValue.swift": "bde8f2a1c9e4b6c74e9bb332ebff29dcbd3569d2459783a451661ff106d0e1c4",
+    "Sources/PastoCore/OriginalSourceApplicationImageColor.swift": "dd0923531076f26726f9aae58876b63a9f8056b009597e99a6612f28155f0c24",
+    "Sources/PastoCore/OriginalDiagnosticsManager.swift": "afb071a98b036e3023f254c039ca1d85c4a975e79307aa3f3075b1caf21513ed",
+    "Sources/PastoCore/OriginalShortcutRecorderView.swift": "3ff3465d0707ad381867cb0167590ab8c5a84fbc06399e50e5dbddb20ddb66d1",
+    "Sources/PastoCore/Pasteboard.swift": "67a8d3d9d1e27e5aa2a8684259ccc3e49fad70f516bdb06715d8a7167ab68234",
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Info.plist": "83d3bb20cda3c61373de928b60c991fbd8c8e53590c6a0eb80fcbb6e11d6645a",
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.link@2x.png": "dcb22ab1eb816628133ff8909c8a37551cbf9d65e31cc757fc1fb6a81aa0f477",
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.file@2x.png": "d2ed40a44ec99509225eeef0919af84789172e7b441da38f0d21a8bc4a1fa1d6",
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.link.png": "8334dcbcaa93beeecd72ae6dddf9a1ec6a9a5aad597bbab2285dc1bbba53af46",
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.file.png": "8e47b829f32f7dd28d634dfddc9b46bb50e5cb06794c3e07fec5fecc141d670b",
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.unknown@2x.png": "abd0ae34acf7ed4ed8eb7b207b1547b02b6e87b23107d342e3394b0ad7061ebe",
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.unknown.png": "10df1429fc14e04a954265b5cc5abcc494dcc3e0b5acbe8ba990898e5a73ce82",
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.text.png": "423122ba0250aeea4a3b91eb92167ffc32ab5bc96083ba3a9e60ac9c0bc6cdd6",
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.text@2x.png": "9f5daae8c48283b2176990d01c37d1110791bfef6be952fb395e071f838ed422",
+    "Sources/PastoCore/Resources/OriginalSettingsCopyToAppDark@2x.png": "83dfa00776b16ba16a37bf52fd5527982271e57e32760c739984e564610aa3f7",
+    "Sources/PastoCore/Resources/OriginalSettingsCopyToClipboardDark@2x.png": "031f1e6e6b2bea16548ed1b77f9de019aae9c6e7a2d7c0f5df960f948324b1ce",
+    "Sources/PastoCore/Resources/PastoOtherApps@2x.png": "9c5e5ee6b2af9a4fa6cb81982d5aaafe08635ed12ea93f12dd2d3c956c978483",
+    "Sources/PastoCore/Resources/OriginalSettingsCopyToClipboardLight@2x.png": "38bb4b1719f4f27dcf301aeb468cdbc3b43d477a92a431b7651619acce04f7eb",
+    "Sources/PastoCore/Resources/OriginalSettingsCopyToAppLight@2x.png": "df23e63db6a07a9753ad889045bd17f797cd4c3ede665c3cbe8f88d82e3f5cee",
+    "Sources/PastoCore/Resources/de.lproj/Localizable.strings": "d53bceee29971766f20acbfdb9cce2d2591662787061217a52b6891117b9f4ee",
+    "Sources/PastoCore/Resources/de.lproj/Localizable.stringsdict": "c6fc20ab4a366deb148f095d770cf6f90c94eb246ac497812103b4f5e8aa6b34",
+    "Sources/PastoCore/Resources/he.lproj/Localizable.strings": "8ccb38e93452f0019fd5e153587af9ec9087b02c37febad5e4e86c3790108094",
+    "Sources/PastoCore/Resources/he.lproj/Localizable.stringsdict": "1c851445f2286d5959411ce7712152009f17a86f3121b597f8563f7a8955808e",
+    "Sources/PastoCore/Resources/zh-Hans.lproj/Localizable.strings": "e6955e82ccf3358e0abbf776883592cd0439360df6e8dc9258d040c274d1b08f",
+    "Sources/PastoCore/Resources/zh-Hans.lproj/Localizable.stringsdict": "c1f7a75193a101959e60911f9014ab3ca0ef905a4e2105e9cba5133d1433e1ad",
+    "Sources/PastoCore/Resources/ja.lproj/Localizable.strings": "9f78515d790c81701034c9e3e01c155313ce438bc606839293ac431998699e2c",
+    "Sources/PastoCore/Resources/ja.lproj/Localizable.stringsdict": "cbd651d369b6e4156ec091cc46b97a477273a7476f9082bb3f14b03d199e207d",
+    "Sources/PastoCore/Resources/en.lproj/Localizable.strings": "d41cefa076994486efde3334b10a812eb6ca4e23c9f56a3f782aaeccf2149a98",
+    "Sources/PastoCore/Resources/en.lproj/Localizable.stringsdict": "dc7911c873e852bd01252c685a5e9fce24c07ca7f8954054ab6b2c4374d04679",
+    "Sources/PastoCore/Resources/es.lproj/Localizable.strings": "3f6aec2ff266e5fe7dc7b2ea8ea9aeeb1183fd9e8a026f6d8b903cb031866cd5",
+    "Sources/PastoCore/Resources/es.lproj/Localizable.stringsdict": "28a931243ce4f9259d411fbe579c3b8eb7c0a58711dabd344d31029ea1104c4f",
+    "Sources/PastoCore/Resources/da.lproj/Localizable.strings": "a65f694c1a7b4e9a8125a50a372fb073b9653445e2eb6b21f67550ffed19663e",
+    "Sources/PastoCore/Resources/da.lproj/Localizable.stringsdict": "2fbe4e3d9ae3f2dadad058b3fe4375dd56a346ec26ec191e6f347b0333ea2b25",
+    "Sources/PastoCore/Resources/it.lproj/Localizable.strings": "e08386ffb969b5b7e9a27d686fdb9ed4a93a14abf00acedfdd2793793ad76dc5",
+    "Sources/PastoCore/Resources/it.lproj/Localizable.stringsdict": "5b89c5b4fa16e1354a92f46c8070f428dd468e3367a63776a0f7b059db17d492",
+    "Sources/PastoCore/Resources/cs.lproj/Localizable.strings": "2a8358d6ee556ed43d8fdf800f29fd6fdf5558d799fa1e0b4b7cf6b5234b80cd",
+    "Sources/PastoCore/Resources/cs.lproj/Localizable.stringsdict": "cad4a0663c716b0a571317b5d99b8855f3076469a39f1bfeb1ce05e4ae6f2a8a",
+    "Sources/PastoCore/Resources/ko.lproj/Localizable.strings": "825d7c566d6f0ff227991854a546f50e13f75c83163d85c517bb62494df95e30",
+    "Sources/PastoCore/Resources/ko.lproj/Localizable.stringsdict": "9a0b1198ca2e28753b38e4d9aa70e5ce026ebfe62308cb36bc45928029b71981",
+    "Sources/PastoCore/Resources/zh-Hant.lproj/Localizable.strings": "004004e5633ba389276b4c5827051e1105ce7a82ce6d1338ec60a83ef3f7da4d",
+    "Sources/PastoCore/Resources/zh-Hant.lproj/Localizable.stringsdict": "8e8115b30d8b5f765fc5b94b485c028b6bf01510e888b2c568ad7978a48756d4",
+    "Sources/PastoCore/Resources/pl.lproj/Localizable.strings": "76e4811afba2ba0cb569096273004da4348d05dd0a33ead608343bc57500d526",
+    "Sources/PastoCore/Resources/pl.lproj/Localizable.stringsdict": "1c257470d804b04c12cab3de12ca8747cc1857bcef963c44e732a5614f5b4232",
+    "Sources/PastoCore/Resources/pt-BR.lproj/Localizable.strings": "70e1dc074fe4c2da404223ea54700639bb94b76b2d1591504e2f77d6679f12d0",
+    "Sources/PastoCore/Resources/pt-BR.lproj/Localizable.stringsdict": "793057162eaa4cf343f9b8b1cbe83ec3aa4641d0812055b6c7fbbbcb4fb648f1",
+    "Sources/PastoCore/Resources/ru.lproj/Localizable.strings": "bede290ec89c09ab48d7d28aeb9422441727f838ab4a31cb8ebb323f5a987c77",
+    "Sources/PastoCore/Resources/ru.lproj/Localizable.stringsdict": "4195d7291edb5f78b23c95e44e06e52ae313e0ae4421b9ce28010d5df97bb6f4",
+    "Sources/PastoCore/Resources/fr.lproj/Localizable.strings": "10e2ed9a960870035c138b7054580b8e02b5e854dd78c7ed5fef0c523d1cd4dd",
+    "Sources/PastoCore/Resources/fr.lproj/Localizable.stringsdict": "7e0acca552f31d51b5556ab38d664b14d359ec55c6c2f52ce54a3b1cfad3bb03",
+    "Sources/PastoCore/Resources/nl.lproj/Localizable.strings": "1999a6084534af7753f4720084bab01afcb67e706e2e42541a972724df605c6e",
+    "Sources/PastoCore/Resources/nl.lproj/Localizable.stringsdict": "270356615bf42ba73be94323210365be1d6adfe845256517acd9b6cf343a7809",
+    "Sources/PastoCore/Resources/pt-PT.lproj/Localizable.strings": "9fd0de276fe0b7c650dc88eda29f9400a77993e8590c76c4568f90d311f3fcc1",
+    "Sources/PastoCore/Resources/pt-PT.lproj/Localizable.stringsdict": "1b28f44dabcb27b6f00d3c8ac5c78b29c6b63510b1525d5cfb7d812cf3e1d399",
+    "Sources/PastoCore/SnapclipResources/zh-Hans.lproj/Localizable.strings": "7242cc20bce2f5c52d0454cb1424ef656ed04cea5c263e6e713571b734bf8dec",
+    "Sources/PastoCore/SnapclipResources/zh-Hans.lproj/Localizable.stringsdict": "801c08e3160fba9362bc3fef5115ec82ec6cb69385522ff259b5c434941f5cdf",
+    "Sources/PastoCore/SnapclipResources/en.lproj/Localizable.strings": "b0a89a95feb561e5cbc5ae5f02a45e88be967082cc5c89de36524d885def63f7",
+    "Sources/PastoCore/SnapclipResources/en.lproj/Localizable.stringsdict": "dc7911c873e852bd01252c685a5e9fce24c07ca7f8954054ab6b2c4374d04679",
+    "Sources/PastoObjC/PRCloudKitEntitlements.m": "3a6df47c2b05120f90d26e93fe3cc1aa36ede17362734a77512f82c5aa73d872",
+    "Sources/PastoObjC/PastoKeyTranslation.m": "a0f6ee08fa476bdd6f082442f012845a89138b3be852b5f07857d959be2d2ff6",
+    "Sources/PastoObjC/PRGlassBackgroundWindow.m": "a59cd14d1e459d83a070fdb5ff909c90e7e3a9e86aca96a429cb1aeca578b4a1",
+    "Sources/PastoObjC/PRPanelGlassBackground.m": "fef584262173220e454c7c609b5472d786745fdda10de0797de104585c751c71",
+    "Sources/PastoObjC/PRObjCExceptionCatcher.m": "99b8ce9f229954f427517a16c4a976b6b1ad776873c0eb5a6856b6a82943af6e",
+    "Sources/PastoObjC/include/PRGlassBackgroundWindow.h": "935ea0c78f99a6e0e04aa264c72189ca85433f6bba33c62b2e8da1a18ef872d3",
+    "Sources/PastoObjC/include/PRPanelGlassBackground.h": "9b8845cd4205399b5c7180c13cf592fcb289b0faee1bf099efc1a5d1608e058e",
+    "Sources/PastoObjC/include/PRObjCExceptionCatcher.h": "04b59d8c6afe6efa1496969e34c823ea16752e7c924d9f123a767acfe804a384",
+    "Sources/PastoObjC/include/PRCloudKitEntitlements.h": "d6bdd810591057f1f8ce692a9d81f396bf9b49bc39ba9e1a933deb06b388bb9c",
+    "Sources/PastoObjC/include/module.modulemap": "55cf21adda4b79a4330ec7d4de9b5fad073f13585024a4aac27fe4115af89b07",
+    "Sources/PastoObjC/include/PastoKeyTranslation.h": "3b6b43e45da825496fe7787512b0103ab39ae7c6fb069000cde80b72c11ddeb6",
+    "Sources/PastoHelper/HelperMain.swift": "ea068d94e00633593db5821674891be9ecbf4bb151440b1e859a46771dc6c330",
+    "Sources/PastoMCP/PastoMCP.swift": "b74156baa4484e643aa76363f1438246b0d5c68af51ee31c1ada60484b9e4be1",
+    "Tests/PastoCoreTests/ValidationMain.swift": "a8076f887928007bdd260282cdb2bf91ff3764b4fe8ecb21f643d42cbe1e836a",
+    "Tests/PastoCoreTests/ClipboardStoreTests.swift": "29f63c8a7783c98ce52f9fd7ed0ee6b992f9e66df981d691bec0f83ed49fa571"
+  },
+  "aliases": [
+    "Sources/Pasto",
+    "Sources/PastoCore",
+    "Sources/PastoObjC",
+    "Sources/PastoHelper",
+    "Sources/PastoMCP",
+    "Tests/PastoCoreTests"
+  ],
+  "after": {
+    "Sources/Pasto/GlobalHotKey.swift": {
+      "newPath": "Sources/Snapclip/GlobalHotKey.swift",
+      "sha256": "87564d94302c974c0a7b582c5bd2ebd2428c9703640e5a134b992d9aefd3648c",
+      "changed": true
+    },
+    "Sources/Pasto/SourceAppColor.swift": {
+      "newPath": "Sources/Snapclip/SourceAppColor.swift",
+      "sha256": "af499c3e72fbeac09b6d05421262a02efbf4d57fe1d1a794ffda547113fd67ca",
+      "changed": true
+    },
+    "Sources/Pasto/BackgroundService.swift": {
+      "newPath": "Sources/Snapclip/BackgroundService.swift",
+      "sha256": "cd2433813f1ec134943e2130411651a4b9b5d0032291f8ff055aef8469cc48ed",
+      "changed": true
+    },
+    "Sources/Pasto/WindowSharingPolicy.swift": {
+      "newPath": "Sources/Snapclip/WindowSharingPolicy.swift",
+      "sha256": "ff4e8f26c8659386749ca78e406e226c6d799c3baea4896eec4b0ffbb1d7fe65",
+      "changed": true
+    },
+    "Sources/Pasto/ICloudDriveSyncController.swift": {
+      "newPath": "Sources/Snapclip/ICloudDriveSyncController.swift",
+      "sha256": "56c47c7eab542598e72ce90efbd105dbbfd0c7480736a7dbca187f375edba530",
+      "changed": true
+    },
+    "Sources/Pasto/AppMain.swift": {
+      "newPath": "Sources/Snapclip/AppMain.swift",
+      "sha256": "c7056d2f8b16b35175330d9c84802cb923e0815e41450f0d7218551dbabf8230",
+      "changed": true
+    },
+    "Sources/Pasto/UI/AuxiliaryViews.swift": {
+      "newPath": "Sources/Snapclip/UI/AuxiliaryViews.swift",
+      "sha256": "dd46004fb4a4fbca1fa9262d15a6fb96ba9f07741810c10d5cf85c572c6e6a2f",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaPanelContentView.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaPanelContentView.swift",
+      "sha256": "4dc1bc8712542e9bf8d2ee386cca67584f19d698b1e789ba6974e4028a549b32",
+      "changed": false
+    },
+    "Sources/Pasto/UI/OriginalLinkPreviewViewport.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalLinkPreviewViewport.swift",
+      "sha256": "ccb8e2b17c1190dca76281f9d7abd9b1f032759e5f88f9c365c2010cbd54faa5",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaNativeDragPreview.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaNativeDragPreview.swift",
+      "sha256": "0e5adbd506e11dee134c1e059adf4f3c7b27fd7e3cd7379be3c87bdc1fb391b7",
+      "changed": false
+    },
+    "Sources/Pasto/UI/HistoryRetentionSaving.swift": {
+      "newPath": "Sources/Snapclip/UI/HistoryRetentionSaving.swift",
+      "sha256": "43582f60fb307b1f5a56305acb2d6cb4f1f5de188ca89e33ac51de3291f5d735",
+      "changed": false
+    },
+    "Sources/Pasto/UI/OriginalCollectionScrollAnimator.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalCollectionScrollAnimator.swift",
+      "sha256": "6a406ef43ba78b00f7acb7c184926c3d0341ef84a3e070e7eda6bc8166fa72b4",
+      "changed": false
+    },
+    "Sources/Pasto/UI/OriginalCompactTextContent.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalCompactTextContent.swift",
+      "sha256": "835b55abc192cbf7fee8d91a36b0d4b011ffcd9aa8c8b8e3e99987158a7785c9",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalImageCheckerboardView.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalImageCheckerboardView.swift",
+      "sha256": "4e9d53a30526eb0cb711bfb2d477f5223b22fa2d8cb6e99f564e3b2e644c5b92",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ScreenshotSettingsCopy.swift": {
+      "newPath": "Sources/Snapclip/UI/ScreenshotSettingsCopy.swift",
+      "sha256": "6f8567d6c9da6c9aafc30b73737d6cc1af843d0a700a1c30b63a2e755d132461",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaPanelResizeHandle.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaPanelResizeHandle.swift",
+      "sha256": "f0461fe70bbcb486c89ef24d7d2d119b051cd5bbfb34279df06f72636f6bcbbe",
+      "changed": false
+    },
+    "Sources/Pasto/UI/OriginalUnavailablePreviewContent.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalUnavailablePreviewContent.swift",
+      "sha256": "e769801b7952c1482f9338c8470bc703be00fb070e5cd7bf90860d97d3d200df",
+      "changed": true
+    },
+    "Sources/Pasto/UI/CloudKitSyncController.swift": {
+      "newPath": "Sources/Snapclip/UI/CloudKitSyncController.swift",
+      "sha256": "452e4a23c32dc33481abd75834ce0099609897fd47f15c43c3dbd6567fc9872b",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalStackSnippetCell.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalStackSnippetCell.swift",
+      "sha256": "1e04dda3ddf83f89c973c2d81361d494708df6624aac7bb1b540ec488b66a032",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalReplicaPreviewAdapter.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalReplicaPreviewAdapter.swift",
+      "sha256": "14a4e0b6884d4e83b6a9ec6ffddd9b3ce2bdb828f76a30c829ca7fe8ef6a40ab",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaUIController.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaUIController.swift",
+      "sha256": "61836fb19e43e6012fdc3a3524d70a4e9cce1cc956041e437814636c626a864e",
+      "changed": true
+    },
+    "Sources/Pasto/UI/PastoAboutWindowController.swift": {
+      "newPath": "Sources/Snapclip/UI/PastoAboutWindowController.swift",
+      "sha256": "e000e81226e64601029fd68f6c674bedbef98bfc2c6b0c512d84b1b3b4ee39e7",
+      "changed": true
+    },
+    "Sources/Pasto/UI/CardSourceIconPresentation.swift": {
+      "newPath": "Sources/Snapclip/UI/CardSourceIconPresentation.swift",
+      "sha256": "fb6c3cc0e4a42e0bdf0ef2ec419a8a9203249690b7680f7e395009138a6983d5",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalCollectionNavigation.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalCollectionNavigation.swift",
+      "sha256": "c6823ab643eb983afed5db05caacc060a568035e35edac2d94b920edd1a48c21",
+      "changed": false
+    },
+    "Sources/Pasto/UI/OriginalHeadTruncatedLabel.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalHeadTruncatedLabel.swift",
+      "sha256": "8dc319cedbba6178e88042e3e3f68c3c6eee3dc06cdbf0ba326f36062fa5b55e",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaCardContextSelection.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaCardContextSelection.swift",
+      "sha256": "2a5b9aac7f579d6466a8f0c6feff24095609873c348ef99444f95f23aeb7615f",
+      "changed": false
+    },
+    "Sources/Pasto/UI/ReplicaBrand.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaBrand.swift",
+      "sha256": "2ca1559f46e20641eb0d0117834d57f76b6ac57b2b56704987b4ba8870cb9e52",
+      "changed": true
+    },
+    "Sources/Pasto/UI/SettingsShortcutRowRestore.swift": {
+      "newPath": "Sources/Snapclip/UI/SettingsShortcutRowRestore.swift",
+      "sha256": "919650a06798cfb8d7ccc91e4374ecbba5f7c295b8c6aed42b6b4c161dc6ae9b",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalAccessibilityRequestAction.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalAccessibilityRequestAction.swift",
+      "sha256": "8d01232abf8a3ad555cfde386ac7ff099ec6410290ef9f17c7ab3f5a60d9e0a1",
+      "changed": false
+    },
+    "Sources/Pasto/UI/HistoryRetentionCopy.swift": {
+      "newPath": "Sources/Snapclip/UI/HistoryRetentionCopy.swift",
+      "sha256": "513deaf4af45c1604cf3e6a42c48c66c40284d2960e92de6f97ee5d66af1c148",
+      "changed": false
+    },
+    "Sources/Pasto/UI/OriginalUnavailableCompactContent.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalUnavailableCompactContent.swift",
+      "sha256": "42b6d683f938a03da3ff81d8a0d572fc4693d50999aeecbfcdea75ea6d001675",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaSearchSuggestionSource.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaSearchSuggestionSource.swift",
+      "sha256": "fef58a6a1ddbb115a830546df0b5941ead36001f3e7eed9dbae50ff91db03e6e",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaLinkPreviewContent.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaLinkPreviewContent.swift",
+      "sha256": "2f11342278b720b967ee24b8798f98f32f6d0840c93a527ac6aa3fd6389df7d6",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalAdaptiveScalingImageView.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalAdaptiveScalingImageView.swift",
+      "sha256": "0002845178a53c2617885f40fcfad92f679c1123a095340aa1037450914730d6",
+      "changed": false
+    },
+    "Sources/Pasto/UI/RichTextEditor.swift": {
+      "newPath": "Sources/Snapclip/UI/RichTextEditor.swift",
+      "sha256": "e76a30b055f19cc4151dbd7ab499e6f4e298276712b61522b6c43a8096c807ed",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaCardTitle.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaCardTitle.swift",
+      "sha256": "3ea8573537902ca9607b211aa8665a29c72e8867f3e1dbd4edb36891c087ab98",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalPinboardHeaderIcon.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalPinboardHeaderIcon.swift",
+      "sha256": "c5aad86b7285c39fd31757919e9cf8d3cc5a29fae201a150132735c193a0c2db",
+      "changed": false
+    },
+    "Sources/Pasto/UI/OriginalImageSizeBadge.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalImageSizeBadge.swift",
+      "sha256": "3b7e9374327d647f7523aadd6ba0749244fdb9ffcc90ccd2b6e39c66b6475b11",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaFileCardImage.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaFileCardImage.swift",
+      "sha256": "92b5d106ab7f48bb8d9dddaa29fdc279ef09b4a02e34448879d34738f440bbd4",
+      "changed": false
+    },
+    "Sources/Pasto/UI/PermissionStatusView.swift": {
+      "newPath": "Sources/Snapclip/UI/PermissionStatusView.swift",
+      "sha256": "f7370f180fb20b9668bb4e8a85b2819a7e59ba54bfe870d3b8607987d20959ac",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaImagePreviewContent.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaImagePreviewContent.swift",
+      "sha256": "9c4d38e5c21e5c6ffe90a2993481de7350f852e4acd8c8b9fec5dcfaf1c111a7",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalCompactTextFooter.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalCompactTextFooter.swift",
+      "sha256": "a8d1c14b879aee62abadf6fcc19a3f5685a41f170b877f9a3270e79469b17a27",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalPanelTabBar.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalPanelTabBar.swift",
+      "sha256": "a2a5027133c0633dc302987b851311fecacec7ccbae67adb99aa5193eca1be2c",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalCardShortcutIndicator.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalCardShortcutIndicator.swift",
+      "sha256": "fe9e3ea3d6a91dd0c9b891380d1f3ee328a0cc1157ea4cecb3f9d06b65e87306",
+      "changed": true
+    },
+    "Sources/Pasto/UI/PanelViews.swift": {
+      "newPath": "Sources/Snapclip/UI/PanelViews.swift",
+      "sha256": "ae77c974dcb508f107cd5d7e966fd1be34ca98d12dda285f37f38953ff8a7bf0",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalNavigationKey.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalNavigationKey.swift",
+      "sha256": "63c828be06065a20f1956fb2c4cb346e81990872ff089a13e5af2ecad2c61ded",
+      "changed": false
+    },
+    "Sources/Pasto/UI/ReplicaLinkMetadataContent.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaLinkMetadataContent.swift",
+      "sha256": "9557f729eae846d0dd9d527a8f4db2f2544e712c21cc56d2fe619f5fa81e0451",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalPreviewColorFormatting.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalPreviewColorFormatting.swift",
+      "sha256": "38754162d394bae0d27932eb73389f8c5ac0f1de6c7be24fd7e16a8656774fa9",
+      "changed": false
+    },
+    "Sources/Pasto/UI/ReplicaFilePreviewContent.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaFilePreviewContent.swift",
+      "sha256": "08919f30a9baface2549a0a4ac21169bf767ea7515a3ea80b13a968dcd08437a",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaCanonicalCardContent.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaCanonicalCardContent.swift",
+      "sha256": "96d1188dccb99422b4eef199cb9843a6ecac3a709f7d5bafef333f82a1fab233",
+      "changed": true
+    },
+    "Sources/Pasto/UI/PermissionStatusProbe.swift": {
+      "newPath": "Sources/Snapclip/UI/PermissionStatusProbe.swift",
+      "sha256": "cbad1dc6a70d735e8055f950db30c5084087db8d53ca26359fdcf890adfbff33",
+      "changed": true
+    },
+    "Sources/Pasto/UI/PastoInAppUpdater.swift": {
+      "newPath": "Sources/Snapclip/UI/PastoInAppUpdater.swift",
+      "sha256": "b25c3842b4e66018da8f41ebe80e4703ac0d9645dec692a9812253a78da9efaa",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaNativeCardCollection.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaNativeCardCollection.swift",
+      "sha256": "59a05419cf262dc19b1a5b37d676d9f443fa07c0f03b52c4774e947e551de6b4",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaCopiedOSD.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaCopiedOSD.swift",
+      "sha256": "e43b9a33db3efcd0bcdc34046a5dbaf34dab2f48c298218624053bafb669abf8",
+      "changed": true
+    },
+    "Sources/Pasto/UI/WindowAppearancePreferenceObservation.swift": {
+      "newPath": "Sources/Snapclip/UI/WindowAppearancePreferenceObservation.swift",
+      "sha256": "3d16ed80340cc60c816db5045164db3dc9e93c8e5bb56bc9af330cb030aa6ba8",
+      "changed": false
+    },
+    "Sources/Pasto/UI/FilterBrowser.swift": {
+      "newPath": "Sources/Snapclip/UI/FilterBrowser.swift",
+      "sha256": "1dc8222e9594a912c48c9fb058520af7e543c539e2eb0c45b09c6a9866da6042",
+      "changed": true
+    },
+    "Sources/Pasto/UI/SettingsShortcutReset.swift": {
+      "newPath": "Sources/Snapclip/UI/SettingsShortcutReset.swift",
+      "sha256": "4a1fa8151c0fc0422c48c08e45047807313edf224d64726071a567071e555df7",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaReadOnlyPreviewContent.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaReadOnlyPreviewContent.swift",
+      "sha256": "b20e607e9ebc4a48395fb46ed8a02ecf47440b455b04a02858d2d85274f0c695",
+      "changed": true
+    },
+    "Sources/Pasto/UI/SearchEditor.swift": {
+      "newPath": "Sources/Snapclip/UI/SearchEditor.swift",
+      "sha256": "b8ae54fd1c413749e9184986916d994d135b2c2872aedd915bee4544be852ea7",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalHistoryCapacityControl.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalHistoryCapacityControl.swift",
+      "sha256": "55e7b8af42e2504fdfd4c45dd8dd0af24fc38725f0316c2400bd266fa6ce7441",
+      "changed": false
+    },
+    "Sources/Pasto/UI/ReplicaPanelGlassBackground.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaPanelGlassBackground.swift",
+      "sha256": "a0cc6e4d6e489130d6d52fb5b7175ac0cfb348a921a6ad7be576a0538aa728cb",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalSuggestionAttributedTitle.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalSuggestionAttributedTitle.swift",
+      "sha256": "e1d2634011a8d4eb277f1dc9f1cc289c6e0f24f1717d582736aa5a7cac665061",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalImageTextSelection.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalImageTextSelection.swift",
+      "sha256": "ed8bf5463b865e9784c9001a9f0923097d53fbe49c2cce8e5b54b4a3bba8d850",
+      "changed": true
+    },
+    "Sources/Pasto/UI/PreviewAnchor.swift": {
+      "newPath": "Sources/Snapclip/UI/PreviewAnchor.swift",
+      "sha256": "aa621221c95e877131ce3f53723be87730091482eeac479ec109daf66adaf923",
+      "changed": false
+    },
+    "Sources/Pasto/UI/ReplicaSearchSuggestionsMenu.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaSearchSuggestionsMenu.swift",
+      "sha256": "8986e8097b3ed2ccd261716114eaf9429a09f33295faa40361ec064ebb98c577",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ReplicaSearchIndex.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaSearchIndex.swift",
+      "sha256": "610377bf8de48d95a1245148d817ecf1e70f12d059841c82d05c22111de16bd8",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalPanelToolbar.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalPanelToolbar.swift",
+      "sha256": "934901ddc53f772c0deba5575a6904a0c793f96377c215a9c7ec71c6a95a7b86",
+      "changed": true
+    },
+    "Sources/Pasto/UI/SettingsCopy.swift": {
+      "newPath": "Sources/Snapclip/UI/SettingsCopy.swift",
+      "sha256": "b11137bb21e0bddbdf2c66b25e1b5959afdebccd988c34d9b8c83c9df9ae7061",
+      "changed": true
+    },
+    "Sources/Pasto/UI/ShortcutRecorder.swift": {
+      "newPath": "Sources/Snapclip/UI/ShortcutRecorder.swift",
+      "sha256": "87ed5b41b07f80877111fc04c36ab8f8e56ca774747a6f3f573d7cde850e88d4",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalSettingsSplitView.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalSettingsSplitView.swift",
+      "sha256": "d9c348122901ac2657757e76e149109c0d8ab261642f31255b98a0784a4b2549",
+      "changed": false
+    },
+    "Sources/Pasto/UI/ReplicaColorPreviewContent.swift": {
+      "newPath": "Sources/Snapclip/UI/ReplicaColorPreviewContent.swift",
+      "sha256": "c54239e6cec8298cfb60908e7aad629a830be59a45e2357859dff7cdafb919fd",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalPinboardTabTitle.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalPinboardTabTitle.swift",
+      "sha256": "786b650cea59848f13f08e8f0e373ac4d38abc237f80d4596789e31ebf548757",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalAccessibilityModals.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalAccessibilityModals.swift",
+      "sha256": "46d9bf16ab79af6e0ae48c827646460cdb67d916d4fae31f809cfdf80efcd1db",
+      "changed": true
+    },
+    "Sources/Pasto/UI/OriginalStackSnippetText.swift": {
+      "newPath": "Sources/Snapclip/UI/OriginalStackSnippetText.swift",
+      "sha256": "2253cdde728362b12bdccf35e930b35f8647dc05abecdf109cdfbe4efa30edea",
+      "changed": true
+    },
+    "Sources/Pasto/Screenshot/ScreenshotCoordinator.swift": {
+      "newPath": "Sources/Snapclip/Screenshot/ScreenshotCoordinator.swift",
+      "sha256": "8f611e2393376845ab6d2adbd1b70339e138d010159404ac627d33a7e4421b3e",
+      "changed": true
+    },
+    "Sources/Pasto/Screenshot/ScreenshotHistoryBridge.swift": {
+      "newPath": "Sources/Snapclip/Screenshot/ScreenshotHistoryBridge.swift",
+      "sha256": "6173fb5a92bb5e1333d2349634a3ea2e517ae4ecb060f3f1df10324c6038c719",
+      "changed": true
+    },
+    "Sources/Pasto/Screenshot/ScreenshotWindowHider.swift": {
+      "newPath": "Sources/Snapclip/Screenshot/ScreenshotWindowHider.swift",
+      "sha256": "25dc4deee8622baae38e57d3321f8f3ec89e8d541a722b123d42555346648302",
+      "changed": false
+    },
+    "Sources/Pasto/Screenshot/ScreenshotFocusRestorer.swift": {
+      "newPath": "Sources/Snapclip/Screenshot/ScreenshotFocusRestorer.swift",
+      "sha256": "de396466f2c6e5af2aa85b06d0427df76c90f1416747a7a17d7dd7224edca9eb",
+      "changed": false
+    },
+    "Sources/Pasto/AppIntents/PastoGetItemAtIndexIntent.swift": {
+      "newPath": "Sources/Snapclip/AppIntents/PastoGetItemAtIndexIntent.swift",
+      "sha256": "b4ca5f8ae326ef80bb7f2f055b3d717221c687ed7a3a06a1d3a50da0b52d6e61",
+      "changed": true
+    },
+    "Sources/Pasto/AppIntents/PastoPinboardAppIntents.swift": {
+      "newPath": "Sources/Snapclip/AppIntents/PastoPinboardAppIntents.swift",
+      "sha256": "89482c31db4ec7235841edc2348cd8fd234de2789180af5aa007ecf3b3238e36",
+      "changed": true
+    },
+    "Sources/Pasto/AppIntents/PastoShortcutsProvider.swift": {
+      "newPath": "Sources/Snapclip/AppIntents/PastoShortcutsProvider.swift",
+      "sha256": "b6ab8aaf6cf11e03fcf2119478afdf1e822ef518f5c5902cbccedf86a0f089b8",
+      "changed": false
+    },
+    "Sources/Pasto/AppIntents/PastoGetLatestItemIntent.swift": {
+      "newPath": "Sources/Snapclip/AppIntents/PastoGetLatestItemIntent.swift",
+      "sha256": "85a73b41f4e47a9221182fed0a30ded085385175f9e6a8a4df1b3b5239e300a3",
+      "changed": true
+    },
+    "Sources/Pasto/AppIntents/PastoCreateItemIntent.swift": {
+      "newPath": "Sources/Snapclip/AppIntents/PastoCreateItemIntent.swift",
+      "sha256": "62d8489b33aec830ec4871c15f868979991b0b61213a202253838eadd6aa4834",
+      "changed": true
+    },
+    "Sources/PastoCore/OriginalResourceBundle.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalResourceBundle.swift",
+      "sha256": "c6737fd13bc18487bbac22f86f812a1d7fb6713a33180069568d20b785ac36ab",
+      "changed": true
+    },
+    "Sources/PastoCore/OriginalDateDisplay.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalDateDisplay.swift",
+      "sha256": "cd1ad2edda3b32d3e25f1750c7d790e3906869325480933e0d7d47c863500e5b",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalOrderedSelection.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalOrderedSelection.swift",
+      "sha256": "b3631aed0222167f88c16329c76483f807d20af3baaf3a90ab4d214e8d9cb9f8",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchFieldAnimation.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchFieldAnimation.swift",
+      "sha256": "5c415996232f8f009d56ca0e07976ac31bb502f2295b7401cda2c62b4f51cc49",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchSuggestionAnchor.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchSuggestionAnchor.swift",
+      "sha256": "2af28e89780d0e373331ea15588909cea7d99e1008e396717bb57b10b21436a7",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardItemObservation.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardItemObservation.swift",
+      "sha256": "6cfe581eb828913eca4fbdce868350b50f5767cf5eb68cfe66d536bc671f376a",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchInputContext.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchInputContext.swift",
+      "sha256": "073c80079e979d5cddc549c105aab901fdf8c9482d7b56cb535e098d9d942867",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardListAttributesObservation.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardListAttributesObservation.swift",
+      "sha256": "e3697eaeef210ee29ce26369751b0706425aa4bb188f1ad2ca891f72752cc418",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardPersistence.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardPersistence.swift",
+      "sha256": "200a6e38595deccca9a96b88c60f9a8e9ec7edeed32ed5ea225b4483765a7e8c",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalCloudKitContracts.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalCloudKitContracts.swift",
+      "sha256": "313a651eec1cab8fb2909601446e1b5cae17f3ace0ebb74b4c5826dc3f175cd6",
+      "changed": true
+    },
+    "Sources/PastoCore/OriginalSearchCommands.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchCommands.swift",
+      "sha256": "cf7409e5f4bf47f0e1052ac3ae42c5af43812c37407bfc77eca62ba864ca1bf8",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalStackFunctions.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalStackFunctions.swift",
+      "sha256": "e408e508e9bc0bf2b7477ab142e29e4b1c1087daa63cd402c312f145e6cf16a4",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalShortcutValidation.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalShortcutValidation.swift",
+      "sha256": "fe66e83630d3e9e3031d00bc90bb869d75f5d7066a693843a53e11f9eb966c19",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalViewAnimation.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalViewAnimation.swift",
+      "sha256": "66c9ebb5f7187b0ad41aac5f1b61b2bce393ccdbac6a4111491cc15e7a50e56e",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalLayerBackedView.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalLayerBackedView.swift",
+      "sha256": "87acffa7790cb38e5715cf6ce3d4474fffb3633d3deb15635743526f6342303c",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalLinkDisplay.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalLinkDisplay.swift",
+      "sha256": "22ddf146e091d4b1f9fb0315e95a8bfb527542b1e1f945c9c80a776e47302b20",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSourceApplicationColors.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSourceApplicationColors.swift",
+      "sha256": "c9842f94a46e841a187891f746cbbe7418fc7a595d46e4a738c59757c28dbcb3",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSettingsLocalization.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSettingsLocalization.swift",
+      "sha256": "7feed7694b76db89a24a82ab511129f4f94e23685b23b9b9b16063a7bc01cfaf",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalColorPreviewMetadata.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalColorPreviewMetadata.swift",
+      "sha256": "b78c20f7a126322c3be604b7a26fc7d630384f31265969e4d17c5cf0887f60b2",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalManagedItem.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalManagedItem.swift",
+      "sha256": "b5388f95ca3f7b58a366f7b9d3a77075294df773d999627249f2aa510906cdca",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalShortcutTelemetry.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalShortcutTelemetry.swift",
+      "sha256": "8873cf835f1611b85b91736a796b4335d3364b9bc9278ace5bc89b2bd43ef14c",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchHistory.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchHistory.swift",
+      "sha256": "8fc078b55a5e21dd5b8e4297d4725d409e8f4a32c779aeff29f9cc16c4c89ab9",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalStackCategoryIcons.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalStackCategoryIcons.swift",
+      "sha256": "f1fec5541718365bf6e7b8da0641dfc0f0db229c93e2c3d1626f5180983bee7e",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPinboardColor.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPinboardColor.swift",
+      "sha256": "cfc44a744f2d3769d70582fea50da409435cfd9dcfa7f9ba104719093dcaef8e",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardStore.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardStore.swift",
+      "sha256": "ad8f29500085ec4f8c0b50cb63f5a58209483b137e37e65fcfe8e7b53988f4b6",
+      "changed": true
+    },
+    "Sources/PastoCore/OriginalPasteboardCaptureState.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPasteboardCaptureState.swift",
+      "sha256": "37ffe8ec4714bca780d53654ed09cde4a89a1b6362ba3869e56882a30a06689c",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPasteboardClassification.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPasteboardClassification.swift",
+      "sha256": "120318efac6b9e47b12a415427c830d051338fcbe0257f6f6c6d5bbab6f30614",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchTextValue.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchTextValue.swift",
+      "sha256": "8cf889ebb9999b13a43223bf406c4c1e12e9cd7365faed560b5dfe1acb8e2bf2",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPasteboardPolicies.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPasteboardPolicies.swift",
+      "sha256": "b85860e5fdc4be03afd7f4f69651f3ed1fc15c2c48d4a765fdcae5fdc8787dc7",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalTextPreviewModel.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalTextPreviewModel.swift",
+      "sha256": "a01858a301a5a5d4ae5fe8492f92644c4b99fc628eaeeaa4cd34d0ca76376cd6",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPasteboardRestore.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPasteboardRestore.swift",
+      "sha256": "bf309c94b15bb4db46acedc6ba535d1f060aa3a8d74257053a773cf7200dd2c6",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPasteboardArchive.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPasteboardArchive.swift",
+      "sha256": "f0775dbdefa9611c9972d4aa8daf3ea9c8742f1f85d446c71f01e0c820c759dd",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchDateEncoding.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchDateEncoding.swift",
+      "sha256": "b46fe7fca447d1089bfc7c36676ecaf13a2d77c6d665eb5f42cb37ab5d00c5c6",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSoundEffects.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSoundEffects.swift",
+      "sha256": "bab0a9ae8662e4f7d81cbe1c87604f0da713d3e928e466e2fb17c7f60b148dd0",
+      "changed": false
+    },
+    "Sources/PastoCore/SnapclipAssetRenderer.swift": {
+      "newPath": "Sources/SnapclipCore/SnapclipAssetRenderer.swift",
+      "sha256": "cbf61ff70afed586c56c4b0e0031e0a3a60b50a19813c7bda571b0b9b35151f7",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPreviewSharing.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPreviewSharing.swift",
+      "sha256": "64b2623f15994676d6798fbc4702a7046826279c56249ade36f9361eef46393c",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalFilterBrowserPopover.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalFilterBrowserPopover.swift",
+      "sha256": "f0476a5457e4326cfa241adc063afb2e0031627cb49fe8bdf226634f9731ae7f",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalHistoryCapacity.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalHistoryCapacity.swift",
+      "sha256": "b5fd642d85020bf621819b81c9bcda4cc33c4c602da19070eb67f6f7e825d3d3",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPreviewTitles.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPreviewTitles.swift",
+      "sha256": "09c1378ba75a4d8d7c75a4cdc22eb8b5093987b824a75ff56bb771cfe28d1c41",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPasteboardChecksums.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPasteboardChecksums.swift",
+      "sha256": "91b10577b3103f2b5e4ad0879dce27b6ed53648531a0265d93d7d9f636fc611f",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardListPersistence.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardListPersistence.swift",
+      "sha256": "e8656dfcd9fc53737c1d212ebfc2a3ac96714e4cb37c1a5447c4fa351002c1e9",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardRestoreItem.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardRestoreItem.swift",
+      "sha256": "b896730653c49e72387fd53bc19e2aeea23e5cafabc94ce7fd8fe6b9cf1d7665",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchLocalization.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchLocalization.swift",
+      "sha256": "78d4d35361955ddcb324ae47587495f1d39efa73dc839e80e96d1106daed1d2f",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchDateRanges.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchDateRanges.swift",
+      "sha256": "91f2f941e01c03dc575e29edb80144c4e268174528e551deb72642b4a7743451",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalDiagnosticsHistory.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalDiagnosticsHistory.swift",
+      "sha256": "a2c917352e8d3d194f3528b7023994fdb3e393e7f81007ac5be6c77928f30b62",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchIndexingState.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchIndexingState.swift",
+      "sha256": "3c790cd0e302b6a3020b88516500e1b4ab9b51462eebef220f17d2b9795264d9",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPasteboardDataCodec.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPasteboardDataCodec.swift",
+      "sha256": "3994f19683c261c6137c9a97f66f89d69b111e8731cc09acb42f6727980a786c",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchInputHistory.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchInputHistory.swift",
+      "sha256": "24cfdd95c3456f594ef02cf3d2d6b31d61600256266a129a686c2675876fce1a",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPreviewAttributedText.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPreviewAttributedText.swift",
+      "sha256": "e525ae72bbe7369776f892ae9949d765c6611c28e408617bea06a611a265f478",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSourceApplication.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSourceApplication.swift",
+      "sha256": "f062fd4c806d1c155e84c80e6ba962500c2f2f195a2fee3b50fe5d864f06478b",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalDiagnosticDispatcher.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalDiagnosticDispatcher.swift",
+      "sha256": "7f7ca246acae9248a654db1af4973e8d48c272651a147fffc06cafaf2a103e9f",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchSuggestions.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchSuggestions.swift",
+      "sha256": "c0896c16d829e7d7703bcd6f741cc10612c51975b9dae93d3fda1e07d166769e",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPinboardTitle.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPinboardTitle.swift",
+      "sha256": "111682b2e750e5a237a34b7a39bc90107cffec52f74ffe0eefa95455b5ca0261",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalCardPresentation.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalCardPresentation.swift",
+      "sha256": "acb4df601c1f35cf1e8767bc8a66140c99ec082c8c82f79acd49fc316a5d09cf",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchFilterView.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchFilterView.swift",
+      "sha256": "4628dc1edfd81fa48b4442c4b7f05ec5eea3a6f8598038d3a1f9f9480c62f6aa",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSettingsIllustrations.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSettingsIllustrations.swift",
+      "sha256": "a3bf1cfe1a5a3f5266559022250e632476311bbd9fdd15dad384fd4e57d0a3d6",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalContextUndo.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalContextUndo.swift",
+      "sha256": "da03ff7120c764782574fb7dd0175d9d3ff7043cd2a58220c34a2b5c828ed8f7",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalConfigurationFunctions.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalConfigurationFunctions.swift",
+      "sha256": "d777c6848066ec198ca41739d0a785ece4df2000977cda19b230e3d4530fcb54",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchTextTokens.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchTextTokens.swift",
+      "sha256": "ea0bef0b75186bf558f512cd15f5343e1251fb47a9e39791d320fd23248b143f",
+      "changed": false
+    },
+    "Sources/PastoCore/KeyboardShortcut.swift": {
+      "newPath": "Sources/SnapclipCore/KeyboardShortcut.swift",
+      "sha256": "eba51741928fc95619585980567b617d39f3c749564cddb5dff4bbd04bf189d6",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSelectionAppearance.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSelectionAppearance.swift",
+      "sha256": "5872178f7e902aa92c57626c3a2201be08ee9fcda85d1d7b1b90e11baff84588",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardSourcePersistence.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardSourcePersistence.swift",
+      "sha256": "c62ebc61419acf331cc3311878d0bf4af0c6546537a81bd824e7fcc1a5d2e339",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalObjCExceptionBridge.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalObjCExceptionBridge.swift",
+      "sha256": "957a3b2b1dd9ea931c364de738712c6da657cc4b7d5e71d4de1d6ab2022166aa",
+      "changed": true
+    },
+    "Sources/PastoCore/OriginalShortcutControls.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalShortcutControls.swift",
+      "sha256": "39ab996761733e0646087dc1413f300d5b958ed1c95e2da3363e752d71d1b1a6",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPasteboardImageEncoding.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPasteboardImageEncoding.swift",
+      "sha256": "2e4430ee0d8c7d8f88561457d37e8d50c0c756d83471facda099b7518a6a2dfe",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPreviewTextTraits.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPreviewTextTraits.swift",
+      "sha256": "1cd1cbb84577bc560c3795d43940d351de246ec22c745be3d5de7b0c85571cbe",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalStackTableController.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalStackTableController.swift",
+      "sha256": "cf0da7926b589a254f17ecb40d513d25903aa3fe40aa64a112b03c04e33bd2f8",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalTextPreviewMetadata.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalTextPreviewMetadata.swift",
+      "sha256": "7c09e2e2297ef070a792bf8a50e51ab162146d27b516d7e92ac3bd53df36b676",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalAccessibilityService.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalAccessibilityService.swift",
+      "sha256": "0944aef05fe5443056b447436bde257358b59ff30064aac24e1fc7e68f311849",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardCollectionItemReference.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardCollectionItemReference.swift",
+      "sha256": "0afcada788788dfd0295ab0c8b3fb0ea747045b74d64847745b7ae88157fee35",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalShortcutCoding.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalShortcutCoding.swift",
+      "sha256": "9a0f5880a129959b4a906014bab6aeab7dfc0055e55e73655ecbe2d55090d2e5",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalFilePreviewActions.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalFilePreviewActions.swift",
+      "sha256": "71aed79904a062dba83864ccd4fa4a1958543abe7f216cea3395f24ccb5a6f8d",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPreviewPopover.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPreviewPopover.swift",
+      "sha256": "8617fae44630789d2aff97e65f2aa2c67adc2551c54d6d21d6021ea1c121994e",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalCloudKitJournal.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalCloudKitJournal.swift",
+      "sha256": "dbc6acda0ecd99e7230585ce3cde8c6df94e026556b0275fef166b3947ee86b5",
+      "changed": true
+    },
+    "Sources/PastoCore/ClipboardItemTitlePersistence.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardItemTitlePersistence.swift",
+      "sha256": "c85a59b46d6b6dda6134d7454368d64fc05b269fdd99fc5350e5b74502e3715b",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalLinkPreviewMetadata.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalLinkPreviewMetadata.swift",
+      "sha256": "cf30ef0714e8f3bfa31c11765ce3a0493b3228013c3d4096cc5c32e851c2be00",
+      "changed": false
+    },
+    "Sources/PastoCore/OCR.swift": {
+      "newPath": "Sources/SnapclipCore/OCR.swift",
+      "sha256": "71144dd13951f0ca5d0073b206d7493c576ad49943d871009c96a603dfe971f5",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPasteKeyTranslation.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPasteKeyTranslation.swift",
+      "sha256": "770938196fab91c4fba2b52d231ff0f41fc921c02c2e705868ec52a32c340979",
+      "changed": true
+    },
+    "Sources/PastoCore/OriginalSharedDependencyCache.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSharedDependencyCache.swift",
+      "sha256": "d83f199826f661090cdd74b9d05e185e295bf3570ba2f8e8dc868f9dac219cbf",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalShortcutRecorder.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalShortcutRecorder.swift",
+      "sha256": "6d26749356d383299c1bdc78104c8e348a2f1e95c8714239b36ef5b87d57426e",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalFilePreviewMetadata.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalFilePreviewMetadata.swift",
+      "sha256": "39becad3e7a78d6d313569312faae9669d577803261813fee3ed8c14189044d0",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalItemPreviewView.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalItemPreviewView.swift",
+      "sha256": "dc4ed2844af83a17c2c878828e13e29572941172b6a18e161081a47c734fd6c0",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalShortcutDependencies.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalShortcutDependencies.swift",
+      "sha256": "b61963d4976edbdce29db86588d7ed4725a2f27105e3eea814877663e7b1ce37",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalGlobalShortcutMonitor.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalGlobalShortcutMonitor.swift",
+      "sha256": "8793fd5fe1cf86710fe0453d585ede5299d2e97a8c7b1b2bdea780d60bfa8945",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalCollectionShortcutActions.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalCollectionShortcutActions.swift",
+      "sha256": "01be6b33a11e469bcbbe4afe6b12ff4f3ee7ef64e7f4a7cc64d8ff654379f9fb",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalShortcutMessages.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalShortcutMessages.swift",
+      "sha256": "7a55204bda8a093b2db4610b8cb6d0deee1173196e1b07dc2811507c7667c6d2",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalCollectionSnapshot.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalCollectionSnapshot.swift",
+      "sha256": "84df7a39ccdad8d43fb43a1e8caaa2c0c14cbd4510f5c9d7165cc651678c17ac",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPreviewTextColors.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPreviewTextColors.swift",
+      "sha256": "06134570276933fc2be82f00033d2ba9c70aaf04d5e1e134e23fcfb830b3a881",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPreviewWindows.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPreviewWindows.swift",
+      "sha256": "4cc1f30d0de962162c6231a6207cc7623fc82e20f126f3ebc3edb326d5592c2d",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPreviewLocalization.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPreviewLocalization.swift",
+      "sha256": "4d040eadf0a8b0f339bfb37f2ab9f5469e53439f5b175a5aa737b705f7c4dab6",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchAppearance.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchAppearance.swift",
+      "sha256": "0cfd7e194ce6f6b1f4118897810e35d0eafab317a68e6104e4bfbd11dbaeb5c4",
+      "changed": false
+    },
+    "Sources/PastoCore/Models.swift": {
+      "newPath": "Sources/SnapclipCore/Models.swift",
+      "sha256": "8fa89e9de112a13b4f4059a5f681996aec4aa9b10351db03b3e924ed528404f1",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchField.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchField.swift",
+      "sha256": "6a56456d5b45a28cacd291891380b97414e71c1eaf68bd1d9ee15c3ec1596600",
+      "changed": false
+    },
+    "Sources/PastoCore/PastoCloudKitConfiguration.swift": {
+      "newPath": "Sources/SnapclipCore/PastoCloudKitConfiguration.swift",
+      "sha256": "f1e8d12cebf0ca4fd1fa0378d7d2089447c376d1ea4ad819e50d658302061648",
+      "changed": true
+    },
+    "Sources/PastoCore/OriginalSearchEditing.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchEditing.swift",
+      "sha256": "de4dbf21b72826fed9c0e9418c842eb8b0f1146a7d7aa9bfe22985af5d7ac73e",
+      "changed": false
+    },
+    "Sources/PastoCore/AppBrand.swift": {
+      "newPath": "Sources/SnapclipCore/AppBrand.swift",
+      "sha256": "9998e6f000ec175e775c6b9109a813fb4c4218447211c3c1b3e3feb057b8c348",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPasteboard.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPasteboard.swift",
+      "sha256": "139097cb610fc3a43f906414ef1b41d8634eb804f8911bc898bb987967a4208e",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardItemDataPersistence.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardItemDataPersistence.swift",
+      "sha256": "209195a24356c92eb1b0d9f5ddf5cd657f6103ea46fab30631db6c7d10282603",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchMenu.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchMenu.swift",
+      "sha256": "af3962d55bbfae4c40a67d43872d7f30d8e0e9c34c049527f28f94cc5a62f5e9",
+      "changed": false
+    },
+    "Sources/PastoCore/ICloudDriveSync.swift": {
+      "newPath": "Sources/SnapclipCore/ICloudDriveSync.swift",
+      "sha256": "54c8858a698b8f8703dc546861a70020967236494d19f9084e7ac34a9fd19847",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalCloudKitSyncEngine.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalCloudKitSyncEngine.swift",
+      "sha256": "cac79153b057f6e68f88a15868f3be3565f9175c9da0ec6f5fbb7e74f0111bdf",
+      "changed": true
+    },
+    "Sources/PastoCore/ClipboardSnapshotReader.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardSnapshotReader.swift",
+      "sha256": "853b835aee118b8fd7994083fa407cd6d7d4ed2967c6bc35f3e5b3b54eef49b5",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardItemOrderPersistence.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardItemOrderPersistence.swift",
+      "sha256": "978e36634da0a087257f4df93030f5aa60620df1a7f568f080dc2dd7c3c0bc17",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPreviewTitleLabel.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPreviewTitleLabel.swift",
+      "sha256": "84e3a33dbd575ad595cded72928d3d9b917ec1ece7eb258ba42ef3cf457bb0e2",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardSearchRecord.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardSearchRecord.swift",
+      "sha256": "f624524f6902d07084ccbee412c92ce933b3b5d7e397f024bd57ce1330cca459",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalCloudKitGraph.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalCloudKitGraph.swift",
+      "sha256": "0f97947f38cda3236ae8e2951fdc71baa49a0f60823fb7798829f7d84ec65dc5",
+      "changed": true
+    },
+    "Sources/PastoCore/OriginalShortcutFunctions.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalShortcutFunctions.swift",
+      "sha256": "c9f72e489f3345339beef2b79493c8c06bbae52251d9f29876bde3fd4c884174",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalUnavailablePreviewLocalization.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalUnavailablePreviewLocalization.swift",
+      "sha256": "d0b1c9580546a47c9b9491edef7016683dc54e88d767eba169be43518a810963",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalNativeDragPasteboardWriter.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalNativeDragPasteboardWriter.swift",
+      "sha256": "db793abd1e9b2c3c6ddf5fbe94dcb55af21122e5c9751751d5032a5156a3c908",
+      "changed": false
+    },
+    "Sources/PastoCore/PastoUpdateChecker.swift": {
+      "newPath": "Sources/SnapclipCore/PastoUpdateChecker.swift",
+      "sha256": "930955800cadbd195334d568057b2c2a53fef49084f8acd170aee447b79fc7e9",
+      "changed": true
+    },
+    "Sources/PastoCore/OriginalPreviewFooter.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPreviewFooter.swift",
+      "sha256": "97d14915cc4fa873a0d526a42f168ea5487864d0b8327e825bee18e28bd2e25c",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchFilterSymbols.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchFilterSymbols.swift",
+      "sha256": "73a9ca9cb90529d7c46665ac1af0241f0310505e56704d441df4e94c816698ef",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalImagePreviewMetadataCodec.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalImagePreviewMetadataCodec.swift",
+      "sha256": "1620a024a011c19294f16680ae2a8d6e92afac426d4ebbe1dd4e1fac1e364ca0",
+      "changed": false
+    },
+    "Sources/PastoCore/PasteGroupMigration.swift": {
+      "newPath": "Sources/SnapclipCore/PasteGroupMigration.swift",
+      "sha256": "edc85447b3271cb519b8636f017fe17e3a473dbf7e7be35deb4346f285a5a645",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPasteboardImageRestore.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPasteboardImageRestore.swift",
+      "sha256": "03e7d3e0aeac82986226a674708f4817cbf5cf69c20e856738774bbd0f51635a",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchQueryNormalization.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchQueryNormalization.swift",
+      "sha256": "fc2414e1395bb916246c9ef38509730c394e3d0feebbf0ca6dc9438f86409eb9",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalImagePreviewMetadata.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalImagePreviewMetadata.swift",
+      "sha256": "90bfbfd6d413e25d446b47346935f15c53d80dc44028d6630d19331b06908ffa",
+      "changed": false
+    },
+    "Sources/PastoCore/PermissionStatusSnapshot.swift": {
+      "newPath": "Sources/SnapclipCore/PermissionStatusSnapshot.swift",
+      "sha256": "1ec29c62fc5144b774eff74bdfa3bc483008fdf635167cc1db80261d5063972a",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchInputView.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchInputView.swift",
+      "sha256": "bacd69180e56aaac3eebae4eca50daa594cd09a6a146da89654f37f04b860b28",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalItemTitleLabel.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalItemTitleLabel.swift",
+      "sha256": "ffc86d0ef58daeb84ed0ede3a777fbc7152ae3a1778d2fbae8470f205f6fee29",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchTextView.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchTextView.swift",
+      "sha256": "25de1edc0432fcfa2a18c8437d6ea6fd98727a7914e01560240380f6d74808b5",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardCollectionEntry.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardCollectionEntry.swift",
+      "sha256": "8f507c30666e267cb30f60e9bf86dae8af186305348156da1fef8a2a5b30a82f",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchTextScroller.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchTextScroller.swift",
+      "sha256": "0f0b42bf9b40a34105f00c5dddf2c644415329fbae2f7816de221c2c123ce870",
+      "changed": false
+    },
+    "Sources/PastoCore/ClipboardSearchCollection.swift": {
+      "newPath": "Sources/SnapclipCore/ClipboardSearchCollection.swift",
+      "sha256": "a7588dd7c2bc2f994d14fdb14ea11e5801887fb1cfb8ca073420d961baf26fb7",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalLocalDiagnostics.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalLocalDiagnostics.swift",
+      "sha256": "95baca2d0ee25cb9ca5a7bcbc111a820bbe70d29feecf46e5d8cd0c1f6d5c911",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalTextPreviewSubmission.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalTextPreviewSubmission.swift",
+      "sha256": "d73f78493de8b58d15baf16daa91882034cc8f186768a7e6a927a398ddc8d91f",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSearchQuery.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSearchQuery.swift",
+      "sha256": "4c828b16c6342387d375e6b5a3f24d28b37bbffa1c377e4cdb064ad27b5d1b28",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalWritingTools.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalWritingTools.swift",
+      "sha256": "4a21f642be03fe3c1c08638186a90b3320567eb2af90f181aea36469446637a3",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalDependencies.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalDependencies.swift",
+      "sha256": "6cccb9750822fd36e8e769bbaf820fc92232446bbde723089032b94a862619a8",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPreviewWindowTransition.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPreviewWindowTransition.swift",
+      "sha256": "35bf14270834582525088ebe43b6b50c11373c6c59106153711c3acf0e1aa34a",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalToolbarButton.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalToolbarButton.swift",
+      "sha256": "f4c3920e5f5cd9f515bbe0cce530f4f8f6335b14450f75e471f0272e19412165",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalCollectionListContext.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalCollectionListContext.swift",
+      "sha256": "4511aae8e8d7897a27c173e97f7cd4a98b9a9c0aecf33080d25bf78dfdd5115e",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalDiagnosticsAppActions.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalDiagnosticsAppActions.swift",
+      "sha256": "51b66a38645a00f634efdb623f74940f503c8c2c36862badc56b1267d2132cac",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalPinboardAttributes.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalPinboardAttributes.swift",
+      "sha256": "c5e2e57445672c441594085a57f57b2b79325e5d19db26141962018bf5eb26df",
+      "changed": false
+    },
+    "Sources/PastoCore/PermissionPromptPolicy.swift": {
+      "newPath": "Sources/SnapclipCore/PermissionPromptPolicy.swift",
+      "sha256": "3dda6e20484274900b6c5595ce3dc81252adec3e105edfc5623403b3ce0eca69",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalInitializedValue.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalInitializedValue.swift",
+      "sha256": "bde8f2a1c9e4b6c74e9bb332ebff29dcbd3569d2459783a451661ff106d0e1c4",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalSourceApplicationImageColor.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalSourceApplicationImageColor.swift",
+      "sha256": "dd0923531076f26726f9aae58876b63a9f8056b009597e99a6612f28155f0c24",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalDiagnosticsManager.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalDiagnosticsManager.swift",
+      "sha256": "afb071a98b036e3023f254c039ca1d85c4a975e79307aa3f3075b1caf21513ed",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalShortcutRecorderView.swift": {
+      "newPath": "Sources/SnapclipCore/OriginalShortcutRecorderView.swift",
+      "sha256": "3ff3465d0707ad381867cb0167590ab8c5a84fbc06399e50e5dbddb20ddb66d1",
+      "changed": false
+    },
+    "Sources/PastoCore/Pasteboard.swift": {
+      "newPath": "Sources/SnapclipCore/Pasteboard.swift",
+      "sha256": "67a8d3d9d1e27e5aa2a8684259ccc3e49fad70f516bdb06715d8a7167ab68234",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Info.plist": {
+      "newPath": "Sources/SnapclipCore/OriginalStackIcons.bundle/Contents/Info.plist",
+      "sha256": "83d3bb20cda3c61373de928b60c991fbd8c8e53590c6a0eb80fcbb6e11d6645a",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.link@2x.png": {
+      "newPath": "Sources/SnapclipCore/OriginalStackIcons.bundle/Contents/Resources/icon.link@2x.png",
+      "sha256": "dcb22ab1eb816628133ff8909c8a37551cbf9d65e31cc757fc1fb6a81aa0f477",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.file@2x.png": {
+      "newPath": "Sources/SnapclipCore/OriginalStackIcons.bundle/Contents/Resources/icon.file@2x.png",
+      "sha256": "d2ed40a44ec99509225eeef0919af84789172e7b441da38f0d21a8bc4a1fa1d6",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.link.png": {
+      "newPath": "Sources/SnapclipCore/OriginalStackIcons.bundle/Contents/Resources/icon.link.png",
+      "sha256": "8334dcbcaa93beeecd72ae6dddf9a1ec6a9a5aad597bbab2285dc1bbba53af46",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.file.png": {
+      "newPath": "Sources/SnapclipCore/OriginalStackIcons.bundle/Contents/Resources/icon.file.png",
+      "sha256": "8e47b829f32f7dd28d634dfddc9b46bb50e5cb06794c3e07fec5fecc141d670b",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.unknown@2x.png": {
+      "newPath": "Sources/SnapclipCore/OriginalStackIcons.bundle/Contents/Resources/icon.unknown@2x.png",
+      "sha256": "abd0ae34acf7ed4ed8eb7b207b1547b02b6e87b23107d342e3394b0ad7061ebe",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.unknown.png": {
+      "newPath": "Sources/SnapclipCore/OriginalStackIcons.bundle/Contents/Resources/icon.unknown.png",
+      "sha256": "10df1429fc14e04a954265b5cc5abcc494dcc3e0b5acbe8ba990898e5a73ce82",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.text.png": {
+      "newPath": "Sources/SnapclipCore/OriginalStackIcons.bundle/Contents/Resources/icon.text.png",
+      "sha256": "423122ba0250aeea4a3b91eb92167ffc32ab5bc96083ba3a9e60ac9c0bc6cdd6",
+      "changed": false
+    },
+    "Sources/PastoCore/OriginalStackIcons.bundle/Contents/Resources/icon.text@2x.png": {
+      "newPath": "Sources/SnapclipCore/OriginalStackIcons.bundle/Contents/Resources/icon.text@2x.png",
+      "sha256": "9f5daae8c48283b2176990d01c37d1110791bfef6be952fb395e071f838ed422",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/OriginalSettingsCopyToAppDark@2x.png": {
+      "newPath": "Sources/SnapclipCore/Resources/OriginalSettingsCopyToAppDark@2x.png",
+      "sha256": "83dfa00776b16ba16a37bf52fd5527982271e57e32760c739984e564610aa3f7",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/OriginalSettingsCopyToClipboardDark@2x.png": {
+      "newPath": "Sources/SnapclipCore/Resources/OriginalSettingsCopyToClipboardDark@2x.png",
+      "sha256": "031f1e6e6b2bea16548ed1b77f9de019aae9c6e7a2d7c0f5df960f948324b1ce",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/PastoOtherApps@2x.png": {
+      "newPath": "Sources/SnapclipCore/Resources/PastoOtherApps@2x.png",
+      "sha256": "9c5e5ee6b2af9a4fa6cb81982d5aaafe08635ed12ea93f12dd2d3c956c978483",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/OriginalSettingsCopyToClipboardLight@2x.png": {
+      "newPath": "Sources/SnapclipCore/Resources/OriginalSettingsCopyToClipboardLight@2x.png",
+      "sha256": "38bb4b1719f4f27dcf301aeb468cdbc3b43d477a92a431b7651619acce04f7eb",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/OriginalSettingsCopyToAppLight@2x.png": {
+      "newPath": "Sources/SnapclipCore/Resources/OriginalSettingsCopyToAppLight@2x.png",
+      "sha256": "df23e63db6a07a9753ad889045bd17f797cd4c3ede665c3cbe8f88d82e3f5cee",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/de.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/de.lproj/Localizable.strings",
+      "sha256": "d53bceee29971766f20acbfdb9cce2d2591662787061217a52b6891117b9f4ee",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/de.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/de.lproj/Localizable.stringsdict",
+      "sha256": "c6fc20ab4a366deb148f095d770cf6f90c94eb246ac497812103b4f5e8aa6b34",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/he.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/he.lproj/Localizable.strings",
+      "sha256": "8ccb38e93452f0019fd5e153587af9ec9087b02c37febad5e4e86c3790108094",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/he.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/he.lproj/Localizable.stringsdict",
+      "sha256": "1c851445f2286d5959411ce7712152009f17a86f3121b597f8563f7a8955808e",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/zh-Hans.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/zh-Hans.lproj/Localizable.strings",
+      "sha256": "e6955e82ccf3358e0abbf776883592cd0439360df6e8dc9258d040c274d1b08f",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/zh-Hans.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/zh-Hans.lproj/Localizable.stringsdict",
+      "sha256": "c1f7a75193a101959e60911f9014ab3ca0ef905a4e2105e9cba5133d1433e1ad",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/ja.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/ja.lproj/Localizable.strings",
+      "sha256": "9f78515d790c81701034c9e3e01c155313ce438bc606839293ac431998699e2c",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/ja.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/ja.lproj/Localizable.stringsdict",
+      "sha256": "cbd651d369b6e4156ec091cc46b97a477273a7476f9082bb3f14b03d199e207d",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/en.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/en.lproj/Localizable.strings",
+      "sha256": "d41cefa076994486efde3334b10a812eb6ca4e23c9f56a3f782aaeccf2149a98",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/en.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/en.lproj/Localizable.stringsdict",
+      "sha256": "dc7911c873e852bd01252c685a5e9fce24c07ca7f8954054ab6b2c4374d04679",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/es.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/es.lproj/Localizable.strings",
+      "sha256": "3f6aec2ff266e5fe7dc7b2ea8ea9aeeb1183fd9e8a026f6d8b903cb031866cd5",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/es.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/es.lproj/Localizable.stringsdict",
+      "sha256": "28a931243ce4f9259d411fbe579c3b8eb7c0a58711dabd344d31029ea1104c4f",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/da.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/da.lproj/Localizable.strings",
+      "sha256": "a65f694c1a7b4e9a8125a50a372fb073b9653445e2eb6b21f67550ffed19663e",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/da.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/da.lproj/Localizable.stringsdict",
+      "sha256": "2fbe4e3d9ae3f2dadad058b3fe4375dd56a346ec26ec191e6f347b0333ea2b25",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/it.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/it.lproj/Localizable.strings",
+      "sha256": "e08386ffb969b5b7e9a27d686fdb9ed4a93a14abf00acedfdd2793793ad76dc5",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/it.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/it.lproj/Localizable.stringsdict",
+      "sha256": "5b89c5b4fa16e1354a92f46c8070f428dd468e3367a63776a0f7b059db17d492",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/cs.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/cs.lproj/Localizable.strings",
+      "sha256": "2a8358d6ee556ed43d8fdf800f29fd6fdf5558d799fa1e0b4b7cf6b5234b80cd",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/cs.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/cs.lproj/Localizable.stringsdict",
+      "sha256": "cad4a0663c716b0a571317b5d99b8855f3076469a39f1bfeb1ce05e4ae6f2a8a",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/ko.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/ko.lproj/Localizable.strings",
+      "sha256": "825d7c566d6f0ff227991854a546f50e13f75c83163d85c517bb62494df95e30",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/ko.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/ko.lproj/Localizable.stringsdict",
+      "sha256": "9a0b1198ca2e28753b38e4d9aa70e5ce026ebfe62308cb36bc45928029b71981",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/zh-Hant.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/zh-Hant.lproj/Localizable.strings",
+      "sha256": "004004e5633ba389276b4c5827051e1105ce7a82ce6d1338ec60a83ef3f7da4d",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/zh-Hant.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/zh-Hant.lproj/Localizable.stringsdict",
+      "sha256": "8e8115b30d8b5f765fc5b94b485c028b6bf01510e888b2c568ad7978a48756d4",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/pl.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/pl.lproj/Localizable.strings",
+      "sha256": "76e4811afba2ba0cb569096273004da4348d05dd0a33ead608343bc57500d526",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/pl.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/pl.lproj/Localizable.stringsdict",
+      "sha256": "1c257470d804b04c12cab3de12ca8747cc1857bcef963c44e732a5614f5b4232",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/pt-BR.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/pt-BR.lproj/Localizable.strings",
+      "sha256": "70e1dc074fe4c2da404223ea54700639bb94b76b2d1591504e2f77d6679f12d0",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/pt-BR.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/pt-BR.lproj/Localizable.stringsdict",
+      "sha256": "793057162eaa4cf343f9b8b1cbe83ec3aa4641d0812055b6c7fbbbcb4fb648f1",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/ru.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/ru.lproj/Localizable.strings",
+      "sha256": "bede290ec89c09ab48d7d28aeb9422441727f838ab4a31cb8ebb323f5a987c77",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/ru.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/ru.lproj/Localizable.stringsdict",
+      "sha256": "4195d7291edb5f78b23c95e44e06e52ae313e0ae4421b9ce28010d5df97bb6f4",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/fr.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/fr.lproj/Localizable.strings",
+      "sha256": "10e2ed9a960870035c138b7054580b8e02b5e854dd78c7ed5fef0c523d1cd4dd",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/fr.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/fr.lproj/Localizable.stringsdict",
+      "sha256": "7e0acca552f31d51b5556ab38d664b14d359ec55c6c2f52ce54a3b1cfad3bb03",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/nl.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/nl.lproj/Localizable.strings",
+      "sha256": "1999a6084534af7753f4720084bab01afcb67e706e2e42541a972724df605c6e",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/nl.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/nl.lproj/Localizable.stringsdict",
+      "sha256": "270356615bf42ba73be94323210365be1d6adfe845256517acd9b6cf343a7809",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/pt-PT.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/Resources/pt-PT.lproj/Localizable.strings",
+      "sha256": "9fd0de276fe0b7c650dc88eda29f9400a77993e8590c76c4568f90d311f3fcc1",
+      "changed": false
+    },
+    "Sources/PastoCore/Resources/pt-PT.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/Resources/pt-PT.lproj/Localizable.stringsdict",
+      "sha256": "1b28f44dabcb27b6f00d3c8ac5c78b29c6b63510b1525d5cfb7d812cf3e1d399",
+      "changed": false
+    },
+    "Sources/PastoCore/SnapclipResources/zh-Hans.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/SnapclipResources/zh-Hans.lproj/Localizable.strings",
+      "sha256": "7242cc20bce2f5c52d0454cb1424ef656ed04cea5c263e6e713571b734bf8dec",
+      "changed": false
+    },
+    "Sources/PastoCore/SnapclipResources/zh-Hans.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/SnapclipResources/zh-Hans.lproj/Localizable.stringsdict",
+      "sha256": "801c08e3160fba9362bc3fef5115ec82ec6cb69385522ff259b5c434941f5cdf",
+      "changed": false
+    },
+    "Sources/PastoCore/SnapclipResources/en.lproj/Localizable.strings": {
+      "newPath": "Sources/SnapclipCore/SnapclipResources/en.lproj/Localizable.strings",
+      "sha256": "b0a89a95feb561e5cbc5ae5f02a45e88be967082cc5c89de36524d885def63f7",
+      "changed": false
+    },
+    "Sources/PastoCore/SnapclipResources/en.lproj/Localizable.stringsdict": {
+      "newPath": "Sources/SnapclipCore/SnapclipResources/en.lproj/Localizable.stringsdict",
+      "sha256": "dc7911c873e852bd01252c685a5e9fce24c07ca7f8954054ab6b2c4374d04679",
+      "changed": false
+    },
+    "Sources/PastoObjC/PRCloudKitEntitlements.m": {
+      "newPath": "Sources/SnapclipObjC/PRCloudKitEntitlements.m",
+      "sha256": "3a6df47c2b05120f90d26e93fe3cc1aa36ede17362734a77512f82c5aa73d872",
+      "changed": false
+    },
+    "Sources/PastoObjC/PastoKeyTranslation.m": {
+      "newPath": "Sources/SnapclipObjC/SnapclipKeyTranslation.m",
+      "sha256": "67593b8ec1143298a938f3b7aa71206f3edb76ea454b92dcbd51ddfb9815dffe",
+      "changed": true
+    },
+    "Sources/PastoObjC/PRGlassBackgroundWindow.m": {
+      "newPath": "Sources/SnapclipObjC/PRGlassBackgroundWindow.m",
+      "sha256": "a59cd14d1e459d83a070fdb5ff909c90e7e3a9e86aca96a429cb1aeca578b4a1",
+      "changed": false
+    },
+    "Sources/PastoObjC/PRPanelGlassBackground.m": {
+      "newPath": "Sources/SnapclipObjC/PRPanelGlassBackground.m",
+      "sha256": "fef584262173220e454c7c609b5472d786745fdda10de0797de104585c751c71",
+      "changed": false
+    },
+    "Sources/PastoObjC/PRObjCExceptionCatcher.m": {
+      "newPath": "Sources/SnapclipObjC/PRObjCExceptionCatcher.m",
+      "sha256": "99b8ce9f229954f427517a16c4a976b6b1ad776873c0eb5a6856b6a82943af6e",
+      "changed": false
+    },
+    "Sources/PastoObjC/include/PRGlassBackgroundWindow.h": {
+      "newPath": "Sources/SnapclipObjC/include/PRGlassBackgroundWindow.h",
+      "sha256": "935ea0c78f99a6e0e04aa264c72189ca85433f6bba33c62b2e8da1a18ef872d3",
+      "changed": false
+    },
+    "Sources/PastoObjC/include/PRPanelGlassBackground.h": {
+      "newPath": "Sources/SnapclipObjC/include/PRPanelGlassBackground.h",
+      "sha256": "9b8845cd4205399b5c7180c13cf592fcb289b0faee1bf099efc1a5d1608e058e",
+      "changed": false
+    },
+    "Sources/PastoObjC/include/PRObjCExceptionCatcher.h": {
+      "newPath": "Sources/SnapclipObjC/include/PRObjCExceptionCatcher.h",
+      "sha256": "04b59d8c6afe6efa1496969e34c823ea16752e7c924d9f123a767acfe804a384",
+      "changed": false
+    },
+    "Sources/PastoObjC/include/PRCloudKitEntitlements.h": {
+      "newPath": "Sources/SnapclipObjC/include/PRCloudKitEntitlements.h",
+      "sha256": "d6bdd810591057f1f8ce692a9d81f396bf9b49bc39ba9e1a933deb06b388bb9c",
+      "changed": false
+    },
+    "Sources/PastoObjC/include/module.modulemap": {
+      "newPath": "Sources/SnapclipObjC/include/module.modulemap",
+      "sha256": "f2cfbded4335e4b12d7c0586b1fe49a8246f8b802b08f9011fd0b01fd8c12ee4",
+      "changed": true
+    },
+    "Sources/PastoObjC/include/PastoKeyTranslation.h": {
+      "newPath": "Sources/SnapclipObjC/include/SnapclipKeyTranslation.h",
+      "sha256": "b0bff00941974efc29aee4dd59de10d364371d7167ba9d22684bb8d95cfb57e5",
+      "changed": true
+    },
+    "Sources/PastoHelper/HelperMain.swift": {
+      "newPath": "Sources/SnapclipHelper/HelperMain.swift",
+      "sha256": "ea068d94e00633593db5821674891be9ecbf4bb151440b1e859a46771dc6c330",
+      "changed": false
+    },
+    "Sources/PastoMCP/PastoMCP.swift": {
+      "newPath": "Sources/SnapclipMCP/PastoMCP.swift",
+      "sha256": "66b9aa5e7aea8ea02c416583175ae0f42a7feb10623bf65bf73b4730c11c947f",
+      "changed": true
+    },
+    "Tests/PastoCoreTests/ValidationMain.swift": {
+      "newPath": "Tests/SnapclipCoreTests/ValidationMain.swift",
+      "sha256": "77d1d22c65ae83e5e915e525b1d0206eb40f2db57f2d8150d39f3d9e08c262b6",
+      "changed": true
+    },
+    "Tests/PastoCoreTests/ClipboardStoreTests.swift": {
+      "newPath": "Tests/SnapclipCoreTests/ClipboardStoreTests.swift",
+      "sha256": "7620155c9f88b35272ccff89bd855024629e35510420785d889e817283ee42dd",
+      "changed": true
+    }
+  },
+  "fileCount": 290,
+  "unchangedBytesFiles": 212,
+  "compatibilityExceptions": [
+    "Main Swift target/module Pasto and all AppIntents types",
+    "CoreData Swift and @objc class names; archive runtime plus four decoder aliases",
+    "LoginItems/Pasto Helper.app is the existing SMAppService service identifier; executable is SnapclipHelper",
+    "main/helper Bundle IDs, stable Team4NJM425J3B, prefs/data/cloud/wire strings",
+    "legacy pasto-mcp binary copy shipped alongside snapclip-mcp",
+    "old Sources directories and Tests/PastoCoreTests are source-only symlink aliases; explicit targets prevent duplicate compilation",
+    "old extracted Resources and OriginalStackIcons.bundle retained for research and excluded from shipping",
+    "published Pasto DMG assets and remote repository/Pages/feed URLs unchanged"
+  ],
+  "recoveredBaseline": {
+    "path": "/Users/chrisli/dev-artifacts/pasto/snapclip-engineering-migration-20465-20261111-193223/out/pre-rename-baseline",
+    "movedSourceFilesExact": 290,
+    "package": "namespace inverse matches observed pre-rename Package, not earlier fixture producer Package SHA",
+    "vendor": "namespace inverse only; not in initial move-file hash inventory"
+  }
+}

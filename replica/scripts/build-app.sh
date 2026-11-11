@@ -1,8 +1,23 @@
 #!/bin/bash
 set -euo pipefail
+# Canonical Snapclip options take precedence; old PASTO options remain supported.
+if [[ -n "${SNAPCLIP_APP_OUTPUT_DIR+x}" ]]; then export PASTO_APP_OUTPUT_DIR="$SNAPCLIP_APP_OUTPUT_DIR"; fi
+if [[ -n "${SNAPCLIP_BUILD_ROOT+x}" ]]; then export PASTO_BUILD_ROOT="$SNAPCLIP_BUILD_ROOT"; fi
+if [[ -n "${SNAPCLIP_CLOUDKIT_CONTAINER+x}" ]]; then export PASTO_CLOUDKIT_CONTAINER="$SNAPCLIP_CLOUDKIT_CONTAINER"; fi
+if [[ -n "${SNAPCLIP_CLOUDKIT_ENVIRONMENT+x}" ]]; then export PASTO_CLOUDKIT_ENVIRONMENT="$SNAPCLIP_CLOUDKIT_ENVIRONMENT"; fi
+if [[ -n "${SNAPCLIP_CLOUDKIT_PROFILE+x}" ]]; then export PASTO_CLOUDKIT_PROFILE="$SNAPCLIP_CLOUDKIT_PROFILE"; fi
+if [[ -n "${SNAPCLIP_SIGNING_IDENTITY+x}" ]]; then export PASTO_SIGNING_IDENTITY="$SNAPCLIP_SIGNING_IDENTITY"; fi
 replica_root="$(cd "$(dirname "$0")/.." && pwd)"
 configuration="${1:-release}"
 architecture="${2:-universal}"
+if [[ -n "${ARTIFACT_TASK_DIR:-}" ]]; then
+  scratch_root="${PASTO_BUILD_ROOT:-$ARTIFACT_TASK_DIR/build/swiftpm}"
+  output_root="${PASTO_APP_OUTPUT_DIR:-$ARTIFACT_TASK_DIR/out}"
+else
+  # Preserve the hosted CI layout when storage-guard is not present.
+  scratch_root="${PASTO_BUILD_ROOT:-$replica_root/.build}"
+  output_root="${PASTO_APP_OUTPUT_DIR:-$replica_root/dist}"
+fi
 build_sdk_version="$(xcrun --sdk macosx --show-sdk-version)"
 if (( ${build_sdk_version%%.*} < 26 )); then
   printf '%s\n' "当前 macOS SDK 为 ${build_sdk_version}；要匹配 macOS 26 的原生控件外观，请使用 Xcode 26 或更新版本构建。" >&2
@@ -21,21 +36,21 @@ if [[ -n "${BASH_REMATCH[5]}" ]]; then
 fi
 build_architecture() {
   swift build --package-path "$replica_root" -c "$configuration" --jobs 2 \
-    --scratch-path "$replica_root/.build/architectures/$1" --arch "$1"
+    --scratch-path "$scratch_root/architectures/$1" --arch "$1"
 }
 architecture_binary_root() {
   swift build --package-path "$replica_root" -c "$configuration" \
-    --scratch-path "$replica_root/.build/architectures/$1" --arch "$1" --show-bin-path
+    --scratch-path "$scratch_root/architectures/$1" --arch "$1" --show-bin-path
 }
 if [[ "$architecture" == native ]]; then
-  swift build --package-path "$replica_root" -c "$configuration" --jobs 2
-  binary_root="$(swift build --package-path "$replica_root" -c "$configuration" --show-bin-path)"
+  swift build --package-path "$replica_root" --scratch-path "$scratch_root" -c "$configuration" --jobs 2
+  binary_root="$(swift build --package-path "$replica_root" --scratch-path "$scratch_root" -c "$configuration" --show-bin-path)"
 elif [[ "$architecture" == universal ]]; then
   build_architecture arm64
   build_architecture x86_64
   binary_root="$(architecture_binary_root arm64)"
   intel_binary_root="$(architecture_binary_root x86_64)"
-  diff -rq "$binary_root/Pasto_PastoCore.bundle" "$intel_binary_root/Pasto_PastoCore.bundle"
+  diff -rq "$binary_root/Snapclip_SnapclipCore.bundle" "$intel_binary_root/Snapclip_SnapclipCore.bundle"
 else
   build_architecture "$architecture"
   binary_root="$(architecture_binary_root "$architecture")"
@@ -49,34 +64,60 @@ install_executable() {
   fi
   install_name_tool -add_rpath "${3:-@executable_path/../Frameworks}" "$2"
 }
-mkdir -p "$replica_root/dist"
-staging="$(mktemp -d "$replica_root/dist/.pasto-build.XXXXXX")"
+mkdir -p "$output_root"
+staging="$(mktemp -d "$output_root/.snapclip-build.XXXXXX")"
 # 清理用 EXIT trap 必须保留真实退出码：bash 3.2 下 `set -e` + ${VAR:?} 中止时，
 # trap 里读到的 $? 是 0，只有真正走到脚本末尾（build_complete=1）才算成功。
 trap 'rc=$?; rm -rf "$staging"; if [[ "$rc" -eq 0 && "${build_complete:-0}" != 1 ]]; then rc=1; fi; exit "$rc"' EXIT
-bundle="$staging/Pasto.app"
+bundle="$staging/Snapclip.app"
 mkdir -p "$bundle/Contents/MacOS" "$bundle/Contents/Resources"
 mkdir -p "$bundle/Contents/Frameworks"
 # Preserve Sparkle's symlinks, signed helpers, and both architecture slices.
 ditto "$binary_root/Sparkle.framework" "$bundle/Contents/Frameworks/Sparkle.framework"
-install_executable Pasto "$bundle/Contents/MacOS/Pasto"
-install_executable pasto-mcp "$bundle/Contents/MacOS/pasto-mcp"
-codesign --force --sign - "$bundle/Contents/MacOS/pasto-mcp"
+install_executable Snapclip "$bundle/Contents/MacOS/Snapclip"
+install_executable snapclip-mcp "$bundle/Contents/MacOS/snapclip-mcp"
+codesign --force --sign - "$bundle/Contents/MacOS/snapclip-mcp"
+# Transitional command for existing external MCP configurations.
+cp "$bundle/Contents/MacOS/snapclip-mcp" "$bundle/Contents/MacOS/pasto-mcp"
 cp "$replica_root/Assets/Sparkle-LICENSE.txt" "$bundle/Contents/Resources/Sparkle-LICENSE.txt"
-cp "$replica_root/Assets/PastoAppIcon.icns" "$bundle/Contents/Resources/PastoAppIcon.icns"
-ditto "$binary_root/Pasto_PastoCore.bundle" "$bundle/Contents/Resources/Pasto_PastoCore.bundle"
+cp "$replica_root/Assets/capcap-LICENSE.txt" "$bundle/Contents/Resources/capcap-LICENSE.txt"
+cp "$replica_root/Assets/SnapclipAppIcon.icns" "$bundle/Contents/Resources/SnapclipAppIcon.icns"
+ditto "$binary_root/Snapclip_SnapclipCore.bundle" "$bundle/Contents/Resources/Snapclip_SnapclipCore.bundle"
+# Fail closed if a stale build reintroduces extracted artwork or language tables.
+python3 - "$bundle/Contents/Resources/Snapclip_SnapclipCore.bundle" <<'OWNED_RESOURCES'
+from pathlib import Path
+import struct, sys
+core = Path(sys.argv[1])
+files = [p for p in core.rglob("*") if p.is_file()]
+illustrations = {
+    "SnapclipDirectPaste@2x.png": (384, 256),
+    "SnapclipCopyToClipboard@2x.png": (384, 256),
+    "SnapclipPermissions@2x.png": (480, 288),
+}
+for p in files:
+    owned_image = p.name in illustrations and p.relative_to(core).parts in {(p.name,), ("GeneratedIllustrations", p.name)}
+    assert p.name == "Info.plist" or owned_image or (p.name in {"Localizable.strings", "Localizable.stringsdict"} and p.parent.name.lower() in {"en.lproj", "zh-hans.lproj"}), f"Unexpected Core resource: {p}"
+for name, size in illustrations.items():
+    matches = [p for p in files if p.name == name]
+    assert len(matches) == 1, f"Missing or duplicate owned illustration: {name}"
+    header = matches[0].read_bytes()[:24]
+    assert header[:8] == b"\x89PNG\r\n\x1a\n" and header[12:16] == b"IHDR" and struct.unpack(">II", header[16:24]) == size, f"Invalid owned illustration: {name}"
+for language in ("en", "zh-hans"):
+    for name in ("Localizable.strings", "Localizable.stringsdict"):
+        assert (core / (language + ".lproj") / name).is_file(), f"Missing owned resource: {language}/{name}"
+OWNED_RESOURCES
 ditto "$replica_root/Vendor/capcap/Resources/zh-Hans.lproj" "$bundle/Contents/Resources/zh-Hans.lproj"
 ditto "$replica_root/Vendor/capcap/Resources/en.lproj" "$bundle/Contents/Resources/en.lproj"
 helper="$bundle/Contents/Library/LoginItems/Pasto Helper.app"
 mkdir -p "$helper/Contents/MacOS"
-install_executable PastoHelper "$helper/Contents/MacOS/PastoHelper" '@executable_path/../../../../../Frameworks'
+install_executable SnapclipHelper "$helper/Contents/MacOS/SnapclipHelper" '@executable_path/../../../../../Frameworks'
 cat > "$helper/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
 <key>CFBundleIdentifier</key><string>com.yingyanzhitong.paste-replica.helper</string>
-<key>CFBundleName</key><string>Pasto Helper</string>
-<key>CFBundleExecutable</key><string>PastoHelper</string>
+<key>CFBundleName</key><string>Snapclip Helper</string>
+<key>CFBundleExecutable</key><string>SnapclipHelper</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleShortVersionString</key><string>$short_version</string>
 <key>CFBundleVersion</key><string>$build_version</string>
@@ -93,24 +134,48 @@ cat > "$bundle/Contents/Info.plist" <<PLIST
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
 <key>CFBundleIdentifier</key><string>com.yingyanzhitong.paste-replica</string>
-<key>CFBundleName</key><string>Pasto</string>
-<key>CFBundleDisplayName</key><string>Pasto</string>
-<key>CFBundleIconFile</key><string>PastoAppIcon</string>
-<key>CFBundleExecutable</key><string>Pasto</string>
+<key>CFBundleName</key><string>Snapclip</string>
+<key>CFBundleDisplayName</key><string>Snapclip</string>
+<key>CFBundleDevelopmentRegion</key><string>en</string>
+<key>LSHasLocalizedDisplayName</key><true/>
+<key>CFBundleIconFile</key><string>SnapclipAppIcon</string>
+<key>CFBundleExecutable</key><string>Snapclip</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleShortVersionString</key><string>$short_version</string>
 <key>CFBundleVersion</key><string>$build_version</string>
 <key>PastoSourceVersion</key><string>$version</string>
 <key>LSMinimumSystemVersion</key><string>14.0</string>
 <key>LSUIElement</key><true/>
-<key>NSScreenCaptureUsageDescription</key><string>截图功能需要读取屏幕内容，用于截取您选择的区域或整个屏幕并保存到 Pasto 历史。</string>
+<key>NSScreenCaptureUsageDescription</key><string>Snapclip needs screen access to capture a region or display and save it to your history.</string>
 <key>NSHighResolutionCapable</key><true/>
 <key>NSPrincipalClass</key><string>NSApplication</string>
 <key>UIDesignRequiresCompatibility</key><false/>
 </dict></plist>
 PLIST
 plutil -lint "$bundle/Contents/Info.plist"
-plutil -insert SUFeedURL -string 'https://github.com/yingyanzhitong/pasto/releases/latest/download/appcast.xml' "$bundle/Contents/Info.plist"
+cat > "$bundle/Contents/Resources/zh-Hans.lproj/InfoPlist.strings" <<'STRINGS'
+"CFBundleName" = "闪贴";
+"CFBundleDisplayName" = "闪贴";
+"NSScreenCaptureUsageDescription" = "闪贴需要读取屏幕内容，用于截取您选择的区域或整个屏幕并保存到历史。";
+STRINGS
+cat > "$bundle/Contents/Resources/en.lproj/InfoPlist.strings" <<'STRINGS'
+"CFBundleName" = "Snapclip";
+"CFBundleDisplayName" = "Snapclip";
+"NSScreenCaptureUsageDescription" = "Snapclip needs screen access to capture a region or display and save it to your history.";
+STRINGS
+mkdir -p "$bundle/Contents/Resources/zh-Hant.lproj"
+cp "$bundle/Contents/Resources/zh-Hans.lproj/InfoPlist.strings" "$bundle/Contents/Resources/zh-Hant.lproj/InfoPlist.strings"
+# Static App Intents metadata resolves in the main bundle, alongside capture localization.
+cat >> "$bundle/Contents/Resources/zh-Hans.lproj/Localizable.strings" <<'STRINGS'
+
+"Snapclip" = "闪贴";
+"Create Snapclip Item" = "创建闪贴项目";
+"Get Snapclip Item at Index" = "获取指定位置的闪贴项目";
+"Get Latest Snapclip Item" = "获取最新闪贴项目";
+"Snapclip Item Type" = "闪贴项目类型";
+"Create Snapclip" = "创建闪贴分组";
+STRINGS
+plutil -insert SUFeedURL -string 'https://github.com/aexachao/Snapclip/releases/latest/download/appcast.xml' "$bundle/Contents/Info.plist"
 plutil -insert SUPublicEDKey -string "$(tr -d '\r\n' < "$replica_root/Assets/UpdatePublicKey.txt")" "$bundle/Contents/Info.plist"
 plutil -insert SURequireSignedFeed -bool YES "$bundle/Contents/Info.plist"
 plutil -insert SUVerifyUpdateBeforeExtraction -bool YES "$bundle/Contents/Info.plist"
@@ -134,11 +199,11 @@ else
   codesign --force --sign "${PASTO_SIGNING_IDENTITY:--}" "$bundle"
 fi
 codesign --verify --deep --strict "$bundle"
-if [[ -e "$replica_root/dist/Pasto.app" ]]; then
-  backup="$replica_root/../.local/app-bundle-backups/$(date +%Y%m%d-%H%M%S)"
+if [[ -e "$output_root/Snapclip.app" ]]; then
+  backup="$output_root/backups/$(date +%Y%m%d-%H%M%S)"
   mkdir -p "$backup"
-  mv "$replica_root/dist/Pasto.app" "$backup/Pasto.app"
+  mv "$output_root/Snapclip.app" "$backup/Snapclip.app"
 fi
-mv "$bundle" "$replica_root/dist/Pasto.app"
-printf '%s\n' "$replica_root/dist/Pasto.app"
+mv "$bundle" "$output_root/Snapclip.app"
+printf '%s\n' "$output_root/Snapclip.app"
 build_complete=1

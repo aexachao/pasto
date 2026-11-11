@@ -34,6 +34,9 @@ def main():
                              capture_output=True, check=True, text=True).stdout
         previous = json.loads(raw)["version"]
     result = select_plan(os.environ["GITHUB_EVENT_NAME"], os.environ["GITHUB_REF"], version, previous)
+    # Source pushes and version tags validate contracts only. Publication is opt-in.
+    if os.environ.get("SNAPCLIP_PUBLISH") != "true":
+        result["release"] = "false"
     result["commit"] = subprocess.run(["git", "rev-parse", "HEAD"],
                                       capture_output=True, check=True, text=True).stdout.strip()
     with Path(os.environ["GITHUB_OUTPUT"]).open("a") as output:

@@ -1,6 +1,6 @@
 import CloudKit
 import Foundation
-import PastoCore
+import SnapclipCore
 
 /// Explicitly signed test process, separate temporary stores and an allowlisted random zone.
 /// No system pasteboard, installed application's store, or existing cloud record zone is opened.
@@ -15,7 +15,7 @@ struct LiveCloudKitSyncHarness {
         catch { print("FAIL: \(error)"); exit(1) }
     }
     @MainActor static func run() async throws {
-        let configuration = try PastoCloudKitConfiguration.current()
+        let configuration = try SnapclipCloudKitConfiguration.current()
         guard configuration.environment == "Development" else { throw Failure(message: "真实探针只允许开发环境") }
         let root = FileManager.default.temporaryDirectory.appendingPathComponent("PastoCloudKitLive-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: root) }

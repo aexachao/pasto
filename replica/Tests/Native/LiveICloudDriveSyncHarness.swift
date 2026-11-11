@@ -1,5 +1,5 @@
 import Foundation
-import PastoCore
+import SnapclipCore
 
 /// Explicitly opt-in integration probe: writes only generated test content to iCloud Drive.
 @main

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 if [[ "$#" -lt 2 || "$#" -gt 3 || "${1:-}" != *.app || "${2:-}" != *.dmg ]]; then
-  printf '%s\n' '用法：build-dmg.sh <已构建的 Pasto.app> <目标.dmg> [arm64|x86_64|universal]' >&2
+  printf '%s\n' '用法：build-dmg.sh <已构建的 Snapclip.app> <目标.dmg> [arm64|x86_64|universal]' >&2
   exit 1
 fi
 expected_architecture="${3:-auto}"
@@ -31,13 +31,13 @@ cleanup() {
 trap cleanup EXIT
 mkdir "$stage" "$mount"
 codesign --verify --deep --strict "$app"
-ditto "$app" "$stage/Pasto.app"
+ditto "$app" "$stage/Snapclip.app"
 ln -s /Applications "$stage/Applications"
-hdiutil create -srcfolder "$stage" -volname Pasto -fs HFS+ -format UDZO "$work/Pasto.dmg"
-hdiutil verify "$work/Pasto.dmg"
+hdiutil create -srcfolder "$stage" -volname Snapclip -fs HFS+ -format UDZO "$work/Snapclip.dmg"
+hdiutil verify "$work/Snapclip.dmg"
 attached=1
-hdiutil attach "$work/Pasto.dmg" -readonly -nobrowse -mountpoint "$mount" -plist > "$work/attach.plist"
-codesign --verify --deep --strict "$mount/Pasto.app"
+hdiutil attach "$work/Snapclip.dmg" -readonly -nobrowse -mountpoint "$mount" -plist > "$work/attach.plist"
+codesign --verify --deep --strict "$mount/Snapclip.app"
 python3 - "$app" "$mount" "$work/attach.plist" "$expected_architecture" <<'PY'
 from pathlib import Path
 import hashlib
@@ -49,7 +49,7 @@ import sys
 
 source, mounted, attachment = map(Path, sys.argv[1:4])
 expected = sys.argv[4]
-app = mounted / "Pasto.app"
+app = mounted / "Snapclip.app"
 if not (mounted / "Applications").is_symlink() or os.readlink(mounted / "Applications") != "/Applications":
     raise ValueError("Applications 快捷链接目标错误")
 entities = plistlib.loads(attachment.read_bytes())["system-entities"]
@@ -72,13 +72,13 @@ if tree(source) != tree(app):
     raise ValueError("DMG 内应用的文件内容、权限或符号链接发生改变")
 info = plistlib.loads((app / "Contents/Info.plist").read_bytes())
 source_info = plistlib.loads((source / "Contents/Info.plist").read_bytes())
-if info != source_info or info.get("CFBundleExecutable") != "Pasto" or info.get("CFBundleDisplayName") != "Pasto":
+if info != source_info or info.get("CFBundleExecutable") != "Snapclip" or info.get("CFBundleDisplayName") != "Snapclip":
     raise ValueError("DMG 内应用元数据不匹配")
 allowed = {frozenset(["arm64"]), frozenset(["x86_64"]), frozenset(["arm64", "x86_64"])}
 expected_set = frozenset(["arm64", "x86_64"] if expected == "universal" else [expected])
 common_architectures = None
-for relative in ["Contents/MacOS/Pasto", "Contents/MacOS/pasto-mcp",
-                 "Contents/Library/LoginItems/Pasto Helper.app/Contents/MacOS/PastoHelper"]:
+for relative in ["Contents/MacOS/Snapclip", "Contents/MacOS/snapclip-mcp",
+                 "Contents/Library/LoginItems/Pasto Helper.app/Contents/MacOS/SnapclipHelper"]:
     executable = app / relative
     architectures = subprocess.run(["lipo", "-archs", str(executable)],
                                    check=True, capture_output=True, text=True).stdout.split()
@@ -98,7 +98,7 @@ PY
 hdiutil detach "$mount"
 attached=0
 # Same-filesystem exclusive link prevents a concurrent writer being overwritten.
-python3 - "$work/Pasto.dmg" "$output" <<'PY'
+python3 - "$work/Snapclip.dmg" "$output" <<'PY'
 import os
 import sys
 os.link(sys.argv[1], sys.argv[2])

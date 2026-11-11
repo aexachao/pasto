@@ -61,7 +61,7 @@ def main():
     source_hashes = source_snapshot()
     if source_hashes != receipt.get("source_sha256"):
         raise ValueError("Receipt source inventory/SHA differs from current production sources; rebuild first")
-    products = [build / "Pasto", build / "Modules/Pasto.swiftmodule", build / "Modules/PastoCore.swiftmodule"]
+    products = [build / "Snapclip", build / "Modules/Pasto.swiftmodule", build / "Modules/SnapclipCore.swiftmodule"]
     product_hashes = {str(p): digest(p) for p in products}
     recorded_products = receipt.get("products_sha256", {})
     resolved_products = {str(Path(p).resolve()): sha for p, sha in recorded_products.items()}
@@ -78,7 +78,7 @@ def main():
     target = other_args[other_args.index("-target") + 1]
     if not target.startswith(args.arch + "-apple-macos"):
         raise ValueError("Build target architecture/platform does not match --arch")
-    intents = sorted((ROOT / "replica/Sources/Pasto/AppIntents").glob("*.swift"))
+    intents = sorted((ROOT / "replica/Sources/Snapclip/AppIntents").glob("*.swift"))
     if not intents or not {str(p) for p in intents}.issubset(set(command["sources"])):
         raise ValueError("AppIntents sources are absent from the actual Pasto build command")
     swiftc_probe = run(["xcrun", "--find", "swiftc"])
@@ -112,7 +112,7 @@ def main():
         constants = output / "Pasto.swiftconstvalues"
         argv = [str(swiftc), "-frontend", "-typecheck", "-parse-as-library", "-module-name", "Pasto",
                 "-target", target, "-sdk", sdk_probe.stdout.strip(), "-swift-version", "5",
-                "-I", str(build / "Modules"), "-I", str(ROOT / "replica/Sources/PastoObjC/include"),
+                "-I", str(build / "Modules"), "-I", str(ROOT / "replica/Sources/SnapclipObjC/include"),
                 "-module-cache-path", str(output / "ModuleCache")]
         argv += [a for a in other_args if a.startswith("-D")]
         argv += [str(p) for p in intents]

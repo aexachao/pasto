@@ -1,7 +1,7 @@
 import AppKit
 import Foundation
 import SwiftUI
-import PastoCore
+import SnapclipCore
 
 @main
 struct UIInteractionHarness {
@@ -353,16 +353,15 @@ struct UIInteractionHarness {
         let newField = newTab.titleView.subviews.first as! NSTextField
         _ = newTab.titleView.control(newField, textView: editor, doCommandBy: #selector(NSResponder.insertNewline(_:)))
         try require(store.pinboards.first { $0.id == newBoard.id }?.name == "Generated group rename")
-        let capacity = OriginalHistoryCapacityControl(frame: .init(x: 0, y: 0, width: 420, height: 54))
+        let capacity = OriginalHistoryCapacityControl(frame: .init(x: 0, y: 0, width: 420, height: 184))
         var capacityChanges: [Int] = []
         capacity.onCommit = { capacityChanges.append($0) }
         capacity.layoutSubtreeIfNeeded()
-        try require(capacity.slider.numberOfTickMarks == 5 && !capacity.slider.allowsTickMarkValuesOnly)
-        for index in 1...5 {
-            capacity.slider.integerValue = index
-            capacity.slider.sendAction(capacity.slider.action, to: capacity.slider.target)
+        capacity.confirmShortening = { _, completion in completion(true) }
+        for days in [1, 7, 30, 60, 0] {
+            capacity.optionButtons.first { $0.tag == days }!.performClick(nil)
         }
-        try require(capacityChanges == [1, 7, 30, 365, 0])
+        try require(capacityChanges == [1, 7, 30, 60, 0])
         for (position, days) in [(1.5, 4), (2.5, 14), (3.5, 180), (4.5, 365), (5.5, 0)] {
             try require(OriginalHistoryCapacity.days(for: position) == days)
         }

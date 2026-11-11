@@ -451,6 +451,17 @@ class OverlayWindowController {
                 preparedOverlayPanels[displayID] = OverlayPanelPool.shared.lease(for: screen)
             }
         }
+        // Register every capture-only window with ScreenCaptureKit before its
+        // asynchronous snapshot starts. The HUD is shown immediately afterward,
+        // so sharingType alone cannot keep it out of the in-flight screenshot.
+        if shouldCaptureSnapshots {
+            if shouldShowMagnifierLensPanel {
+                magnifierLensPanel = MagnifierLensPanelWindow()
+                magnifierLensPanelFormat = .hex
+            } else {
+                chipWindow = CursorChipWindow(text: currentCursorChipText)
+            }
+        }
         startWindowEnumeration(generation: generation)
         startSnapshotCapture(targets: targets, generation: generation)
         if let presentationBlocker {
@@ -481,7 +492,8 @@ class OverlayWindowController {
         }
         snapshotDeadline = deadline
         DispatchQueue.main.asyncAfter(deadline: .now() + snapshotTimeout, execute: deadline)
-        let excludedWindowIDs = Set((windows + Array(preparedOverlayPanels.values)).compactMap { window in
+        let captureChrome = [magnifierLensPanel, chipWindow].compactMap { $0 }
+        let excludedWindowIDs = Set((windows + Array(preparedOverlayPanels.values) + captureChrome).compactMap { window in
             window.windowNumber > 0 ? CGWindowID(window.windowNumber) : nil
         })
         snapshotCancellation = snapshotProvider.capture(targets: targets, excludingWindowIDs: excludedWindowIDs) { [weak self] event in
@@ -745,7 +757,9 @@ class OverlayWindowController {
             // double up with the lens.
             setupMagnifierLensPanel()
         } else {
-            chipWindow = CursorChipWindow(text: currentCursorChipText)
+            if chipWindow == nil {
+                chipWindow = CursorChipWindow(text: currentCursorChipText)
+            }
             chipWindow?.show()
         }
 
@@ -1382,11 +1396,11 @@ class OverlayWindowController {
     }
 
     private func setupMagnifierLensPanel() {
-        guard magnifierLensPanel == nil else { return }
-        let lens = MagnifierLensPanelWindow()
-        magnifierLensPanel = lens
-        magnifierLensPanelFormat = .hex
-        lens.show()
+        if magnifierLensPanel == nil {
+            magnifierLensPanel = MagnifierLensPanelWindow()
+            magnifierLensPanelFormat = .hex
+        }
+        magnifierLensPanel?.show()
         refreshMagnifierLensPanelContent()
     }
 

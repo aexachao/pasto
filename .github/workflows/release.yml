@@ -1,10 +1,16 @@
-name: Build and release Pasto
+name: Build and release Snapclip
 
 on:
   push:
     branches: [main]
     tags: ['v*']
   workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish a signed release after release prerequisites are configured
+        type: boolean
+        required: true
+        default: false
 
 permissions:
   contents: read
@@ -27,6 +33,8 @@ jobs:
           python3 replica/scripts/test-update-feed.py
       - id: version
         name: Determine whether the package version changed
+        env:
+          SNAPCLIP_PUBLISH: ${{ github.event_name == 'workflow_dispatch' && inputs.publish }}
         run: python3 replica/scripts/release-plan.py
 
   intel:
@@ -61,7 +69,7 @@ jobs:
       contents: write
       actions: write
     concurrency:
-      group: pasto-release-${{ needs.plan.outputs.tag }}
+      group: snapclip-release-${{ needs.plan.outputs.tag }}
       cancel-in-progress: false
     env:
       DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
@@ -93,4 +101,4 @@ jobs:
           --version "$RELEASE_VERSION" --tag "$RELEASE_TAG" --commit "$RELEASE_COMMIT"
       # GITHUB_TOKEN-created releases do not emit another workflow run automatically.
       - name: Update public downloads and deploy the website
-        run: gh workflow run pages.yml --repo yingyanzhitong/pasto --ref main
+        run: gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main

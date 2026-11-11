@@ -4,6 +4,10 @@ import argparse
 import hashlib
 import json
 import os
+# Accept canonical names while keeping existing CI configuration compatible.
+for _snapclip_key, _snapclip_value in list(os.environ.items()):
+    if _snapclip_key.startswith("SNAPCLIP_"):
+        os.environ["PASTO_" + _snapclip_key[9:]] = _snapclip_value
 from pathlib import Path
 import platform
 import plistlib
@@ -13,6 +17,31 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
 RELEASE_ARCHITECTURES = ["arm64", "x86_64"]
+
+
+def app_output_directory():
+    explicit = os.environ.get("SNAPCLIP_APP_OUTPUT_DIR", os.environ.get("PASTO_APP_OUTPUT_DIR"))
+    if explicit:
+        return Path(explicit).expanduser().resolve()
+    task = os.environ.get("ARTIFACT_TASK_DIR")
+    return (Path(task) / "out").resolve() if task else ROOT / "replica/dist"
+
+
+def release_output_directory():
+    explicit = os.environ.get("SNAPCLIP_RELEASE_OUTPUT_DIR", os.environ.get("PASTO_RELEASE_OUTPUT_DIR"))
+    return Path(explicit).expanduser().resolve() if explicit else app_output_directory() / "release"
+
+
+def app_build_environment():
+    environment = os.environ.copy()
+    for suffix in ("APP_OUTPUT_DIR", "RELEASE_OUTPUT_DIR", "BUILD_ROOT"):
+        if "SNAPCLIP_" + suffix in environment:
+            environment["PASTO_" + suffix] = environment["SNAPCLIP_" + suffix]
+    environment["PASTO_APP_OUTPUT_DIR"] = str(app_output_directory())
+    if not environment.get("PASTO_BUILD_ROOT"):
+        task = environment.get("ARTIFACT_TASK_DIR")
+        environment["PASTO_BUILD_ROOT"] = str(Path(task) / "build/swiftpm" if task else ROOT / "replica/.build")
+    return environment
 
 
 def bundle_version(version):
@@ -68,7 +97,7 @@ def remote_state(repo, tag, commit):
 
 
 def asset_names(version):
-    names = ["Pasto-" + version + "-macos-universal.dmg", "SHA256SUMS.txt", "release-manifest.json"]
+    names = ["Snapclip-" + version + "-macos-universal.dmg", "SHA256SUMS.txt", "release-manifest.json"]
     if "-dev." not in version:
         names.append("appcast.xml")
     return names
@@ -105,13 +134,13 @@ def check_existing(repo, version, tag, commit):
 def verify_app(app, version, architectures):
     info = plistlib.loads((app / "Contents/Info.plist").read_bytes())
     short_version, expected_build = bundle_version(version)
-    if (info.get("CFBundleExecutable") != "Pasto" or info.get("CFBundleDisplayName") != "Pasto"
+    if (info.get("CFBundleExecutable") != "Snapclip" or info.get("CFBundleDisplayName") != "Snapclip"
             or info.get("CFBundleShortVersionString") != short_version
             or info.get("CFBundleVersion") != expected_build or info.get("PastoSourceVersion") != version
             or info.get("LSMinimumSystemVersion") != "14.0"):
         raise ValueError("Application bundle version/name mismatch")
     update_config = {
-        "SUFeedURL": "https://github.com/yingyanzhitong/pasto/releases/latest/download/appcast.xml",
+        "SUFeedURL": "https://github.com/aexachao/Snapclip/releases/latest/download/appcast.xml",
         "SUPublicEDKey": (ROOT / "replica/Assets/UpdatePublicKey.txt").read_text().strip(),
         "SURequireSignedFeed": True, "SUVerifyUpdateBeforeExtraction": True,
         "SUEnableAutomaticChecks": False, "SUAutomaticallyUpdate": False, "SUSendProfileInfo": False}
@@ -122,8 +151,8 @@ def verify_app(app, version, architectures):
     framework_architectures = run(["lipo", "-archs", str(framework)], capture_output=True, text=True).stdout.split()
     if not set(architectures).issubset(framework_architectures):
         raise ValueError("Unexpected executable architectures in Sparkle")
-    executables = [app / "Contents/MacOS/Pasto", app / "Contents/MacOS/pasto-mcp",
-                   app / "Contents/Library/LoginItems/Pasto Helper.app/Contents/MacOS/PastoHelper"]
+    executables = [app / "Contents/MacOS/Snapclip", app / "Contents/MacOS/snapclip-mcp",
+                   app / "Contents/Library/LoginItems/Pasto Helper.app/Contents/MacOS/SnapclipHelper"]
     for executable in executables:
         actual = run(["lipo", "-archs", str(executable)], capture_output=True, text=True).stdout.split()
         if len(actual) != len(architectures) or set(actual) != set(architectures):
@@ -133,7 +162,7 @@ def verify_app(app, version, architectures):
                            capture_output=True, text=True).stdout
             if re.search(r"\bminos\s+14\.0(?:\.0)?(?:\s|$)", commands) is None:
                 raise ValueError("Unexpected minimum macOS version: " + str(executable))
-            framework_path = ("@executable_path/../../../../../Frameworks" if executable.name == "PastoHelper"
+            framework_path = ("@executable_path/../../../../../Frameworks" if executable.name == "SnapclipHelper"
                               else "@executable_path/../Frameworks")
             if framework_path not in re.findall(r"\bpath\s+(\S+)\s+\(offset", commands):
                 raise ValueError("Missing bundled Frameworks search path: " + str(executable))
@@ -149,7 +178,7 @@ def verify_app(app, version, architectures):
 def verify_intel(version):
     if platform.system() != "Darwin" or platform.machine() != "x86_64":
         raise ValueError("Intel verification requires a native macOS x86_64 runner")
-    verify_app(ROOT / "replica/dist/Pasto.app", version, ["x86_64"])
+    verify_app(app_output_directory() / "Snapclip.app", version, ["x86_64"])
 
 
 def verify_dmg(archive, version, architectures):
@@ -157,7 +186,7 @@ def verify_dmg(archive, version, architectures):
         mount = Path(temporary)
         run(["hdiutil", "attach", "-readonly", "-nobrowse", "-mountpoint", str(mount), str(archive)])
         try:
-            verify_app(mount / "Pasto.app", version, architectures)
+            verify_app(mount / "Snapclip.app", version, architectures)
             applications = mount / "Applications"
             if not applications.is_symlink() or os.readlink(applications) != "/Applications":
                 raise ValueError("Disk image is missing the Applications shortcut")
@@ -168,10 +197,10 @@ def verify_dmg(archive, version, architectures):
 def package(version, tag, commit):
     if platform.system() != "Darwin":
         raise ValueError("Release requires a macOS runner")
-    app = ROOT / "replica/dist/Pasto.app"
-    output = ROOT / "replica/dist/release"
+    app = app_output_directory() / "Snapclip.app"
+    output = release_output_directory()
     output.mkdir(parents=True, exist_ok=False)
-    run(["bash", "replica/scripts/build-app.sh", "release", "universal"])
+    run(["bash", "replica/scripts/build-app.sh", "release", "universal"], env=app_build_environment())
     verify_app(app, version, RELEASE_ARCHITECTURES)
     name = asset_names(version)[0]
     archive = output / name
@@ -192,7 +221,7 @@ def publish(repo, version, tag, commit):
     ref, existing = check_existing(repo, version, tag, commit)
     if existing:
         return
-    output = ROOT / "replica/dist/release"
+    output = release_output_directory()
     names = asset_names(version)
     manifest = json.loads((output / "release-manifest.json").read_text())
     expected_archives = [{"archive": names[0], "architectures": RELEASE_ARCHITECTURES, "sha256": sha(output / names[0])}]
@@ -210,20 +239,20 @@ def publish(repo, version, tag, commit):
     notes = output / "notes.md"
     download = "https://github.com/" + repo + "/releases/download/" + tag + "/"
     notes.write_text("[下载 macOS 通用版（Intel / Apple 芯片）](" + download + names[0] + ")\n\n"
-                     "Pasto " + version + " · macOS 14+。一个 Universal DMG 同时兼容 Intel 与 Apple 芯片。\n\n"
+                     "Snapclip " + version + " · macOS 14+。一个 Universal DMG 同时兼容 Intel 与 Apple 芯片。\n\n"
                      "## 更新内容\n\n" + changelog_entry(version) + "\n\n"
                      "## 安装与验证\n\n"
-                     "将 Pasto.app 拖入 Applications 即可安装；同时提供 SHA256SUMS.txt 与构建来源清单。\n"
+                     "将 Snapclip.app 拖入 Applications 即可安装；同时提供 SHA256SUMS.txt 与构建来源清单。\n"
                      "应用采用临时签名，未经 Apple 公证。\n"
                      "本次 Actions 发布任务验证编译、架构、版本、签名及安装镜像，没有在构建节点执行应用或功能回归；本机定向验证范围见上方变更日志。\n"
                      "主程序、Helper 与 MCP 可执行文件均包含 arm64 和 x86_64 架构。\n"
-                     "正式版还提供带 Ed25519 签名的 appcast.xml，供已接入 Sparkle 的 Pasto 在应用内下载、安装及重启。\n"
+                     "正式版还提供带 Ed25519 签名的 appcast.xml，供已接入 Sparkle 的闪贴 / Snapclip 在应用内下载、安装及重启。\n"
                      "临时签名更新仍可能需要重新开启辅助功能授权。\n"
                      "本流程仅上传一个 DMG、校验文件、清单及正式版更新源；页面中的 Source code (zip/tar.gz) 链接由 GitHub 自动生成，没有主动上传源码包。\n\n"
                      "Commit: " + commit + "\n")
     args = ["gh", "release", "create", tag, *[str(output / name) for name in names],
             "--repo", repo, "--draft", "--verify-tag", "--target", commit,
-            "--title", "Pasto " + version, "--notes-file", str(notes)]
+            "--title", "Snapclip " + version, "--notes-file", str(notes)]
     if "-dev." in version:
         args += ["--prerelease", "--latest=false"]
     run(args)

@@ -1,6 +1,6 @@
 // Pasto-local adapter (not part of upstream capcap). Keep additive: upstream subtree merges must not conflict.
 //
-// 为什么需要这个文件：`PastoCapture` 里所有类型都是 internal（`struct ScreenCapturer`、
+// 为什么需要这个文件：`SnapclipCapture` 里所有类型都是 internal（`struct ScreenCapturer`、
 // `enum ImageEditLauncher`、`class OverlayWindowController`、`CaptureTriggerContext`），
 // 而 `Pasto` 是另一个 module，跨 module 直接调用会得到
 // “cannot find 'ScreenCapturer' in scope”。
@@ -39,6 +39,8 @@ public final class SuspendedEditDraftBox {
 
 public enum CaptureEntry {
     /// 全屏：抓取鼠标所在那一块屏幕，直接进编辑器。
+    /// 注意：全屏**不读**「截图后行为」偏好，始终走编辑器（`ImageEditLauncher` 的上游默认）。
+    /// 设置面板的脚注也写了这一点，避免用户以为全屏会跟着改。
     /// 返回 nil 表示抓屏失败（缺少「屏幕录制」授权，或 2 秒超时——见 `captureFullScreen`）。
     /// 调用方拿到 nil 会走 `windowHider.restore()` 并把窗口还回去。
     @discardableResult
@@ -63,7 +65,8 @@ public enum CaptureEntry {
         )
     }
 
-    /// 区域：拉起选区遮罩（十字光标 / 窗口吸附），松手后进编辑器。
+    /// 区域：拉起选区遮罩（十字光标 / 窗口吸附），松手后按设置面板里选的
+    /// 「截图后行为」执行（默认 `.edit` → 进标注编辑器）。
     /// 返回 nil 表示遮罩没能启动。
     @discardableResult
     public static func presentRegionEditor(
@@ -72,7 +75,7 @@ public enum CaptureEntry {
         onComplete: @escaping (NSImage?) -> Void
     ) -> AnyObject? {
         let controller = OverlayWindowController(
-            postCaptureAction: .edit,
+            postCaptureAction: SnapclipScreenshotSettings.postCaptureAction.capcapPostCaptureAction,
             triggerContext: CaptureTriggerContext(source: .keyboardShortcut),
             onFirstFramePresented: nil,
             onRecordingSelection: { _, _ in },
